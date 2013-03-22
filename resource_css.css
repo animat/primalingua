@@ -1,0 +1,70 @@
+#container {
+	position: absolute;
+	right: 0px;
+	height: 100%;
+	top: 0px;
+	overflow-x: hidden;
+	z-index: 2;
+}
+#container a {
+	text-decoration: none;
+	margin-left: 10px;
+	color: #394057;
+}
+#resource {
+	font-family: 'Nunito', sans-serif;
+	height: 100%;
+	width: 406px;
+	float: right;
+	background: rgba(160, 160, 200, 0.8);
+}
+#individual {
+	height: 150px;
+}
+.ui-state-default {
+	margin-bottom: -15;
+	background: #aca0de;
+	border-top: 1px solid #6A507C;
+	border-bottom: 1px solid #6A507C;
+}
+#spacing {
+	height: 354px;
+}
+#resource_button {
+	float: left;
+	background: url('images/resource_bar.png') repeat-y center;
+	height: 100%;
+	width: 28px;
+	position: relative;
+}
+#resource_button img {
+	position: absolute;
+	top: 50%;
+	margin-top: -10px;
+	left: 50%;
+	margin-left: -3px;
+}
+#resource_button:hover {
+	cursor: pointer;
+}
+#points_to_consider {
+	background: #DAD948;
+}
+#terms {
+	background: #EC4647;
+}
+#vocab {
+	background: #51C33A;
+}
+#links {
+	background: #697BD3;
+}
+.resources_title {
+	color: #333;
+	font-size: 11px;
+	margin-left: 11px;
+	margin-top: 0px;
+}
+#games {
+	background: #EB934C;
+}

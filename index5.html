@@ -1,0 +1,188 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style2.css" />
+		<link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="jquery.populate.pack.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="resource_css.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+		<script src="http://jqueryui.com/ui/jquery.ui.widget.js"></script>
+		<script src="http://jqueryui.com/ui/jquery.ui.accordion.js"></script>
+		<script>
+			var student_id = 1;
+			var lesson_id = 1;
+			var currentPosition = 0;
+			
+			var points_to_consider;
+			var terms;
+			var vocab;
+			var links;
+			var games;
+			
+			var num = window.innerHeight;
+			var excludedHeight;
+			var middleHeight;
+			var middle;
+			var workbook;
+			$(function() {
+				$( "#accordion" ).accordion();
+			});
+			function load() {
+				excludedHeight = document.getElementById('head').offsetHeight + 16;
+				middleHeight = num - excludedHeight + 15;
+				middle = document.getElementById('workspace');
+				middle.style.height = middleHeight;
+				
+				points_to_consider = document.getElementById('acc1');
+				terms = document.getElementById('acc2');
+				vocab = document.getElementById('acc3');
+				links = document.getElementById('acc4');
+				games = document.getElementById('acc5');
+				getResources();
+				workbook = document.getElementById('workbook');
+				$.ajax({
+					url: "getSelectMenu.php",
+					success: function(resp) {
+						lesson_select.innerHTML = resp;
+						lessonPlanMenu = document.getElementById('lessonPlanMenu');
+						getLessonPlan();
+					}
+				});
+			}
+			function toggleResources() {
+				if (currentPosition == 0) {
+					$('#resource').animate({
+						width: ['1', 'swing'],
+					}, "slow" );
+					currentPosition = -400;
+				} else {
+					$('#resource').animate({
+						width: ['400', 'swing'],
+					}, "slow" );
+					currentPosition = 0;
+				}
+			}
+			function getResources() {
+				$.ajax({
+					url: "getResources.php?lesson_id="+lesson_id+"&type=points to consider",
+					success: function(resp) {
+						points_to_consider.innerHTML = "<p class='resources_title'>Points to consider for "+lesson_id+"!</p>"+resp;
+					}
+				});	
+				$.ajax({
+					url: "getResources.php?lesson_id="+lesson_id+"&type=terms",
+					success: function(resp) {
+						terms.innerHTML = "<p class='resources_title'>Terms for "+lesson_id+"!</p>"+resp;
+					}
+				});	
+				$.ajax({
+					url: "getResources.php?lesson_id="+lesson_id+"&type=vocab",
+					success: function(resp) {
+						vocab.innerHTML = "<p class='resources_title'>Vocabulary for "+lesson_id+"!</p>"+resp;
+					}
+				});	
+				$.ajax({
+					url: "getResources.php?lesson_id="+lesson_id+"&type=links",
+					success: function(resp) {
+						links.innerHTML = "<p class='resources_title'>Other links for "+lesson_id+"!</p>"+resp;
+					}
+				});	
+				$.ajax({
+					url: "getResources.php?lesson_id="+lesson_id+"&type=games",
+					success: function(resp) {
+						games.innerHTML = "<p class='resources_title'>Practice with games for "+lesson_id+"!</p>"+resp;
+					}
+				});	
+			}
+			window.onresize = function() {
+				num = window.innerHeight;
+				middleHeight = num - excludedHeight + 15;
+				middle.style.height = middleHeight;
+			}
+			function getLessonPlan() {
+				lesson = lessonPlanMenu.options[lessonPlanMenu.selectedIndex].value.toString();
+				$.ajax({
+					url: "getLesson.php?lesson_id="+lesson,
+					success: function(resp) {
+						workbook.innerHTML = resp;
+					}
+				});
+			}
+		</script>
+	</head>
+	<body onload="load();">
+		<div id="head">
+			<div id="topnav">
+				<div id="logo">
+				</div>
+				<div id="nav">
+				<a href="index2planning.html" class="nav_option">
+					Planning
+				</a>
+				<a href="index2grading.html" class="nav_option">
+					Grading
+				</a>
+				<a href="index5.html" class="nav_option">
+					In Class
+				</a>
+				<div id="buttons">
+					<img src="images/button_home.png" />
+					<img src="images/button_notification.png" />
+					<img src="images/button_settings.png" />
+				</div>
+			</div>
+			</div>
+		</div>
+		<div id="workspace">
+			<div id="lesson_select"></div>
+			<div id="workbook">
+				
+			</div>
+			<div id="container">
+				<div id="resource_button" onclick="toggleResources();"><img src="images/resource_button.png" /></div>
+				<div id="resource">
+					<div id="spacing">
+					<div id="accordion">
+						<h3 id="points_to_consider"><a href="#">Points to Consider</a></h3>
+						<div id="individual">
+							<p id="acc1">	
+								Stuff
+							</p>
+						</div>
+						<h3 id="terms"><a href="#">Terms</a></h3>
+						<div id="individual">
+							<p id="acc2">
+								This will have terms in it!
+							</p>
+						</div>
+						<h3 id="vocab"><a href="#">Vocab</a></h3>
+						<div id="individual">
+							<p id="acc3">
+								This will have vocab!
+							</p>
+						</div>
+						<h3 id="links"><a href="#">Links</a></h3>
+						<div id="individual">
+							<p id="acc4">
+								This will have links to other things!
+							</p>
+							<ul>
+								<li>List item one</li>
+								<li>List item two</li>
+								<li>List item three</li>
+							</ul>
+						</div>
+						<h3 id="games"><a href="#">Games</a></h3>
+						<div id="individual">
+							<p id="acc5">
+								This will contain links to games!
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+	</body>
+</html>

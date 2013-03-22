@@ -1,0 +1,243 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="jquery.populate.pack.js"></script>
+		<link rel="stylesheet" type="text/css" href="style2planning.css" />
+		<link rel="stylesheet" type="text/css" href="workbook.css" />
+		<link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+		<script>
+			var lessonPlanNumber = 0;
+			var lessonplans;
+			var lesson;
+			var selectMenu;
+			var lessonPlanMenu;
+			var selectMenu2;
+			var lessonPlanMenu2;
+			var student_id = 1;
+			var lesson_id = 1;
+			var num = window.innerHeight;
+			var excludedHeight;
+			var middleHeight;
+			var middle;
+			var isSynced = true;
+			function load() {
+				excludedHeight = document.getElementById('head').offsetHeight + 16;
+				middleHeight = num - excludedHeight + 15;
+				middle = document.getElementById('workspace');
+				middle.style.height = middleHeight;
+				lessonplans = document.getElementById('lessonplans');
+				lesson = document.getElementById('lesson');
+				selectMenu = document.getElementById('selectMenu');
+				selectMenu2 = document.getElementById('selectMenu2');
+				$.ajax({
+					url: "getSelectMenu.php",
+					success: function(resp) {
+						selectMenu.innerHTML = resp;
+						lessonPlanMenu = document.getElementById('lessonPlanMenu');
+						getLessonPlan();
+					}
+				});	
+				$.ajax({
+					url: "getSelectMenu2.php",
+					success: function(resp) {
+						selectMenu2.innerHTML = resp;
+						lessonMenu = document.getElementById('lessonMenu');
+					}
+				});	
+				populate();
+			}
+			function getLessonPlan() {
+				lessonPlanNumber = parseInt(lessonPlanMenu.options[lessonPlanMenu.selectedIndex].value);
+				$.ajax({
+					url: "getLessonPlans.php?lesson_id="+lessonPlanMenu.options[lessonPlanMenu.selectedIndex].value.toString(),
+					success: function(resp) {
+						lessonplans.innerHTML = resp;
+						
+					}
+				});
+				if (isSynced == true) {
+					getLessonSynced();
+				}
+			}
+			function getLesson() {
+				$.ajax({
+					url: "getLesson.php?lesson_id="+lessonMenu.options[lessonMenu.selectedIndex].value.toString(),
+					success: function(resp) {
+						lesson.innerHTML = resp;
+					}
+				});
+			}
+			function getLessonSynced() {
+				$.ajax({
+					url: "getLesson.php?lesson_id="+lessonPlanMenu.options[lessonPlanMenu.selectedIndex].value.toString(),
+					success: function(resp) {
+						lesson.innerHTML = resp;
+					}
+				});
+			}
+			function toggleLessonSelect() {
+				if (lessonMenu.disabled == false) {
+					lessonMenu.disabled = true;
+					getLessonSynced();
+					isSynced = true;
+					
+				} else {
+					lessonMenu.disabled = false;
+					isSynced = false;
+					getLesson();
+				}
+			}
+			window.onresize = function() {
+				num = window.innerHeight;
+				middleHeight = num - excludedHeight + 15;
+				middle.style.height = middleHeight;
+			}
+			function nextPlan() {
+				lessonPlanNumber += 1;
+				lessonPlanMenu.selectedIndex = lessonPlanNumber - 1;
+				$.ajax({
+					url: "getLessonPlans.php?lesson_id="+lessonPlanNumber.toString(),
+					success: function(resp) {
+						lessonplans.innerHTML = resp;
+						
+					}
+				});
+				if (isSynced == true) {
+					$.ajax({
+						url: "getLesson.php?lesson_id="+lessonPlanNumber.toString(),
+						success: function(resp) {
+							lesson.innerHTML = resp;
+						}
+					});
+				}
+			}
+			function previousPlan() {
+				lessonPlanNumber = lessonPlanNumber - 1;
+				lessonPlanMenu.selectedIndex = lessonPlanNumber - 1;
+				$.ajax({
+					url: "getLessonPlans.php?lesson_id="+lessonPlanNumber.toString(),
+					success: function(resp) {
+						lessonplans.innerHTML = resp;
+						
+					}
+				});
+				if (isSynced == true) {
+					$.ajax({
+						url: "getLesson.php?lesson_id="+lessonPlanNumber.toString(),
+						success: function(resp) {
+							lesson.innerHTML = resp;
+						}
+					});
+				}
+			}
+		</script>
+	</head>
+	<body onload="load();">
+		<div id="head">
+			<div id="topnav">
+				<div id="logo">
+				</div>
+				<div id="nav">
+				<a href="index2planning.html" class="nav_option">
+					Planning
+				</a>
+				<a href="index2grading.html" class="nav_option">
+					Grading
+				</a>
+				<a href="index5.html" class="nav_option">
+					In Class
+				</a>
+				<div id="buttons">
+					<img src="images/button_home.png" />
+					<img src="images/button_notification.png" />
+					<img src="images/button_settings.png" />
+				</div>
+			</div>
+			</div>
+		</div>
+		<div id="workspace">
+			<div id="lessonplan">
+				<div id="lessons">
+					<div id="selectMenu">
+					
+					</div>
+					<div id="lessonplans">
+					
+					</div>
+				</div>
+			</div>
+			<div id="workbook">
+				<div id="workbook_tools">
+					<input type="checkbox" checked=checked onChange="toggleLessonSelect();">Sync with Lesson Plans</input>
+					<div id="selectMenu2">
+					
+					</div>
+				</div>
+				<div id="lesson">
+				<form id="content">
+					<h1>Unit 2</h1>
+					<h2>The variety of Languages</h2>
+					<h4>Lesson 1:   Importance of Speaking Other Languages </h4>
+					<br />
+					<ol>
+						<li>
+														
+							<label>Do you know any words in other languages? List some words and what languages they are.</label>
+							<br />
+							<ul>
+								<table>
+									<tr>
+										<td>
+											<li><input type="text" value="e.g. Rana"></input></li>
+											<li><input type="text"></input></li>
+											<li><input type="text"></input></li>
+											<li><input type="text"></input></li>
+										</td>
+										<td>
+											<li><input type="text" value="e.g. Latin"></input></li>
+											<li><input type="text"></input></li>
+											<li><input type="text"></input></li>
+											<li><input type="text"></input></li>
+										</td>
+									</tr>
+								</table>
+							</ul>
+							<div class="feedback"><img src="images/x.png" />
+								<div class="feedback_txt">
+									You did a very, very poor job on this John. I expected more out of you. You thoroughly disapointed me. Better luck next time.
+								</div>
+							</div>
+							
+						</li>
+						<li >
+														
+							<label>Where have you heard a foreign language being used?</label>
+							<br />
+							<textarea cols=70 rows=9 name="q_1" id="q_1"></textarea>
+							<div class="feedback"><img src="images/error.png" />
+								<div class="feedback_txt">
+									Even though everyone got different answers for this test, you still understood the material very well.
+								</div>
+							</div>
+						</li>
+						<li>
+														
+							<label>List some jobs that people have that require them to use a foreign language.<img src="images/globe.jpeg" /></label>
+							<br />
+							<textarea cols=70 rows=9 name="q_2" id="q_2"></textarea>
+							<div class="feedback"><img src="images/check.png" />
+								<div class="feedback_txt">
+									Congradulations, John. You're the best.
+								</div>
+							</div>
+						</li>
+						
+					</ol>
+
+				</form>
+				</div>
+			</div>
+		<div>
+		<span class="clear-float"></span>
+	</body>
+</html>

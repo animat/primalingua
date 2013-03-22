@@ -1,0 +1,185 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="jquery.populate.pack.js"></script>
+		<link rel="stylesheet" type="text/css" href="style2grading.css" />
+		<link rel="stylesheet" type="text/css" href="workbook.css" />
+		<link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+		<script>
+			var student_index = 1;
+			var studentSelectMenu;
+			var lesson_select;
+			var lessonPlanMenu;
+			var student = "1";
+			var lesson = "1";
+			var workbook1;
+			
+			var num = window.innerHeight;
+			var excludedHeight;
+			var middleHeight;
+			var middle;
+			function load() {
+				studentSelectMenu = document.getElementById('student_select');
+				excludedHeight = document.getElementById('head').offsetHeight + 16;
+				middleHeight = num - excludedHeight + 15;
+				middle = document.getElementById('workspace');
+				middle.style.height = middleHeight;
+			
+				lesson_select = document.getElementById('lesson_select');
+				workbook1 = document.getElementById('workbook1');
+				$.ajax({
+					url: "getSelectMenu.php",
+					success: function(resp) {
+						lesson_select.innerHTML = resp;
+						lessonPlanMenu = document.getElementById('lessonPlanMenu');
+						getLessonPlan();
+					}
+				});	
+			}
+			window.onresize = function() {
+				num = window.innerHeight;
+				middleHeight = num - excludedHeight + 15;
+				middle.style.height = middleHeight;
+			}
+			function populate() {
+				$.getJSON("getAnswersAndFeedback.php?student_id="+student+"&lesson_id="+lesson, function(data) {
+					$("#workbook1 #content").populate(jQuery.parseJSON(data));
+				});
+			}
+			function populateTG() {
+				$.getJSON("getTGAnswers.php?lesson_id="+lesson, function(data) {
+					$("#workbook2 #content").populate(jQuery.parseJSON(data));
+				});
+			}
+			function getLessonPlan() {
+				student = student_select.options[student_select.selectedIndex].value.toString();
+				lesson = lessonPlanMenu.options[lessonPlanMenu.selectedIndex].value.toString();
+				studentIndex = parseInt(studentSelectMenu.options[studentSelectMenu.selectedIndex].value);
+				$.ajax({
+					url: "getLesson.php?lesson_id="+lesson,
+					success: function(resp) {
+						workbook1.innerHTML = resp;
+						populate();
+						workbook2.innerHTML = resp;
+						populateTG();
+						populateFeedback();
+					}
+				});
+			}
+			function updateFeedbackStatus(id, status) {
+				var feedback_node = "f_"+id.toString();
+				var feedback_image = "f_"+id.toString()+"_image";
+				var text = document.getElementById(feedback_node).getElementsByClassName('feedback_editor_text');
+				text[0].value = status;
+				$.ajax({
+					url: "updateFeedbackStatus.php?type="+status+"&q_id="+id+"&student_id="+student,
+					success: function(resp) {
+						if (status == "correct") {
+							document.getElementById(feedback_image).setAttribute('src', 'images/check.png');
+						} else if (status == "incorrect") {
+							document.getElementById(feedback_image).setAttribute('src', 'images/x.png');
+						} else if (status == "incomplete") {
+							document.getElementById(feedback_image).setAttribute('src', 'images/error.png');
+						}
+						var content = document.getElementById(feedback_node).getElementsByClassName('feedback_txt')[0];
+						content.disabled = false;
+						content.innerHTML = "";
+					}
+				});	
+			}
+			function updateFeedbackText(id) {
+				var feedback_node = "f_"+id.toString();
+				var content = document.getElementById(feedback_node).getElementsByClassName('feedback_txt')[0];
+				$.ajax({
+					url: "updateFeedbackText.php?content="+content.value+"&q_id="+id+"&student_id="+student,
+					success: function(resp) {
+						
+					}
+				});	
+			}
+			function changeStudent(num) {
+				student = (parseInt(student)+num).toString();
+				student_index = student_index + num;
+				studentSelectMenu.selectedIndex = student_index - 1;
+				$.ajax({
+					url: "getLesson.php?lesson_id="+lesson,
+					success: function(resp) {
+						workbook1.innerHTML = resp;
+						populate();
+						workbook2.innerHTML = resp;
+						populateTG();
+						populateFeedback();
+					}
+				});
+			}
+			function updateFeedbackImage(num) {
+				$.ajax({
+					url: "getFeedbackStatus.php?student_id="+student+"&q_id="+num,
+					success: function(status) {
+						var image = document.getElementById('f_'+num+'_image');
+						if (status == "correct") {
+							image.setAttribute('src', 'images/check.png');
+						} else if (status == "incorrect") {
+							image.setAttribute('src', 'images/x.png');
+						} else if (status == "incomplete") {
+							image.setAttribute('src', 'images/error.png');
+						}
+					}
+				});	
+			}
+		</script>
+	</head>
+	<body onload="load();">
+		<div id="head">
+			<div id="topnav">
+				<div id="logo">
+				</div>
+				<div id="nav">
+				<a href="index2planning.html" class="nav_option">
+					Planning
+				</a>
+				<a href="index2grading.html" class="nav_option">
+					Grading
+				</a>
+				<a href="index5.html" class="nav_option">
+					In Class
+				</a>
+				<div id="buttons">
+					<img src="images/button_home.png" />
+					<img src="images/button_notification.png" />
+					<img src="images/button_settings.png" />
+				</div>
+			</div>
+			</div>
+		</div>
+		<div id="workspace">
+			<div id="side1">
+				<div id="student_search">
+					<div id="lesson_select">
+		
+					</div>
+					<select id="student_select" onchange="getLessonPlan();">
+						<option value="1">Colin Roberts</option>
+						<option value="2">Brandon Jackson-Shorts</option>
+						<option value="3">John Ghallagher</option>
+						<option value="4">BC Angevine</option>
+						<option value="5">Margaret Roberts</option>
+						<option value="6">Douglas Roberts</option>
+					<select>
+				</div>
+				<a href="#" onClick="changeStudent(1);" id="arrow_right"></a>
+				<a href="#" onClick="changeStudent(-1);" id="arrow_left"></a>
+				<div id="workbook1">
+				
+				</div>
+				
+			</div>
+			<div id="side2">
+				<div id="workbook2">
+				
+				</div>
+			
+			</div>
+		<div>
+	</body>
+</html>
