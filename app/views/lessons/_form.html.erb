@@ -12,10 +12,7 @@
   <% end %>
 	
 	
-	<div class="field">
-		<%= f.label :unit %>
-		<%= collection_select :lesson, :unit, Unit.all, :id, :title, {:prompt => "Select a unit..."} %>
-	</div>
+	
   <div class="field">
     <%= f.label :title %><br />
     <%= f.text_field :title %>

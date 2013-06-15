@@ -1,2 +1,33 @@
-<h1>Teachers#planning</h1>
-<p>Find me in app/views/teachers/planning.html.erb</p>
+
+<div id="lessonplan" class="half_width">
+	<div id="lessons">
+		<div id="selectMenu">
+		
+		</div>
+		<div id="lessonplans">
+		
+		</div>
+	</div>
+</div>
+
+<div id="workbook" class="half_width">
+	<div id="workbook_tools">
+		<label><input type="checkbox" checked=checked onChange="toggleLessonSelect();" />Sync with Lesson Plans</label>
+		<div id="selectMenu2"></div>
+	</div>
+	<div id="content">
+		<% unless flash[:notice].nil? %>
+			<p class="flash_notice"><%= flash[:notice]%></p>
+		<% end %>
+		<% unless flash[:error].nil? %>
+			<p class="flash_error"><%= flash[:error] %></p>
+		<% end %>
+
+		<h1><%= "Unit #{'1'}" %></h1>
+		<h2><%= "What is language" %></h2>
+		<h4><%= "Lesson 1: #{@lesson.title}" %></h4>
+
+		<%= @workbook_content.html_safe %>
+
+	</div>
+</div>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title><%= yield(:title) or 'Prima Lingua' %></title>
+	<%= stylesheet_link_tag 'workspace' %>
+	<%= javascript_include_tag :defaults, :cache => true %>
+	<link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+	<%= yield(:head) %>
+	<%= yield(:page_script) %>
+</head>
+<body>
+	<div id="head">
+		<div id="topnav">
+			<div id="logo"></div>
+		</div>
+		<div id="nav">
+			<div class="nav_option">
+				Planning
+			</div>
+			<div class="nav_option">
+				Grading
+			</div>
+			<div class="nav_option">
+				In Class
+			</div>
+			<div id="buttons">
+				<%= link_to image_tag("workspace/button_home.png"), root_url %>
+				<%= link_to image_tag("workspace/button_notification.png"), root_url %>
+				<%= link_to image_tag("workspace/button_settings.png"), root_url %>
+			</div>
+		</div>
+	</div>
+ 	<div id="workspace">
+		<%= yield %>
+	</div>
+	
+</body>
+</html>
