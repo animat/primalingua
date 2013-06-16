@@ -1,0 +1,13 @@
+<h1>Lesson plan</h1>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Lesson:</strong>
+  <%= @lesson_plan.lesson.title %>
+</p>
+
+<%= @lesson_plan.content.gsub("\\r\\n", "").html_safe %>
+
+<%= link_to 'Edit', edit_lesson_plan_path(@lesson_plan) %> |
+<%= link_to 'Back', lesson_plans_path %>

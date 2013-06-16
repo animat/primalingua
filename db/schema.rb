@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130421205618) do
+ActiveRecord::Schema.define(version: 20130615014106) do
 
   create_table "feedbacks", force: true do |t|
     t.string   "type"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "lesson_plans", force: true do |t|
+    t.integer  "lesson_id"
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"

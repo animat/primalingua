@@ -1,22 +1,20 @@
 # == Schema Information
 #
-# Table name: lessons
+# Table name: lesson_plans
 #
 #  id         :integer          not null, primary key
-#  title      :string(255)
+#  lesson_id  :integer
 #  content    :text
 #  created_at :datetime
 #  updated_at :datetime
-#  unit_id    :integer
-#  completed  :boolean
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  title: MyString
+  lesson: 
   content: MyText
 
 two:
-  title: MyString
+  lesson: 
   content: MyText

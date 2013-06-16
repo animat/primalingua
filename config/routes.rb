@@ -1,5 +1,7 @@
 Pl2::Application.routes.draw do
 
+  resources :lesson_plans
+
   get "teachers/grading"
   get "teachers/planning"
   get "teachers/in_class"

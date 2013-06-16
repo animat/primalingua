@@ -8,8 +8,10 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  unit_id    :integer
+#  completed  :boolean
 #
 
 class Lesson < ActiveRecord::Base
   belongs_to :unit
+  has_one :lesson_plan
 end
