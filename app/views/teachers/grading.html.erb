@@ -1,2 +1,32 @@
-<h1>Teachers#grading</h1>
-<p>Find me in app/views/teachers/grading.html.erb</p>
+<div id="grading_area" class="half_width float_left">
+	<div id="student_search">
+		<div id="lesson_select">
+
+		</div>
+		<select id="student_select" onchange="getLessonPlan();">
+			<option value="1">Colin Roberts</option>
+			<option value="2">Brandon Jackson-Shorts</option>
+			<option value="3">John Ghallagher</option>
+			<option value="4">BC Angevine</option>
+			<option value="5">Margaret Roberts</option>
+			<option value="6">Douglas Roberts</option>
+		<select>
+	</div>
+
+	<a href="#" onClick="changeStudent(1);" id="arrow_right"></a>
+	<a href="#" onClick="changeStudent(-1);" id="arrow_left"></a>
+
+	<div id="student_workbook">
+		<h2>Student workbook here</h2>
+		<% 20.times do %>
+			<p>See me??</p>
+		<% end %>
+	</div>
+</div>
+
+
+<div id="teacher_guide_workbook" class="half_width float_left">
+	<h2>Teachers' guide here</h2>
+</div>
+
+<br class="clear_float" />

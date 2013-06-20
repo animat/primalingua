@@ -5,7 +5,7 @@
 		
 		</div>
 		<div id="lessonplans">
-		
+			<%= @lesson_plan.content.gsub("\\r\\n", "").html_safe %>
 		</div>
 	</div>
 </div>
@@ -23,9 +23,9 @@
 			<p class="flash_error"><%= flash[:error] %></p>
 		<% end %>
 
-		<h1><%= "Unit #{'1'}" %></h1>
+		<h1><%= "Unit #{@unit.number}" %></h1>
 		<h2><%= "What is language" %></h2>
-		<h4><%= "Lesson 1: #{@lesson.title}" %></h4>
+		<h4><%= "Lesson 1: #{@lesson_plan.lesson.title}" %></h4>
 
 		<%= @workbook_content.html_safe %>
 

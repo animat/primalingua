@@ -5,13 +5,14 @@ class TeachersController < ApplicationController
   end
 
   def planning
-  	@lesson = Lesson.first(:include => :unit)
-  	@workbook_content = @lesson.content.gsub("\\r\\n", " ")
+    @lesson_plan = LessonPlan.includes(:lesson => :unit).first
+    @unit = @lesson_plan.lesson.unit
+    @workbook_content = @lesson_plan.lesson.content.gsub("\\r\\n", "")
   end
 
   def in_class
   	@lesson = Lesson.first(:include => :unit)
-  	@workbook_content = @lesson.content.gsub("\\r\\n", " ")
+  	@workbook_content = @lesson.content.gsub("\\r\\n", "")
   end
 
   def index
