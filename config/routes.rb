@@ -1,11 +1,12 @@
 Pl2::Application.routes.draw do
 
+  devise_for :teachers
   resources :lesson_plans
 
-  get "teachers/grading"
-  get "teachers/planning"
-  get "teachers/in_class"
-  get "teachers/index"
+  get "teachers/grading", :as => "teachers_grading"
+  get "teachers/planning", :as => "teachers_planning"
+  get "teachers/in_class", :as => "teachers_in_class"
+  get "teachers/index", :as => "teachers"
   resources :lessons, :resources, :units, :feedbacks
   
   root to: 'about#index'
