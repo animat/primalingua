@@ -1,12 +1,15 @@
 Pl2::Application.routes.draw do
 
-  get "admin/index"
-  devise_for :admins, :students, :teachers
+  devise_for :admins
+  devise_for :students
+  devise_for :teachers
   
+  get "admin/index", :as => "admin"
+
+  get "teachers/index", :as => "teachers"
   get "teachers/grading", :as => "teachers_grading"
   get "teachers/planning", :as => "teachers_planning"
   get "teachers/in_class", :as => "teachers_in_class"
-  get "teachers/index", :as => "teachers"
   
   get "students/index", :as => "students"
   get "students/workbook", :as => "students_workbook"

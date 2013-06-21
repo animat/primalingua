@@ -10,10 +10,4 @@ class StudentsController < ApplicationController
 
   def join_section
   end
-
-  protected
-    def student_params
-      params.require(:student).permit(:email, :password, :password_confirmation, :remember_me)
-    end
-
 end

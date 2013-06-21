@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title><%= yield(:title) or 'Prima Lingua' %></title>
 	<%= stylesheet_link_tag 'layout' %>
-	<%= javascript_include_tag :defaults, :cache => true %>
+	<%= javascript_include_tag "application" %>
 	<link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
 	<%= yield(:head) %>
 	<%= yield(:page_script) %>
@@ -17,13 +17,37 @@
 		<div id="header_frog"></div>
 		<br class="clearFloat" />
 		<div id="nav">
+			<% if admin_signed_in? %>
 			<ul>
 				<li><%= link_to "About", root_path %></li>
 				<li><%= link_to "Units", units_path %></li>
 				<li><%= link_to "Lessons", lessons_path %></li>
 				<li><%= link_to "Lesson Plans", lesson_plans_path %></li>
 				<li><%= link_to "Resources", resources_path %></li>
+				<li><%= link_to("Sign out", destroy_admin_session_path, :method => :delete) %></li>
 			</ul>
+			<% end %>
+			<% if teacher_signed_in? %>
+			<ul>
+				<li><%= link_to "Overview", teachers_path %></li>
+				<li><%= link_to "Planning", teachers_planning_path %></li>
+				<li><%= link_to "In class", teachers_in_class_path %></li>
+				<li><%= link_to "Grading", teachers_grading_path %></li>
+				<li><%= link_to "Sign out", destroy_teacher_session_path, :method => :delete %></li>
+			</ul>
+			<% end %>
+			<% if student_signed_in? %>
+			<ul>
+				<li><%= link_to "Overview", student_path %></li>
+				<li><%= link_to "Workbook", student_workbook_path %></li>
+				<li><%= link_to "Sign out", destroy_student_session_path, :method => :delete %></li>
+			</ul>
+			<% end %>
+			<% if !admin_signed_in? and !teacher_signed_in? and !student_signed_in? %>
+			<ul>
+				<li><%= link_to "About", root_path %></li>
+			</ul>
+			<% end %>
 		</div>
 	</div>
  	<div id="body">

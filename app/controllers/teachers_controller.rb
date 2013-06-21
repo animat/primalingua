@@ -17,9 +17,4 @@ class TeachersController < ApplicationController
 
   def index
   end
-
-  protected
-    def teacher_params
-      params.require(:teacher).permit(:email, :password, :password_confirmation, :remember_me)
-    end
 end
