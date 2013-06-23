@@ -7,6 +7,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.0.1'
 gem "protected_attributes", "~> 1.0.0"
+gem "jquery-rails"
 
 group :assets do
   gem 'sass-rails',   '~> 4.0.0.beta1'

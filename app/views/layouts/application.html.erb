@@ -24,7 +24,7 @@
 				<li><%= link_to "Lessons", lessons_path %></li>
 				<li><%= link_to "Lesson Plans", lesson_plans_path %></li>
 				<li><%= link_to "Resources", resources_path %></li>
-				<li><%= link_to("Sign out", destroy_admin_session_path, :method => :delete) %></li>
+				<li><%= link_to "Sign out", destroy_admin_session_path %></li>
 			</ul>
 			<% end %>
 			<% if teacher_signed_in? %>
@@ -46,6 +46,9 @@
 			<% if !admin_signed_in? and !teacher_signed_in? and !student_signed_in? %>
 			<ul>
 				<li><%= link_to "About", root_path %></li>
+				<li><%= link_to "Admin", new_admin_session_path %></li>
+				<li><%= link_to "Teacher", new_teacher_session_path %></li>
+				<li><%= link_to "Student", new_student_session_path %></li>
 			</ul>
 			<% end %>
 		</div>

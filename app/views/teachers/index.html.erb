@@ -1,2 +1,7 @@
-<h1>Teachers#index</h1>
-<p>Find me in app/views/teachers/index.html.erb</p>
+<h1>Teacher's overview</h1>
+<p>Manage your account, your classes, your other stuff</p>
+
+<h2>Classes</h2>
+<% @sections.each do |s| %>
+	<p><%link_to s.name, section_path(s) %></p>
+<% end %>
