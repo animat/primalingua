@@ -13,4 +13,6 @@
 class Section < ActiveRecord::Base
   belongs_to :teacher
   attr_accessible :name, :code, :teacher_id
+
+  validates_uniqueness_of :code
 end

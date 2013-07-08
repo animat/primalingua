@@ -10,11 +10,12 @@ Pl2::Application.routes.draw do
     end
     resources :sections
   end
-  
-  get "students/index", :as => "students"
-  get "students/workbook", :as => "students_workbook"
-  get "students/join_section", :as => "students_join_section"
 
+  resources :students, :except => [:new, :create, :delete] do
+    collection do 
+      get :workbook
+    end
+  end
 
   resources :lessons, :lesson_plans, :resources, :units, :feedbacks, :sections
   

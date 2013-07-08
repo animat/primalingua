@@ -29,10 +29,10 @@
 			<% end %>
 			<% if teacher_signed_in? %>
 			<ul>
-				<li><%= link_to "Overview", teachers_path %></li>
-				<li><%= link_to "Planning", teachers_planning_path %></li>
-				<li><%= link_to "In class", teachers_in_class_path %></li>
-				<li><%= link_to "Grading", teachers_grading_path %></li>
+				<li><%= link_to "Overview", teacher_path(current_teacher) %></li>
+				<li><%= link_to "Planning", planning_teachers_path %></li>
+				<li><%= link_to "In class", in_class_teachers_path %></li>
+				<li><%= link_to "Grading", grading_teachers_path %></li>
 				<li><%= link_to "Sign out", destroy_teacher_session_path %></li>
 			</ul>
 			<% end %>
