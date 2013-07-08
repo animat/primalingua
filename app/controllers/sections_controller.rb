@@ -4,7 +4,18 @@ class SectionsController < ApplicationController
   # GET /sections
   # GET /sections.json
   def index
-    @sections = Section.all
+    if teacher_signed_in?
+      @teacher = Teacher.find(current_teacher)
+      @sections = Section.where(:teacher_id => @teacher.id)
+    elsif params[:teacher_id]
+      @teacher = Teacher.find(:teacher_id)
+      @sections = Section.where(:teacher_id => @teacher.id)
+    elsif admin_signed_in?
+      @sections = Section.all
+    elsif 
+      flash[:error] = "You need to be a teacher to view that page."
+      redirect_to root_path 
+    end
   end
 
   # GET /sections/1
@@ -14,7 +25,13 @@ class SectionsController < ApplicationController
 
   # GET /sections/new
   def new
-    @section = Section.new
+    if params[:teacher_id]
+      @teacher = Teacher.find(params[:teacher_id])
+      @section = Section.new
+    else
+      flash[:error] = "New sections can only be created by teachers."
+      redirect_to :back
+    end
   end
 
   # GET /sections/1/edit

@@ -7,10 +7,12 @@ Pl2::Application.routes.draw do
   
   get "admin/index", :as => "admin"
 
-  get "teachers/index", :as => "teachers"
-  get "teachers/grading", :as => "teachers_grading"
-  get "teachers/planning", :as => "teachers_planning"
-  get "teachers/in_class", :as => "teachers_in_class"
+  resources :teachers, :except => [:new, :create, :delete] do
+    collection do
+      get :grading, :planning, :in_class
+    end
+    resources :sections
+  end
   
   get "students/index", :as => "students"
   get "students/workbook", :as => "students_workbook"

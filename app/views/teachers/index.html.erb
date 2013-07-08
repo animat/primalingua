@@ -1,8 +1,6 @@
-<h1>Teacher's overview</h1>
-<p>Manage your account, your classes, your other stuff</p>
+<h1>All teachers using PrimaLingua.net</h1>
 
-<h2>Classes</h2>
-<% @sections.each do |s| %>
-	<p><%= link_to s.name, section_path(s) %></p>
+<% @teachers.each do |t| %>
+	<p><%= link_to t.display_name, teacher_path(t) %></p>
 <% end %>
-<%= link_to link_to "Create a new section", new_section_path %>
+<%= link_to link_to "Create a new teacher", new_teacher_registration_path %>

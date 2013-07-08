@@ -1,12 +1,22 @@
 class Teachers::RegistrationsController < Devise::RegistrationsController
   def new
-  	super
+    if admin_signed_in?
+      super
+    else
+      flash[:error] = "Only administrators can create new teacher accounts."
+      redirect_to root_path
+    end
   end
 
   def create
-  	puts "Can you see me?"
-  	flash[:notice] = "Wahoo!"
-  	redirect_to new_teacher_session_path
+    @t = Teacher.new(params[:teacher])
+    if @t.save and admin_signed_in?
+      flash[:notice] = "New teacher account has been created."
+      redirect_to teachers_path
+    else
+      flash[:error] = "There was an error creating the teacher account."
+      redirect_to teachers_path
+    end
   end
 
   def edit
