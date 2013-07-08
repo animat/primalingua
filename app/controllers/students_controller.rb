@@ -3,13 +3,16 @@ class StudentsController < ApplicationController
   end
 
   def show
-  	@student = Student.find(params[:id])
+  	if student_signed_in? or teacher_signed_in? or admin_admined_in?
+      @student = Student.find(params[:id])
+  	else
+  	  flash[:error] = "Please sign in to view that page."
+  	  redirect_to root_path
+  	end
   end
 
   def workbook
-  	if current_student
-  	  @student = current_student
-  	elsif params[:id]
+  	if params[:id] and (current_student.id == params[:id].to_i or admin_signed_in?)
   	  @student = Student.find(params[:id])
   	  @lesson = Lesson.first(:include => :unit)
   	  @workbook_content = @lesson.content.gsub("\\r\\n", "")

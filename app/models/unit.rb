@@ -11,4 +11,6 @@
 
 class Unit < ActiveRecord::Base
   has_many :lessons
+
+  attr_accessible :number, :title
 end
