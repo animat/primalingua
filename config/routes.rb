@@ -4,9 +4,6 @@ Pl2::Application.routes.draw do
   devise_for :teachers, :controllers => {:registrations => "teachers/registrations"}
   devise_for :admins, :controllers => {:registrations => "admins/registrations"}
 
-  
-  get "admin/index", :as => "admin"
-
   resources :teachers, :except => [:new, :create, :delete] do
     collection do
       get :grading, :planning, :in_class
