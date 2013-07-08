@@ -27,13 +27,20 @@
 			<div id="buttons">
 				<% if student_signed_in? %>
 					<%= link_to image_tag("workspace/button_home.png"), destroy_student_session_path %>
+					<%= link_to image_tag("workspace/button_notification.png"), root_url %>
+					<%= link_to image_tag("workspace/button_settings.png"), edit_student_registration_path %>
+
 				<% elsif teacher_signed_in? %>
 					<%= link_to image_tag("workspace/button_home.png"), destroy_teacher_session_path %>
+					<%= link_to image_tag("workspace/button_notification.png"), root_url %>
+					<%= link_to image_tag("workspace/button_settings.png"), root_url %>
+
 				<% elsif admin_signed_in? %>
 					<%= link_to image_tag("workspace/button_home.png"), destroy_admin_session_path %>
+					<%= link_to image_tag("workspace/button_notification.png"), root_url %>
+					<%= link_to image_tag("workspace/button_settings.png"), root_url %>
+
 				<% end %>
-				<%= link_to image_tag("workspace/button_notification.png"), root_url %>
-				<%= link_to image_tag("workspace/button_settings.png"), root_url %>
 			</div>
 		</div>
 	</div>

@@ -13,7 +13,7 @@ Pl2::Application.routes.draw do
 
   resources :students, :except => [:new, :create, :delete] do
     member do
-      get :workbook
+      get :workbook, :settings
     end
   end
 
