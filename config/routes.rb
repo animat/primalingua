@@ -1,7 +1,5 @@
 Pl2::Application.routes.draw do
 
-  resources :sections
-
   devise_for :students, :controllers => {:registrations => "students/registrations"}
   devise_for :teachers
   devise_for :admins
@@ -19,7 +17,7 @@ Pl2::Application.routes.draw do
   get "students/join_section", :as => "students_join_section"
 
 
-  resources :lessons, :lesson_plans, :resources, :units, :feedbacks
+  resources :lessons, :lesson_plans, :resources, :units, :feedbacks, :sections
   
   root to: 'about#index'
 

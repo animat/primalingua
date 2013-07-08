@@ -16,5 +16,6 @@ class TeachersController < ApplicationController
   end
 
   def index
+    @sections = Section.where(:teacher_id => current_teacher.id)
   end
 end

@@ -15,6 +15,9 @@
 #  last_sign_in_ip        :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  first_name             :string(255)
+#  last_name              :string(255)
+#  display_name           :string(255)
 #
 
 class Teacher < ActiveRecord::Base
@@ -23,5 +26,11 @@ class Teacher < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :first_name, :last_name, :email, :password
+  attr_accessible :first_name, :last_name, :display_name, :email, :password
+
+  has_many :sections
+
+  def display_name
+  	"#{first_name} #{last_name}"
+  end
 end

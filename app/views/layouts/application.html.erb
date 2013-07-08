@@ -33,14 +33,14 @@
 				<li><%= link_to "Planning", teachers_planning_path %></li>
 				<li><%= link_to "In class", teachers_in_class_path %></li>
 				<li><%= link_to "Grading", teachers_grading_path %></li>
-				<li><%= link_to "Sign out", destroy_teacher_session_path, :method => :delete %></li>
+				<li><%= link_to "Sign out", destroy_teacher_session_path %></li>
 			</ul>
 			<% end %>
 			<% if student_signed_in? %>
 			<ul>
 				<li><%= link_to "Overview", student_path %></li>
 				<li><%= link_to "Workbook", student_workbook_path %></li>
-				<li><%= link_to "Sign out", destroy_student_session_path, :method => :delete %></li>
+				<li><%= link_to "Sign out", destroy_student_session_path %></li>
 			</ul>
 			<% end %>
 			<% if !admin_signed_in? and !teacher_signed_in? and !student_signed_in? %>

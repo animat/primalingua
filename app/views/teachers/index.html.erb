@@ -3,5 +3,6 @@
 
 <h2>Classes</h2>
 <% @sections.each do |s| %>
-	<p><%link_to s.name, section_path(s) %></p>
+	<p><%= link_to s.name, section_path(s) %></p>
 <% end %>
+<%= link_to link_to "Create a new section", new_section_path %>

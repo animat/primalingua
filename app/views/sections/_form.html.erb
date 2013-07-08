@@ -16,14 +16,11 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :teacher %><br />
-    <%= f.text_field :teacher %>
-  </div>
-  <div class="field">
     <%= f.label :code %><br />
     <%= f.text_field :code %>
   </div>
   <div class="actions">
+    <%= f.hidden_field :teacher_id, :value => current_teacher.id %>
     <%= f.submit %>
   </div>
 <% end %>

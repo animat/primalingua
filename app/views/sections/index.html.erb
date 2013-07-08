@@ -16,7 +16,7 @@
     <% @sections.each do |section| %>
     <tr>
       <td><%= section.name %></td>
-      <td><%= section.teacher %></td>
+      <td><%= section.teacher.display_name %></td>
       <td><%= section.code %></td>
       <td><%= link_to 'Show', section %></td>
       <td><%= link_to 'Edit', edit_section_path(section) %></td>
