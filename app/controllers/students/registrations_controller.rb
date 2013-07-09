@@ -7,8 +7,8 @@ class Students::RegistrationsController < Devise::RegistrationsController
     @section = Section.find_by_code(params[:code])
     if @section
       @student = Student.new(params[:student])
+      @student.section = @section
       if @student.save
-        SectionStudent.create!(:student_id => @student.id, :section_id => @section.id)
         flash[:notice] = "New student account created!"
         redirect_to new_student_session_path
       else
