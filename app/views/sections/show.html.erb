@@ -19,7 +19,7 @@
   <strong>Students:</strong>
   <ul>
 	  <% @section.students.each do |s| %>
-	  	<li><%= s.display_name %></li>
+	  	<li><%= s.display_name %> (<%= link_to "View workbook", workbook_student_path(s) %>)</li>
 	  <% end %>
   </ul>
 </p>

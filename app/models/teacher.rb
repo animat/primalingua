@@ -29,6 +29,7 @@ class Teacher < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :display_name, :email, :password
 
   has_many :sections
+  has_many :students, through: :sections
 
   def display_name
   	"#{first_name} #{last_name}"

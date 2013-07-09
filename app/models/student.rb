@@ -28,6 +28,7 @@ class Student < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :password
 
   belongs_to :section
+  has_one :teacher, through: :section
 
   def display_name
   	"#{first_name} #{last_name}"

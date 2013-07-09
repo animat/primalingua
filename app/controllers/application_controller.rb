@@ -20,4 +20,14 @@ class ApplicationController < ActionController::Base
   def after_sign_up_path_for(user)
     after_sign_in_path_for(user)
   end
+
+  def is_student_or_teacher_for(num, user)
+    if student_signed_in?
+      return num.to_i == current_student.id
+    elsif teacher_signed_in?
+      return user.teacher == current_teacher
+    elsif admin_signed_in?
+      return true
+    end
+  end
 end

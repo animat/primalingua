@@ -12,8 +12,8 @@ class StudentsController < ApplicationController
   end
 
   def workbook
-  	if params[:id] and (current_student.id == params[:id].to_i or admin_signed_in?)
-  	  @student = Student.find(params[:id])
+    @student = Student.find(params[:id])
+  	if is_student_or_teacher_for(params[:id], @student)
   	  @lesson = Lesson.first(:include => :unit)
   	  @workbook_content = @lesson.content.gsub("\\r\\n", "")
   	  render :layout => "workspace"
