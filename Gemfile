@@ -25,6 +25,7 @@ end
 group :development do
   gem "annotate"
   gem "devise"
+  gem "seed_dump"
 end
 
 group :test do
