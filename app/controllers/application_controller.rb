@@ -12,4 +12,12 @@ class ApplicationController < ActionController::Base
   	  teachers_url
   	end
   end
+
+  def after_update_path_for(user)
+    after_sign_in_path_for(user)
+  end
+
+  def after_sign_up_path_for(user)
+    after_sign_in_path_for(user)
+  end
 end

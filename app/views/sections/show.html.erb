@@ -15,6 +15,15 @@
   <%= @section.code %>
 </p>
 
+<p>
+  <strong>Students:</strong>
+  <ul>
+	  <% @section.students.each do |s| %>
+	  	<li><%= s.display_name %></li>
+	  <% end %>
+  </ul>
+</p>
+
 
 <%= link_to 'Edit', edit_section_path(@section) %> |
 <%= link_to 'Back', sections_path %>

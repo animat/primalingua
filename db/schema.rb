@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130708143049) do
+ActiveRecord::Schema.define(version: 20130709124954) do
 
   create_table "admins", force: true do |t|
     t.string   "email",                              default: "", null: false
@@ -63,16 +63,6 @@ ActiveRecord::Schema.define(version: 20130708143049) do
     t.datetime "updated_at"
   end
 
-  create_table "section_students", force: true do |t|
-    t.integer  "student_id_id"
-    t.integer  "section_id_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "section_students", ["section_id_id"], name: "index_section_students_on_section_id_id"
-  add_index "section_students", ["student_id_id"], name: "index_section_students_on_student_id_id"
-
   create_table "sections", force: true do |t|
     t.string   "name"
     t.integer  "teacher_id"
@@ -98,10 +88,12 @@ ActiveRecord::Schema.define(version: 20130708143049) do
     t.datetime "updated_at"
     t.string   "first_name"
     t.string   "last_name"
+    t.integer  "section_id"
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true
   add_index "students", ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
+  add_index "students", ["section_id"], name: "index_students_on_section_id"
 
   create_table "teachers", force: true do |t|
     t.string   "email",                              default: "", null: false

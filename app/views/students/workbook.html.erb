@@ -1,17 +1,1 @@
-<div id="workbook" class="full_width">
-	<div id="content">
-		<% unless flash[:notice].nil? %>
-			<p class="flash_notice"><%= flash[:notice]%></p>
-		<% end %>
-		<% unless flash[:error].nil? %>
-			<p class="flash_error"><%= flash[:error] %></p>
-		<% end %>
-
-		<h1><%= "Unit #{'1'}" %></h1>
-		<h2><%= "What is language" %></h2>
-		<h4><%= "Lesson 1: #{@lesson.title}" %></h4>
-
-		<%= @workbook_content.html_safe %>
-
-	</div>
-</div>
+<%= @workbook_content.html_safe %>
