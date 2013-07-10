@@ -15,6 +15,7 @@ class Lesson < ActiveRecord::Base
   belongs_to :unit
   has_one :lesson_plan
   has_many :questions
+  has_many :sections
 
   attr_accessible :title, :content, :unit_id
 end

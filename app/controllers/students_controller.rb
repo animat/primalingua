@@ -18,7 +18,7 @@ class StudentsController < ApplicationController
       if params[:lesson_id]
         @lesson = Lesson.find(params[:lesson_id], :include => :unit)
       else
-        #@lesson = @student.section.latest_lesson
+        @lesson = @student.section.lesson
       end
   	  @workbook_content = @lesson.content.gsub("\\r\\n", "")
   	  render :layout => "workspace"
