@@ -32,13 +32,15 @@ body {
 	margin: 0 auto;
 }
 .nav_option {
+	position: relative;
+	z-index: 2;
 	width: 100px;
 	padding-top: 20px;
 	height: 40px;
 	vertical-align: center;
 	display: inline-block;
-	font-family: Arial Rounded MT Bold;
-	color: #583083;
+	font-family: Helvetica;
+	color: #524392;
 	text-align: center;
 	text-decoration: none;
 }
@@ -208,7 +210,7 @@ body {
 	margin: 0 auto;	
 	margin-top: 50px;
 	padding: 30px;
-	max-width: 60%;
+	max-width: 900px;
 	background: #fff;
 	box-shadow: 0px 0px 20px 4px rgba(0, 0, 0, 0.2);
 	-moz-border-radius: 3px;
@@ -306,9 +308,10 @@ body {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	height: 28px;
-	width: 200px;
-	padding: 10px;
-	background-image: -webkit-linear-gradient(top, #eaeaea, #ffffff); 
+	min-width: 100px;
+	max-width: 500px;
+	padding-left: 10px;
+	background-image: -webkit-linear-gradient(top, #eaeaea, #ffffff);  
 }
 input:focus, textarea:focus {
 	outline: rgba(0, 0, 0, 0.2) outset 3px;
@@ -349,6 +352,46 @@ td {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
+.feedback_editor {
+	height: 45px;
+	width: 80%;
+	border: 1px solid #999;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background: #eaeaea;
+}
+.feedback img {
+	vertical-align: middle;
+}
+.feedback_editor .feedback_editor_text {
+	float: right;
+	font-size: 10px;
+	color: #555;
+	padding: 15px;
+	margin: 0px;
+	border: none;
+	background: none;
+	width: 300px;
+	text-align: right;	
+}
+.feedback_editor .feedback_correct {
+	margin-left: 10px;
+	background: url('images/correct_button.png') no-repeat center;
+}
+.feedback_editor div {
+	width: 37px;
+	height: 40px;
+	display: inline-block;
+}
+.feedback_editor div:hover {
+	cursor: pointer;
+}
+.feedback_editor .feedback_incorrect {
+	background: url('images/incorrect_button.png') no-repeat center;
+}
+.feedback_editor .feedback_incomplete {
+	background: url('images/incomplete_button.png') no-repeat center;
+}
 #lesson_select {
 	position: absolute;
 	top: 20px;
@@ -356,4 +399,19 @@ td {
 	width: 130px;
 	height: 30px;
 	border: 1px solid red;
+}
+.ptc {
+	border: 1px solid #222;
+}
+.ptc_head {
+	background: #222;
+	padding: 6px;
+	color: #eee;
+}
+#content .ptc ol > li {
+	margin-bottom: 15px;
+	margin-left: 20px;
+	margin-right: 25px;
+	clear: both;
+	position: relative;
 }
