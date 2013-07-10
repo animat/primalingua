@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130710134035) do
+ActiveRecord::Schema.define(version: 20130710173916) do
 
   create_table "admins", force: true do |t|
     t.string   "email",                              default: "", null: false
@@ -40,17 +40,13 @@ ActiveRecord::Schema.define(version: 20130710134035) do
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "feedback"
+    t.string   "feedback_status"
+    t.datetime "feedback_updated_at"
   end
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id"
   add_index "answers", ["student_id"], name: "index_answers_on_student_id"
-
-  create_table "feedbacks", force: true do |t|
-    t.string   "type"
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "lesson_plans", force: true do |t|
     t.integer  "lesson_id"

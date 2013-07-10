@@ -50,7 +50,13 @@ function populate() {
 	});
 }
 function loadFeedbackImages(d) {
-
+	$.each(d, function(val) {
+		console.log(val);
+		if (val.substring(val.length-7, val.length) == "_status") {
+			var tmp = d[val];
+			$("#"+val.substring(0, 3)+"_image").attr("src", "/assets/workspace/"+tmp+"_button.png");
+		}
+	})
 }
 
 </script>

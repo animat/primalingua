@@ -34,6 +34,6 @@ class Answer < ActiveRecord::Base
   }
 
   def as_json(options)
-    "\"q_#{question_id}\": \"#{content}\""
+    "\"q_#{question_id}\": \"#{content}\", \"f_#{question_id}\": \"#{feedback}\", \"f_#{question_id}_status\": \"#{feedback_status}\""
   end
 end
