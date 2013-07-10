@@ -11,13 +11,12 @@ Pl2::Application.routes.draw do
     resources :sections
   end
 
-  resources :students, :except => [:new, :create, :delete] do
-    member do
-      get :workbook, :settings
-    end
-  end
+  resources :students, :except => [:new, :create, :delete]
+  get "students/:student_id/workbook/:lesson_id", to: "students#workbook", :as => "workbook_student"
 
-  resources :lessons, :lesson_plans, :resources, :units, :feedbacks, :sections
+  get "students/:student_id/lesson/:lesson_id/answers", to: "answers#show", :as => "student_answers_in_lesson"
+
+  resources :lessons, :lesson_plans, :resources, :units, :feedbacks, :sections, :answers
   
   root to: 'about#index'
 

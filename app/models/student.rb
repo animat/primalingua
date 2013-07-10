@@ -17,6 +17,7 @@
 #  updated_at             :datetime
 #  first_name             :string(255)
 #  last_name              :string(255)
+#  section_id             :integer
 #
 
 class Student < ActiveRecord::Base
@@ -29,6 +30,7 @@ class Student < ActiveRecord::Base
 
   belongs_to :section
   has_one :teacher, through: :section
+  has_many :answers
 
   def display_name
   	"#{first_name} #{last_name}"

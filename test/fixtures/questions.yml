@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: questions
+#
+#  id         :integer          not null, primary key
+#  lesson_id  :integer
+#  tg_answer  :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  lesson_id: 
+  tg_answer: MyText
+
+two:
+  lesson_id: 
+  tg_answer: MyText

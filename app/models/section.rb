@@ -2,12 +2,13 @@
 #
 # Table name: sections
 #
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  teacher_id :integer
-#  code       :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id            :integer          not null, primary key
+#  name          :string(255)
+#  teacher_id    :integer
+#  code          :string(255)
+#  created_at    :datetime
+#  updated_at    :datetime
+#  latest_lesson :reference
 #
 
 class Section < ActiveRecord::Base
@@ -17,4 +18,5 @@ class Section < ActiveRecord::Base
   validates_uniqueness_of :code
 
   has_many :students
+
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130709124954) do
+ActiveRecord::Schema.define(version: 20130710125759) do
 
   create_table "admins", force: true do |t|
     t.string   "email",                              default: "", null: false
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(version: 20130709124954) do
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+
+  create_table "answers", force: true do |t|
+    t.integer  "student_id"
+    t.text     "content"
+    t.integer  "question_id"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id"
+  add_index "answers", ["student_id"], name: "index_answers_on_student_id"
 
   create_table "feedbacks", force: true do |t|
     t.string   "type"
@@ -56,6 +68,15 @@ ActiveRecord::Schema.define(version: 20130709124954) do
     t.boolean  "completed"
   end
 
+  create_table "questions", force: true do |t|
+    t.integer  "lesson_id"
+    t.text     "tg_answer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "questions", ["lesson_id"], name: "index_questions_on_lesson_id"
+
   create_table "resources", force: true do |t|
     t.string   "type"
     t.text     "content"
@@ -70,8 +91,6 @@ ActiveRecord::Schema.define(version: 20130709124954) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "sections", ["teacher_id"], name: "index_sections_on_teacher_id"
 
   create_table "students", force: true do |t|
     t.string   "email",                              default: "", null: false

@@ -12,9 +12,14 @@ class StudentsController < ApplicationController
   end
 
   def workbook
-    @student = Student.find(params[:id])
-  	if is_student_or_teacher_for(params[:id], @student)
-  	  @lesson = Lesson.first(:include => :unit)
+    @student = Student.find(params[:student_id])
+  	if is_student_or_teacher_for(params[:student_id], @student)
+
+      if params[:lesson_id]
+        @lesson = Lesson.find(params[:lesson_id], :include => :unit)
+      else
+        #@lesson = @student.section.latest_lesson
+      end
   	  @workbook_content = @lesson.content.gsub("\\r\\n", "")
   	  render :layout => "workspace"
   	else
