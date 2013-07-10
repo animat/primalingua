@@ -17,7 +17,8 @@ $(function() {
 	 			alert("Problem saving data...");
 	 		}
 		});
-	})
+	});
+	$(".feedback_editor").hide();
 	$(".drawing_save_btn").click(function() {
 		/*var qid = 2;//$(this).data("question"); taken from the q_2 name
 		var sid = 2;//taken from the URL
@@ -43,9 +44,13 @@ function populate() {
 	$.getJSON("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>").success(function(data) {
 		var tmp = $.parseJSON(data);
 		$("#content").populate(tmp);
+		loadFeedbackImages(tmp);
 	}).error(function(data) {
 		console.log("ERROR fetching JSON!");
 	});
+}
+function loadFeedbackImages(d) {
+
 }
 
 </script>
