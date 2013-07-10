@@ -12,7 +12,7 @@ Pl2::Application.routes.draw do
   end
 
   resources :students, :except => [:new, :create, :delete]
-  get "students/:student_id/workbook/:lesson_id", to: "students#workbook", :as => "workbook_student"
+  get "students/:student_id/workbook(/:lesson_id)", to: "students#workbook", :as => "workbook_student"
 
   get "students/:student_id/lesson/:lesson_id/answers", to: "answers#show", :as => "student_answers_in_lesson"
 

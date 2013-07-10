@@ -10,7 +10,8 @@ class AnswersController < ApplicationController
   end
 
   def create
-  	@answer = Answer.new(answer_params)
+    @answer = Answer.where(question_id: params[:answer][:question_id], student_id: params[:answer][:student_id]).first_or_create!
+    @answer.content = params[:answer][:content]
   	if @answer.save
   	  respond_to do |format|
         format.json { render :json => @answer, :status => :ok }

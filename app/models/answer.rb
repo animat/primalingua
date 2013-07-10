@@ -17,6 +17,9 @@ class Answer < ActiveRecord::Base
 
   attr_accessible :student_id, :question_id, :content
 
+  validates_presence_of :student_id, :question_id
+  validates_uniqueness_of :question_id, :scope => :student_id
+
   def self.by_student(sid)
   	where(:student_id => sid)
   end

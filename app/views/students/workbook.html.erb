@@ -3,12 +3,28 @@
 
 $(function() {
 	$(".question").blur(function() {
-		var qid = $(this).data("question");
-
-		alert(qid);
-		var sid = 2;
+		var qid = $(this).attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
 		var c = $(this).val();
-	 	/*$.ajax({
+	 	$.ajax({
+	 		type: "POST",
+	 		url: "<%= answers_url %>",
+	 		data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>"},
+	 		success: function() {
+	 			alert("Saved!");
+	 		},
+	 		error: function() {
+	 			alert("Problem saving data...");
+	 		}
+		});
+	})
+	$(".drawing_save_btn").click(function() {
+		/*var qid = 2;//$(this).data("question"); taken from the q_2 name
+		var sid = 2;//taken from the URL
+		var c = eval("d_"+qid).serialize();
+		console.log("Here is the serialized thing!");
+		console.log(c);
+		$.ajax({
 	 		type: "POST",
 	 		url: "<%= answers_url %>",
 	 		data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>",},
@@ -24,7 +40,7 @@ $(function() {
 })
 
 function populate() {
-	$.getJSON("<%= student_answers_in_lesson_url(2, 1) %>").success(function(data) {
+	$.getJSON("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>").success(function(data) {
 		var tmp = $.parseJSON(data);
 		$("#content").populate(tmp);
 	}).error(function(data) {
