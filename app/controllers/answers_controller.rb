@@ -4,7 +4,9 @@ class AnswersController < ApplicationController
   	str = "{"
   	@answers.each do |a|
   		str << a.as_json(0)
+      str << ", "
   	end
+    str = str[0..-3]
   	str << "}"
   	render :json => str.to_json
   end

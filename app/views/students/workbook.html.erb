@@ -92,7 +92,9 @@ function loadFeedbackImages(d) {
 	$.each(d, function(val) {
 		if (val.substring(val.length-7, val.length) == "_status") {
 			var tmp = d[val];
-			$("#"+val.substring(0, 3)+"_image").attr("src", "/assets/workspace/"+tmp+"_button.png");
+			if (tmp != "") {
+				$("#"+val.substring(0, 3)+"_image").attr("src", "/assets/workspace/"+tmp+"_button.png");
+			}
 		}
 	});
 }
