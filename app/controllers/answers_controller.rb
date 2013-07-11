@@ -8,16 +8,28 @@ class AnswersController < ApplicationController
     @answer = Answer.where(question_id: params[:answer][:question_id], student_id: params[:answer][:student_id]).first_or_create!
     @answer.content = params[:answer][:content]
   	if @answer.save
-  	  respond_to do |format|
-        format.json { render :json => @answer, :status => :ok }
-      end
+  	  render :json => @answer, :status => :ok
   	else
   	  render :json => @answer.errors, :status => :unprocessable_entity
   	end
   end
 
+  def update_feedback
+    @answer = Answer.where(question_id: answer_params[:question_id], student_id: answer_params[:student_id]).first
+    @student = Student.find(answer_params[:student_id])
+    if is_student_or_teacher_for(0, @student)
+      if @answer.update(answer_params)
+        render :json => @answer, :status => :ok
+      else
+        render :json => @answer.errors, :status => :unprocessable_entity
+      end
+    else
+      render :json => {:permission => "denied"}, :status => :unprocessable_entity
+    end
+  end
+
   private
   def answer_params
-  	params.require(:answer).permit(:student_id, :question_id, :content)
+  	params.require(:answer).permit(:student_id, :question_id, :content, :id, :feedback, :feedback_status)
   end
 end

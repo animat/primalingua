@@ -2,7 +2,6 @@
 <script type="text/javascript">
 
 $(function() {
-	$(".feedback_editor").hide();
 	$(document).on("blur", ".question", function() {
 		var qid = $(this).attr("name").split("_")[1];
 		var sid = <%= @student.id %>;
@@ -19,6 +18,36 @@ $(function() {
 	 		}
 		});
 	});
+	<% if teacher_signed_in? or admin_signed_in? %>
+	$(document).on("blur", ".feedback_txt", function() {
+		var qid = $(this).attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var f = $(this).val();
+		var d = {answer: {student_id: sid, question_id: qid, feedback: f}, authenticity_token: "<%= form_authenticity_token %>"};
+	 	saveFeedback(d);
+	});
+	$(document).on("click", ".feedback_correct_btn", function() {
+		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var fs = "correct";
+		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
+		saveFeedback(d, $(this).parent(), ".feedback_correct_btn");
+	});
+	$(document).on("click", ".feedback_incomplete_btn", function() {
+		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var fs = "incomplete";
+		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
+		saveFeedback(d, $(this).parent(), ".feedback_incomplete_btn");
+	});
+	$(document).on("click", ".feedback_incorrect_btn", function() {
+		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var fs = "incorrect";
+		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
+		saveFeedback(d, $(this).parent(), ".feedback_incorrect_btn");
+	});
+	<% end %>
 	$(".drawing").each(function() {
         var tmpID = $(this).attr("id");
         var r = new RoCanvas;
@@ -58,27 +87,16 @@ $(function() {
 		$("#d_"+num).siblings(".drawing_tools").show();
 		return false;
 	})
+
 	populate();
 })
 
 function populate() {
 	$.getJSON("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>").success(function(answers) {
 		for (var i = 0; i < answers.length; i++) {
-			var answer = answers[i].answer;
-			switch (answer.question.input_type) {
-				case "text":
-					$("[name=q_"+answer.question.id+"]").val(answer.content);
-					break;
-				case "drawing_base64":
-					replaceDrawing(answer);
-					break;
-				default:
-					console.log("Input type not recognized for Answer#"+answer.id);
-					break;
-			}
-			displayFeedback(answer);
+			displayAnswer(answers[i].answer);
+			displayFeedback(answers[i].answer);
 		}
-		//loadFeedbackImages(tmp);
 	}).error(function(data) {
 		console.log("Error fetching answer JSON.");
 	});
@@ -91,18 +109,79 @@ function replaceDrawing(answer) {
 	var display_div = '<div class="completed_drawing">'+img_tag+'<br />'+redo_btn+'</div>';
 	$("#d_"+answer.question.id).parent().append(display_div);
 }
-function displayFeedback(answer) {
-	if (answer.feedback != null) {
-		$("[name=f_"+answer.question.id+"]").val(answer.feedback);
+function displayAnswer(answer) {
+	switch (answer.question.input_type) {
+		case "text":
+			$("[name=q_"+answer.question.id+"]").val(answer.content);
+			break;
+		case "drawing_base64":
+			replaceDrawing(answer);
+			break;
+		default:
+			console.log("Input type not recognized for Answer#"+answer.id);
+			break;
 	}
+}
+function displayFeedback(answer) {
+	var $feedbackDiv = $('<div>', {class: "feedback", id: "f_"+answer.question.id});
+	$("[name=q_"+answer.question.id+"]").after($feedbackDiv);
+	<% if student_signed_in? %>
+	displayStudentFeedback(answer);
+	<% elsif teacher_signed_in? or admin_signed_in? %>
+	displayTeacherFeedback(answer);
+	<% end %>
+}
+function displayStudentFeedback(answer) {
 	if (answer.feedback_status != null) {
 		var feedbackTypes = ["incomplete", "correct", "incorrect"];
 		if ($.inArray(answer.feedback_status, feedbackTypes) > -1) {
-			$("#f_"+answer.question.id+"_image").attr("src", "/assets/workspace/"+answer.feedback_status+"_button.png");
+			var $feedbackImg = $('<img>', {src: "/assets/workspace/"+answer.feedback_status+"_icon.png"})
+			$("#f_"+answer.question.id).append($feedbackImg);
 		} else {
 			console.log("Feedback status not recognized for Answer#"+answer.id);
 		}
 	}
+	if (answer.feedback != null) {
+		var $feedbackTxt = $('<textarea>', {class: "feedback_txt", name: "f_"+answer.question.id, disabled: "disabled"});
+		$feedbackTxt.val(answer.feedback);
+		$("#f_"+answer.question.id).append($feedbackTxt);
+	}
+}
+function displayTeacherFeedback(answer) {
+	<% if teacher_signed_in? or admin_signed_in? %>
+	var $feedbackButtonsDiv = $('<div>', {class: "feedback_buttons"});
+	var $correctBtn = $('<img>', {src: "/assets/workspace/correct_button.png", class: "feedback_correct_btn"});
+	var $incompleteBtn = $('<img>', {src: "/assets/workspace/incomplete_button.png", class: "feedback_incomplete_btn"});
+	var $incorrectBtn = $('<img>', {src: "/assets/workspace/incorrect_button.png", class: "feedback_incorrect_btn"});
+
+	var $feedbackEditorTxt = $('<textarea>', {class: "feedback_txt", name: "f_"+answer.question.id});
+	$feedbackEditorTxt.val(answer.feedback);
+
+	var $feedbackEditorDiv = $('<div>', {class: "feedback_editor"});
+
+	$feedbackButtonsDiv.append($correctBtn, $incompleteBtn, $incorrectBtn);
+	if (answer.feedback_status != null) {
+		$feedbackButtonsDiv.children(".feedback_"+answer.feedback_status+"_btn").addClass("selected_feedback");
+	}
+	$feedbackEditorDiv.append($feedbackButtonsDiv, $feedbackEditorTxt);
+	$("[name=q_"+answer.question.id+"]").siblings(".feedback").append($feedbackEditorDiv);
+	<% end %>
+}
+function saveFeedback(d, btns, selected) {
+	<% if teacher_signed_in? or admin_signed_in? %>
+	$.ajax({
+ 		type: "PATCH",
+ 		url: "<%= update_feedback_url %>",
+ 		data: d,
+ 		success: function() {
+ 			btns.children("img").removeClass("selected_feedback");
+			btns.children(selected).addClass("selected_feedback");
+ 		},
+ 		error: function() {
+ 			console.log("Problem saving data...");
+ 		}
+	});
+	<% end %>
 }
 
 </script>

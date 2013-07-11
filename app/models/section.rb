@@ -19,4 +19,5 @@ class Section < ActiveRecord::Base
   attr_accessible :name, :code, :teacher_id
 
   validates_uniqueness_of :code
+
 end

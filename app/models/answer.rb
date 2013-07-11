@@ -6,7 +6,6 @@
 #  student_id          :integer
 #  content             :text
 #  question_id         :integer
-#  type                :string(255)
 #  created_at          :datetime
 #  updated_at          :datetime
 #  feedback            :text
@@ -18,7 +17,7 @@ class Answer < ActiveRecord::Base
   belongs_to :student
   belongs_to :question
 
-  attr_accessible :student_id, :question_id, :content
+  attr_accessible :student_id, :question_id, :content, :feedback, :feedback_status
 
   validates_presence_of :student_id, :question_id
   validates_uniqueness_of :question_id, :scope => :student_id

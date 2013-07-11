@@ -6,7 +6,6 @@
 #  student_id          :integer
 #  content             :text
 #  question_id         :integer
-#  type                :string(255)
 #  created_at          :datetime
 #  updated_at          :datetime
 #  feedback            :text

@@ -7,6 +7,7 @@
 #  tg_answer  :text
 #  created_at :datetime
 #  updated_at :datetime
+#  input_type :string(255)
 #
 
 class Question < ActiveRecord::Base
