@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130710173916) do
+ActiveRecord::Schema.define(version: 20130711130910) do
 
   create_table "admins", force: true do |t|
     t.string   "email",                              default: "", null: false
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20130710173916) do
     t.integer  "student_id"
     t.text     "content"
     t.integer  "question_id"
-    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "feedback"
@@ -69,6 +68,7 @@ ActiveRecord::Schema.define(version: 20130710173916) do
     t.text     "tg_answer"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "input_type"
   end
 
   add_index "questions", ["lesson_id"], name: "index_questions_on_lesson_id"

@@ -2,13 +2,16 @@
 #
 # Table name: answers
 #
-#  id          :integer          not null, primary key
-#  student_id  :integer
-#  content     :text
-#  question_id :integer
-#  type        :string(255)
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id                  :integer          not null, primary key
+#  student_id          :integer
+#  content             :text
+#  question_id         :integer
+#  type                :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  feedback            :text
+#  feedback_status     :string(255)
+#  feedback_updated_at :datetime
 #
 
 class Answer < ActiveRecord::Base
@@ -34,6 +37,6 @@ class Answer < ActiveRecord::Base
   }
 
   def as_json(options)
-    "\"q_#{question_id}\": \"#{content}\", \"f_#{question_id}\": \"#{feedback}\", \"f_#{question_id}_status\": \"#{feedback_status}\""
+    "\"q_#{question_id}\": \"#{content}\", \"q_#{question_id}_type\": \"#{question.input_type}\", \"f_#{question_id}\": \"#{feedback}\", \"f_#{question_id}_status\": \"#{feedback_status}\""
   end
 end
