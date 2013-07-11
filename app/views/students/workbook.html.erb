@@ -62,41 +62,47 @@ $(function() {
 })
 
 function populate() {
-	$.getJSON("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>").success(function(data) {
-		var tmp = $.parseJSON(data);
-		$("#content").populate(tmp);
-		loadDrawings(tmp);
-		loadFeedbackImages(tmp);
+	$.getJSON("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>").success(function(answers) {
+		for (var i = 0; i < answers.length; i++) {
+			var answer = answers[i].answer;
+			switch (answer.question.input_type) {
+				case "text":
+					$("[name=q_"+answer.question.id+"]").val(answer.content);
+					break;
+				case "drawing_base64":
+					replaceDrawing(answer);
+					break;
+				default:
+					console.log("Input type not recognized for Answer#"+answer.id);
+					break;
+			}
+			displayFeedback(answer);
+		}
+		//loadFeedbackImages(tmp);
 	}).error(function(data) {
-		console.log("ERROR fetching JSON!");
+		console.log("Error fetching answer JSON.");
 	});
 }
-function loadDrawings(d) {
-	$.each(d, function(val) {
-		if (val.substring(val.length-5, val.length) == "_type") {
-			var input_type = d[val];
-			if (input_type == "drawing_base64") {
-				var num = val.split("_")[1];
-				$("#d_"+num).hide();
-				$("#d_"+num).siblings(".drawing_tools").hide();
-
-				var img_tag = '<img src="'+d["q_"+num]+'" />';
-				var redo_btn = '<button class="drawing_redo_btn" data-drawing_id="'+num+'">Redo drawing</button>';
-				var display_div = '<div class="completed_drawing">'+img_tag+'<br />'+redo_btn+'</div>';
-				$("#d_"+num).parent().append(display_div);
-			}
-		}
-	});
+function replaceDrawing(answer) {
+	$("#d_"+answer.question.id).hide();
+	$("#d_"+answer.question.id).siblings(".drawing_tools").hide();
+	var img_tag = '<img src="'+answer.content+'" />';
+	var redo_btn = '<button class="drawing_redo_btn" data-drawing_id="'+answer.question.id+'">Redo drawing</button>';
+	var display_div = '<div class="completed_drawing">'+img_tag+'<br />'+redo_btn+'</div>';
+	$("#d_"+answer.question.id).parent().append(display_div);
 }
-function loadFeedbackImages(d) {
-	$.each(d, function(val) {
-		if (val.substring(val.length-7, val.length) == "_status") {
-			var tmp = d[val];
-			if (tmp != "") {
-				$("#"+val.substring(0, 3)+"_image").attr("src", "/assets/workspace/"+tmp+"_button.png");
-			}
+function displayFeedback(answer) {
+	if (answer.feedback != null) {
+		$("[name=f_"+answer.question.id+"]").val(answer.feedback);
+	}
+	if (answer.feedback_status != null) {
+		var feedbackTypes = ["incomplete", "correct", "incorrect"];
+		if ($.inArray(answer.feedback_status, feedbackTypes) > -1) {
+			$("#f_"+answer.question.id+"_image").attr("src", "/assets/workspace/"+answer.feedback_status+"_button.png");
+		} else {
+			console.log("Feedback status not recognized for Answer#"+answer.id);
 		}
-	});
+	}
 }
 
 </script>

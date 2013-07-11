@@ -1,14 +1,7 @@
 class AnswersController < ApplicationController
   def show
-  	@answers = Student.find(params[:student_id]).answers.in_lesson(params[:lesson_id])
-  	str = "{"
-  	@answers.each do |a|
-  		str << a.as_json(0)
-      str << ", "
-  	end
-    str = str[0..-3]
-  	str << "}"
-  	render :json => str.to_json
+  	@answers = Student.find(params[:student_id]).answers.includes(:question).in_lesson(params[:lesson_id])
+  	render :json => @answers.to_json(:include => :question)
   end
 
   def create

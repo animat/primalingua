@@ -35,8 +35,4 @@ class Answer < ActiveRecord::Base
     joins(:question).
     where("questions.lesson_id = ?", lid)
   }
-
-  def as_json(options)
-    "\"q_#{question_id}\": \"#{content}\", \"q_#{question_id}_type\": \"#{question.input_type}\", \"f_#{question_id}\": \"#{feedback}\", \"f_#{question_id}_status\": \"#{feedback_status}\""
-  end
 end
