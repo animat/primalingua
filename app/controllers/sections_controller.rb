@@ -12,16 +12,14 @@ class SectionsController < ApplicationController
       @sections = Section.where(:teacher_id => @teacher.id)
     elsif admin_signed_in?
       @sections = Section.all
-    elsif 
-      flash[:error] = "You need to be a teacher to view that page."
-      redirect_to root_path 
     end
+    render_flex_layout
   end
 
   # GET /sections/1
   # GET /sections/1.json
   def show
-    render :layout => "workspace"
+    render_flex_layout
   end
 
   # GET /sections/new
@@ -33,11 +31,13 @@ class SectionsController < ApplicationController
       flash[:error] = "New sections can only be created by teachers."
       redirect_to :back
     end
+    render_flex_layout
   end
 
   # GET /sections/1/edit
   def edit
     @teacher = @section.teacher
+    render_flex_layout
   end
 
   # POST /sections
@@ -47,7 +47,7 @@ class SectionsController < ApplicationController
 
     respond_to do |format|
       if @section.save
-        format.html { redirect_to @section, notice: 'Section was successfully created.' }
+        format.html { redirect_to teacher_path(@section.teacher), notice: 'Section was successfully created.' }
         format.json { render action: 'show', status: :created, location: @section }
       else
         flash[:error] = @section.errors.full_messages
@@ -63,7 +63,7 @@ class SectionsController < ApplicationController
   def update
     respond_to do |format|
       if @section.update(section_params)
-        format.html { redirect_to @section, notice: 'Section was successfully updated.' }
+        format.html { redirect_to teacher_path(@section.teacher), notice: 'Section was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -91,5 +91,16 @@ class SectionsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def section_params
       params.require(:section).permit(:name, :teacher_id, :code, :lesson_id)
+    end
+
+    def render_flex_layout
+      if admin_signed_in?
+        render :layout => "application"
+      elsif teacher_signed_in?
+        render :layout => "workspace"
+      else
+        flash[:error] = "You need to be a teacher to view that page."
+        redirect_to root_path 
+      end
     end
 end
