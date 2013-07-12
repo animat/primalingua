@@ -78,6 +78,7 @@ GEM
     multi_json (1.7.2)
     nokogiri (1.5.9)
     orm_adapter (0.0.7)
+    pg (0.15.1)
     polyglot (0.3.3)
     protected_attributes (1.0.1)
       activemodel (>= 4.0.0.beta, < 5.0)
@@ -148,6 +149,7 @@ DEPENDENCIES
   factory_girl
   jbuilder (~> 1.0.1)
   jquery-rails
+  pg
   protected_attributes (~> 1.0.0)
   rails (= 4.0.0.beta1)
   sass-rails (~> 4.0.0.beta1)
