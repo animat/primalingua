@@ -7,6 +7,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.0.1'
 gem "protected_attributes", "~> 1.0.0"
 gem "jquery-rails"
+gem "devise"
 
 group :assets do
   gem 'sass-rails',   '~> 4.0.0.beta1'
@@ -27,7 +28,6 @@ end
 
 group :development do
   gem "annotate"
-  gem "devise"
   gem "seed_dump"
   gem 'sqlite3'
 end

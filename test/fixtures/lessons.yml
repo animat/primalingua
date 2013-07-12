@@ -9,6 +9,7 @@
 #  updated_at :datetime
 #  unit_id    :integer
 #  completed  :boolean
+#  number     :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

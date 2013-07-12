@@ -9,6 +9,7 @@
 #  updated_at :datetime
 #  unit_id    :integer
 #  completed  :boolean
+#  number     :integer
 #
 
 class Lesson < ActiveRecord::Base

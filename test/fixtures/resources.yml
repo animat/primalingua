@@ -2,11 +2,14 @@
 #
 # Table name: resources
 #
-#  id         :integer          not null, primary key
-#  type       :string(255)
-#  content    :text
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer          not null, primary key
+#  content_type :string(255)
+#  primary      :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  secondary    :text
+#  description  :text
+#  unit_id      :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

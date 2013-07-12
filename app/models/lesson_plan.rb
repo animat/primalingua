@@ -11,4 +11,6 @@
 
 class LessonPlan < ActiveRecord::Base
 	belongs_to :lesson
+
+	attr_accessible :lesson_id, :content
 end
