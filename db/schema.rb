@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130711145704) do
+ActiveRecord::Schema.define(version: 20130712135336) do
 
   create_table "admins", force: true do |t|
     t.string   "email",                              default: "", null: false
@@ -75,10 +75,13 @@ ActiveRecord::Schema.define(version: 20130711145704) do
   add_index "questions", ["lesson_id"], name: "index_questions_on_lesson_id"
 
   create_table "resources", force: true do |t|
-    t.string   "type"
-    t.text     "content"
+    t.string   "content_type"
+    t.text     "primary"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "secondary"
+    t.text     "description"
+    t.integer  "unit_id"
   end
 
   create_table "sections", force: true do |t|
