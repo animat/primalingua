@@ -16,6 +16,8 @@ Pl2::Application.routes.draw do
 
   get "students/:student_id/lesson/:lesson_id/answers", to: "answers#show", :as => "student_answers_in_lesson"
 
+  patch "answers/update_feedback", to: "answers#update_feedback", :as => "update_feedback"
+
   resources :lessons, :lesson_plans, :resources, :units, :feedbacks, :sections, :answers
   
   root to: 'about#index'

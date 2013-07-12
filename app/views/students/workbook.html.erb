@@ -51,8 +51,7 @@ $(function() {
 		div.appendChild(header2);
 		document.getElementById('timeline_lessons').appendChild(div);
 	}
-
-	$(".question").blur(function() {
+	$(document).on("blur", ".question", function() {
 		var qid = $(this).attr("name").split("_")[1];
 		var sid = <%= @student.id %>;
 		var c = $(this).val();
@@ -68,45 +67,170 @@ $(function() {
 	 		}
 		});
 	});
-	$(".feedback_editor").hide();
-	$(".drawing_save_btn").click(function() {
-		/*var qid = 2;//$(this).data("question"); taken from the q_2 name
-		var sid = 2;//taken from the URL
-		var c = eval("d_"+qid).serialize();
-		console.log("Here is the serialized thing!");
-		console.log(c);
+	<% if teacher_signed_in? or admin_signed_in? %>
+	$(document).on("blur", ".feedback_txt", function() {
+		var qid = $(this).attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var f = $(this).val();
+		var d = {answer: {student_id: sid, question_id: qid, feedback: f}, authenticity_token: "<%= form_authenticity_token %>"};
+	 	saveFeedback(d);
+	});
+	$(document).on("click", ".feedback_correct_btn", function() {
+		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var fs = "correct";
+		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
+		saveFeedback(d, $(this).parent(), ".feedback_correct_btn");
+	});
+	$(document).on("click", ".feedback_incomplete_btn", function() {
+		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var fs = "incomplete";
+		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
+		saveFeedback(d, $(this).parent(), ".feedback_incomplete_btn");
+	});
+	$(document).on("click", ".feedback_incorrect_btn", function() {
+		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var fs = "incorrect";
+		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
+		saveFeedback(d, $(this).parent(), ".feedback_incorrect_btn");
+	});
+	<% end %>
+	$(".drawing").each(function() {
+        var tmpID = $(this).attr("id");
+        var r = new RoCanvas;
+            r.RO(tmpID, {
+                "toolbar": {
+                   colors: ["pink", "#FFF","#000","#FF0000","#00FF00","#0000FF","#FFFF00","#00FFFF"],
+                   custom_color: false,
+                   tools: ['path', 'circle', 'rectangle'],
+                   sizes: null,
+                   saveButton: {"text": "Save drawing"}            
+               },
+               "settings": {
+                   color: 'black'        
+               }
+           });
+	});
+	$(document).on("click", ".drawing_save_btn", function() {
+		var qid = $(this).attr("id").toString().split("_")[2];
+		var sid = <%= @student.id %>;
+		var c = document.getElementById("d_"+qid).toDataURL();
 		$.ajax({
-	 		type: "POST",
-	 		url: "<%= answers_url %>",
-	 		data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>",},
+        	type: "POST",
+			url: "<%= answers_url %>",
+			data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>"},
 	 		success: function() {
 	 			alert("Saved!");
 	 		},
 	 		error: function() {
 	 			alert("Problem saving data...");
 	 		}
-		});*/
+		});
+	});
+	$(document).on("click", ".drawing_redo_btn", function() {
+		var num = $(this).data("drawing_id");
+		$("#d_"+num).siblings(".completed_drawing").hide();
+		$("#d_"+num).show();
+		$("#d_"+num).siblings(".drawing_tools").show();
+		return false;
 	})
+
 	populate();
 })
 
 function populate() {
-	$.getJSON("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>").success(function(data) {
-		var tmp = $.parseJSON(data);
-		$("#content").populate(tmp);
-		loadFeedbackImages(tmp);
+	$.getJSON("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>").success(function(answers) {
+		for (var i = 0; i < answers.length; i++) {
+			displayAnswer(answers[i].answer);
+			displayFeedback(answers[i].answer);
+		}
 	}).error(function(data) {
-		console.log("ERROR fetching JSON!");
+		console.log("Error fetching answer JSON.");
 	});
 }
-function loadFeedbackImages(d) {
-	$.each(d, function(val) {
-		console.log(val);
-		if (val.substring(val.length-7, val.length) == "_status") {
-			var tmp = d[val];
-			$("#"+val.substring(0, 3)+"_image").attr("src", "/assets/workspace/"+tmp+"_button.png");
+function replaceDrawing(answer) {
+	$("#d_"+answer.question.id).hide();
+	$("#d_"+answer.question.id).siblings(".drawing_tools").hide();
+	var img_tag = '<img src="'+answer.content+'" />';
+	var redo_btn = '<button class="drawing_redo_btn" data-drawing_id="'+answer.question.id+'">Redo drawing</button>';
+	var display_div = '<div class="completed_drawing">'+img_tag+'<br />'+redo_btn+'</div>';
+	$("#d_"+answer.question.id).parent().append(display_div);
+}
+function displayAnswer(answer) {
+	switch (answer.question.input_type) {
+		case "text":
+			$("[name=q_"+answer.question.id+"]").val(answer.content);
+			break;
+		case "drawing_base64":
+			replaceDrawing(answer);
+			break;
+		default:
+			console.log("Input type not recognized for Answer#"+answer.id);
+			break;
+	}
+}
+function displayFeedback(answer) {
+	var $feedbackDiv = $('<div>', {class: "feedback", id: "f_"+answer.question.id});
+	$("[name=q_"+answer.question.id+"]").after($feedbackDiv);
+	<% if student_signed_in? %>
+	displayStudentFeedback(answer);
+	<% elsif teacher_signed_in? or admin_signed_in? %>
+	displayTeacherFeedback(answer);
+	<% end %>
+}
+function displayStudentFeedback(answer) {
+	if (answer.feedback_status != null) {
+		var feedbackTypes = ["incomplete", "correct", "incorrect"];
+		if ($.inArray(answer.feedback_status, feedbackTypes) > -1) {
+			var $feedbackImg = $('<img>', {src: "/assets/workspace/"+answer.feedback_status+"_icon.png"})
+			$("#f_"+answer.question.id).append($feedbackImg);
+		} else {
+			console.log("Feedback status not recognized for Answer#"+answer.id);
 		}
-	})
+	}
+	if (answer.feedback != null) {
+		var $feedbackTxt = $('<textarea>', {class: "feedback_txt", name: "f_"+answer.question.id, disabled: "disabled"});
+		$feedbackTxt.val(answer.feedback);
+		$("#f_"+answer.question.id).append($feedbackTxt);
+	}
+}
+function displayTeacherFeedback(answer) {
+	<% if teacher_signed_in? or admin_signed_in? %>
+	var $feedbackButtonsDiv = $('<div>', {class: "feedback_buttons"});
+	var $correctBtn = $('<img>', {src: "/assets/workspace/correct_button.png", class: "feedback_correct_btn"});
+	var $incompleteBtn = $('<img>', {src: "/assets/workspace/incomplete_button.png", class: "feedback_incomplete_btn"});
+	var $incorrectBtn = $('<img>', {src: "/assets/workspace/incorrect_button.png", class: "feedback_incorrect_btn"});
+
+	var $feedbackEditorTxt = $('<textarea>', {class: "feedback_txt", name: "f_"+answer.question.id});
+	$feedbackEditorTxt.val(answer.feedback);
+
+	var $feedbackEditorDiv = $('<div>', {class: "feedback_editor"});
+
+	$feedbackButtonsDiv.append($correctBtn, $incompleteBtn, $incorrectBtn);
+	if (answer.feedback_status != null) {
+		$feedbackButtonsDiv.children(".feedback_"+answer.feedback_status+"_btn").addClass("selected_feedback");
+	}
+	$feedbackEditorDiv.append($feedbackButtonsDiv, $feedbackEditorTxt);
+	$("[name=q_"+answer.question.id+"]").siblings(".feedback").append($feedbackEditorDiv);
+	<% end %>
+}
+function saveFeedback(d, btns, selected) {
+	<% if teacher_signed_in? or admin_signed_in? %>
+	$.ajax({
+ 		type: "PATCH",
+ 		url: "<%= update_feedback_url %>",
+ 		data: d,
+ 		success: function() {
+ 			btns.children("img").removeClass("selected_feedback");
+			btns.children(selected).addClass("selected_feedback");
+ 		},
+ 		error: function() {
+ 			console.log("Problem saving data...");
+ 		}
+	});
+	<% end %>
 }
 
 </script>

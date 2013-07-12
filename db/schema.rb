@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20130711145704) do
     t.integer  "student_id"
     t.text     "content"
     t.integer  "question_id"
-    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "feedback"
@@ -70,6 +69,7 @@ ActiveRecord::Schema.define(version: 20130711145704) do
     t.text     "tg_answer"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "input_type"
   end
 
   add_index "questions", ["lesson_id"], name: "index_questions_on_lesson_id"

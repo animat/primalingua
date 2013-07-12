@@ -2,20 +2,22 @@
 #
 # Table name: answers
 #
-#  id          :integer          not null, primary key
-#  student_id  :integer
-#  content     :text
-#  question_id :integer
-#  type        :string(255)
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id                  :integer          not null, primary key
+#  student_id          :integer
+#  content             :text
+#  question_id         :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  feedback            :text
+#  feedback_status     :string(255)
+#  feedback_updated_at :datetime
 #
 
 class Answer < ActiveRecord::Base
   belongs_to :student
   belongs_to :question
 
-  attr_accessible :student_id, :question_id, :content
+  attr_accessible :student_id, :question_id, :content, :feedback, :feedback_status
 
   validates_presence_of :student_id, :question_id
   validates_uniqueness_of :question_id, :scope => :student_id
@@ -32,8 +34,4 @@ class Answer < ActiveRecord::Base
     joins(:question).
     where("questions.lesson_id = ?", lid)
   }
-
-  def as_json(options)
-    "\"q_#{question_id}\": \"#{content}\", \"f_#{question_id}\": \"#{feedback}\", \"f_#{question_id}_status\": \"#{feedback_status}\""
-  end
 end
