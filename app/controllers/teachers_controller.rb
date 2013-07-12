@@ -22,5 +22,6 @@ class TeachersController < ApplicationController
   def show
     @teacher = Teacher.find(params[:id])
     @sections = @teacher.sections
+    @resource = Teacher
   end
 end

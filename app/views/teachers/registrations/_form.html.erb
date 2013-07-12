@@ -1,0 +1,24 @@
+<%= form_for(:teacher, :as => :teacher, :url => registration_path(:teacher), :html => { :method => :put }) do |f| %>
+  <% if @teacher.errors.any? %>
+    <h2><%= pluralize(@teacher.errors.count, "error") %> prohibited your changes from being saved:</h2>
+    <ul>
+    <% @teacher.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  <% end %>
+
+  <div><%= f.label :email %><br />
+  <%= f.email_field :email %></div>
+
+  <div><%= f.label :password %> <em>(leave blank if you don't want to change it)</em><br />
+  <%= f.password_field :password %></div>
+
+  <div><%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %></div>
+
+  <div><%= f.label :current_password %> <em>(we need your current password to confirm your changes)</em><br />
+  <%= f.password_field :current_password %></div>
+
+  <div><%= f.submit "Update" %></div>
+<% end %>
