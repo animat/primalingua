@@ -1,5 +1,5 @@
 class TeachersController < ApplicationController
-  layout "workspace", :except => [:index, :show]
+  layout "workspace", :except => [:index]
 
   def grading
   end

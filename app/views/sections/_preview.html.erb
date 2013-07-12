@@ -1,0 +1,9 @@
+<div class="teacher_class">
+	<%= link_to section_path(section), :class => "teacher_class_main" do %>
+		<h1><%= section.name %></h1>
+		<h2>Unit <strong><%= section.lesson.unit.number %></strong></h2>
+		<h3>Lesson <strong><%= section.lesson.number %></strong></h3>
+		<h4><%= pluralize(section.students.length, "student") %></h4>
+	<% end %>
+	<%= link_to image_tag("workspace/class_edit_button.png", :class => "teacher_class_edit_button"), edit_section_path(section) %>
+</div>

@@ -1,29 +1,40 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @section.name %>
-</p>
-
-<p>
-  <strong>Teacher:</strong>
-  <%= @section.teacher.display_name %>
-</p>
-
-<p>
-  <strong>Code:</strong>
-  <%= @section.code %>
-</p>
-
-<p>
-  <strong>Students:</strong>
-  <ul>
-	  <% @section.students.each do |s| %>
-	  	<li><%= s.display_name %> (<%= link_to "View workbook", workbook_student_path(s) %>)</li>
-	  <% end %>
-  </ul>
-</p>
-
-
-<%= link_to 'Edit', edit_section_path(@section) %> |
-<%= link_to 'Back', sections_path %>
+<div class="student_overview_titles"
+  <p>
+    <strong>Name:</strong>
+    <%= @section.name %>
+  </p>
+</div>
+<div class="student_overview_titles"
+  <p>
+    <strong>Teacher:</strong>
+    <%= @section.teacher.display_name %>
+  </p>
+</div>
+<div class="student_overview_titles"
+  <p>
+    <strong>Code:</strong>
+    <%= @section.code %>
+  </p>
+</div>
+<div id="student_grid">
+  <div>
+    <% @section.students.each do |s| %>
+      <a href="<%= workbook_student_path(s) %>" class="teacher_student">
+        <h1><%= s.display_name %></h1>
+      </a>
+    <% end %>
+  </div>
+  <div> 
+    <%= link_to edit_section_path(@section) do %>
+      <div class="workspace_button">
+        Edit
+      </div>
+    <% end %>
+    <%= link_to sections_path do %>
+      <div class="workspace_button">
+        Back
+      </div>
+    <% end %>
+  </div>
+</div>

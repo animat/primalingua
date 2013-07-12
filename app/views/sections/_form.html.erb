@@ -19,6 +19,10 @@
     <%= f.label :code %><br />
     <%= f.text_field :code %>
   </div>
+  <div class="field">
+    <%= f.label :lesson %><br />
+    <%= collection_select :section, :lesson_id, Lesson.all, :id, :full_title %>
+  </div>
   <div class="actions">
     <%= f.hidden_field :teacher_id, :value => @teacher.id %>
     <%= f.submit %>

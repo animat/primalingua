@@ -21,6 +21,7 @@ class SectionsController < ApplicationController
   # GET /sections/1
   # GET /sections/1.json
   def show
+    render :layout => "workspace"
   end
 
   # GET /sections/new
@@ -36,6 +37,7 @@ class SectionsController < ApplicationController
 
   # GET /sections/1/edit
   def edit
+    @teacher = @section.teacher
   end
 
   # POST /sections
@@ -48,7 +50,9 @@ class SectionsController < ApplicationController
         format.html { redirect_to @section, notice: 'Section was successfully created.' }
         format.json { render action: 'show', status: :created, location: @section }
       else
-        format.html { render action: 'new' }
+        flash[:error] = @section.errors.full_messages
+        # TODO: Should be rendering the new page again instead
+        format.html { redirect_to :back }
         format.json { render json: @section.errors, status: :unprocessable_entity }
       end
     end
@@ -86,6 +90,6 @@ class SectionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def section_params
-      params.require(:section).permit(:name, :teacher_id, :code)
+      params.require(:section).permit(:name, :teacher_id, :code, :lesson_id)
     end
 end

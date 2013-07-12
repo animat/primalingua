@@ -17,5 +17,11 @@ class Lesson < ActiveRecord::Base
   has_many :questions
   has_many :sections
 
+  validates_presence_of :unit
+
   attr_accessible :title, :content, :unit_id
+
+  def full_title
+  	"Unit #{self.unit.number}, lesson #{self.number}: #{self.title}"
+  end
 end

@@ -16,7 +16,12 @@ class Section < ActiveRecord::Base
   belongs_to :lesson
   has_many :students
 
-  attr_accessible :name, :code, :teacher_id
+  attr_accessible :name, :code, :teacher_id, :lesson_id
 
   validates_uniqueness_of :code
+  validates_presence_of :lesson_id
+
 end
+def after_initialize
+  	self.lesson ||= Lesson.first
+ end

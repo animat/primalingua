@@ -3,7 +3,7 @@
 # Do not hesitate to tweak this to your needs
 
 Admin.create([
-  { :email => "admin@example.com", :encrypted_password => "$2a$10$/XVNRBj.Sxbuz0.MvdjG3enUjgMajAIWqvWFIMlfho/n9IU/xS0nG", :reset_password_token => nil, :reset_password_sent_at => nil, :remember_created_at => nil, :sign_in_count => 2, :current_sign_in_at => "2013-07-10 18:59:32", :last_sign_in_at => "2013-07-10 17:11:07", :current_sign_in_ip => "127.0.0.1", :last_sign_in_ip => "127.0.0.1", :created_at => "2013-07-10 16:29:43", :updated_at => "2013-07-10 18:59:32", :first_name => "BC", :last_name => "Angevine" }
+  { :email => "admin@example.com", :password => "tester", :reset_password_token => nil, :reset_password_sent_at => nil, :remember_created_at => nil, :sign_in_count => 2, :current_sign_in_at => "2013-07-10 18:59:32", :last_sign_in_at => "2013-07-10 17:11:07", :current_sign_in_ip => "127.0.0.1", :last_sign_in_ip => "127.0.0.1", :created_at => "2013-07-10 16:29:43", :updated_at => "2013-07-10 18:59:32", :first_name => "BC", :last_name => "Angevine" }
 ], :without_protection => true )
 
 
@@ -51,13 +51,13 @@ Section.create([
 
 
 Student.create([
-  { :email => "student@example.com", :encrypted_password => "$2a$10$/Z1HatM57gPBDO1c17BPpeZjQkufY1yRqBFaw3iCYGbGwUxMy9vNW", :reset_password_token => nil, :reset_password_sent_at => nil, :remember_created_at => nil, :sign_in_count => 3, :current_sign_in_at => "2013-07-10 18:57:56", :last_sign_in_at => "2013-07-10 16:33:21", :current_sign_in_ip => "127.0.0.1", :last_sign_in_ip => "127.0.0.1", :created_at => "2013-07-10 16:31:31", :updated_at => "2013-07-10 18:57:56", :first_name => "Annie", :last_name => "Roberts", :section_id => 1 }
+  { :email => "student@example.com", :password => "tester", :reset_password_token => nil, :reset_password_sent_at => nil, :remember_created_at => nil, :sign_in_count => 3, :current_sign_in_at => "2013-07-10 18:57:56", :last_sign_in_at => "2013-07-10 16:33:21", :current_sign_in_ip => "127.0.0.1", :last_sign_in_ip => "127.0.0.1", :created_at => "2013-07-10 16:31:31", :updated_at => "2013-07-10 18:57:56", :first_name => "Annie", :last_name => "Roberts", :section_id => 1 }
 ], :without_protection => true )
 
 
 
 Teacher.create([
-  { :email => "teacher@example.com", :encrypted_password => "$2a$10$zUh8BS6Z826wPc3aFTkiOO53P5tFPK6AJK3tMFnNKtLlgml7btJYS", :reset_password_token => nil, :reset_password_sent_at => nil, :remember_created_at => nil, :sign_in_count => 1, :current_sign_in_at => "2013-07-10 17:09:17", :last_sign_in_at => "2013-07-10 17:09:17", :current_sign_in_ip => "127.0.0.1", :last_sign_in_ip => "127.0.0.1", :created_at => "2013-07-10 16:30:24", :updated_at => "2013-07-10 17:09:17", :first_name => "Margaret", :last_name => "Roberts", :display_name => nil }
+  { :email => "teacher@example.com", :password => "tester", :reset_password_token => nil, :reset_password_sent_at => nil, :remember_created_at => nil, :sign_in_count => 1, :current_sign_in_at => "2013-07-10 17:09:17", :last_sign_in_at => "2013-07-10 17:09:17", :current_sign_in_ip => "127.0.0.1", :last_sign_in_ip => "127.0.0.1", :created_at => "2013-07-10 16:30:24", :updated_at => "2013-07-10 17:09:17", :first_name => "Margaret", :last_name => "Roberts", :display_name => nil }
 ], :without_protection => true )
 
 

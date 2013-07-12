@@ -1,8 +1,17 @@
-<h1>Teacher's overview</h1>
-<p>Manage your account, your classes, your other stuff</p>
-
-<h2>Classes</h2>
-<% @sections.each do |s| %>
-	<p><%= link_to s.name, section_path(s) %></p>
-<% end %>
-<%= link_to link_to "Create a new section", new_teacher_section_path(@teacher) %>
+<div id="teacher_class_overview">
+	<div>
+		<%= render partial: "sections/preview", collection: @sections, as: :section %>
+	</div>
+	<div>
+		<%= link_to new_teacher_section_path(@teacher) do %>
+			<div class="workspace_button">
+				New Class
+			</div>
+		<% end %>
+	</div>
+</div>
+<div id="teacher_account_settings">
+	<div id="teacher_settings">
+		<h1>Account Settings</h1>
+	</div>
+</div>

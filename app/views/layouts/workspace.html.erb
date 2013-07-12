@@ -10,40 +10,66 @@
 	<%= yield(:page_script) %>
 </head>
 <body>
-	<div id="head">
-		<div id="topnav">
-			<div id="logo"></div>
-		</div>
-		<div id="nav">
-			<div class="nav_option">
-				Planning
+	<% if student_signed_in? %>
+		<div id="head_student">
+			<div id="topnav">
+				<div id="logo"></div>
 			</div>
-			<div class="nav_option">
-				Grading
-			</div>
-			<div class="nav_option">
-				In Class
-			</div>
-			<div id="buttons">
-				<% if student_signed_in? %>
+			<div id="nav">
+				<div id="buttons">
 					<%= link_to image_tag("workspace/button_home.png"), destroy_student_session_path %>
 					<%= link_to image_tag("workspace/button_notification.png"), root_url %>
 					<%= link_to image_tag("workspace/button_settings.png"), edit_student_registration_path %>
-
-				<% elsif teacher_signed_in? %>
+				</div>
+			</div>
+			<div id="timeline">
+				<a href="#" id="timeline_arrow_right"></a>
+				<a href="#" id="timeline_arrow_left"></a>
+				<div id="timeline_overlay">
+					<div id="timeline_end_left"></div>
+					<div id="timeline_end_right"></div>
+				</div>
+				<div id="timeline_lessons">
+					
+				</div>
+			</div>
+		</div>
+	<% elsif teacher_signed_in? %>
+		<div id="head">
+			<div id="topnav">
+				<div id="logo"></div>
+			</div>
+			<div id="nav">
+				<div id="buttons">
+					<div class="nav_option">
+						Planning
+					</div>
+					<div class="nav_option">
+						Grading
+					</div>
+					<div class="nav_option">
+						In Class
+					</div>
 					<%= link_to image_tag("workspace/button_home.png"), destroy_teacher_session_path %>
 					<%= link_to image_tag("workspace/button_notification.png"), root_url %>
 					<%= link_to image_tag("workspace/button_settings.png"), root_url %>
-
-				<% elsif admin_signed_in? %>
+				</div>
+			</div>
+		</div>
+	<% elsif admin_signed_in? %>
+		<div id="head">
+			<div id="topnav">
+				<div id="logo"></div>
+			</div>
+			<div id="nav">
+				<div id="buttons">
 					<%= link_to image_tag("workspace/button_home.png"), destroy_admin_session_path %>
 					<%= link_to image_tag("workspace/button_notification.png"), root_url %>
 					<%= link_to image_tag("workspace/button_settings.png"), root_url %>
-
-				<% end %>
+				</div>
 			</div>
 		</div>
-	</div>
+	<% end %>
  	<div id="workspace">
  		<% unless flash[:notice].nil? %>
 			<p class="flash_notice"><%= flash[:notice]%></p>
