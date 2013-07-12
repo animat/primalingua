@@ -13,44 +13,6 @@ var unitArray = [
 
 
 $(function() {
-	var timeline_width = $("#timeline_overlay").width();
-	var number_of_lessons = unitArray.length;
-	var lesson_width = timeline_width / number_of_lessons;
-	for (i = 1; i <= number_of_lessons; i++) {
-		var div = document.createElement('div');
-		div.id = "lesson"+i;
-		div.className = "timeline_lesson";
-		$(div).css("width", lesson_width);
-		if (unitArray[i-1].status == "complete") {
-			$(div).css({
-			"background-color": "#1EA62B",
-			"backgroundImage": "url('/assets/workspace/timeline_break.png')"
-			});
-		} else if (unitArray[i-1].status == "active") {
-			$(div).css({
-			"background-color": "#E0CA05",
-			"backgroundImage": "url('/assets/workspace/timeline_break.png')"
-			});
-		} else if (unitArray[i-1].status == "inactive") {
-			$(div).css({
-			"background-color": "none",
-			"backgroundImage": "url('/assets/workspace/timeline_break.png')",
-			"backgroundRepeat": "no-repeat"
-			});
-		} else {
-			div.style.background = "red";
-		}
-		var number = document.createElement('img');
-		number.setAttribute("src", "/assets/workspace/number(0"+i+").png");
-		var header1 = document.createElement('h1');
-		header1.innerHTML = "Lesson "+ i;
-		var header2 = document.createElement('h2');
-		header2.innerHTML = unitArray[i-1].title;
-		div.appendChild(number);
-		div.appendChild(header1);
-		div.appendChild(header2);
-		document.getElementById('timeline_lessons').appendChild(div);
-	}
 	$(document).on("blur", ".question", function() {
 		var qid = $(this).attr("name").split("_")[1];
 		var sid = <%= @student.id %>;
@@ -67,7 +29,9 @@ $(function() {
 	 		}
 		});
 	});
-	<% if teacher_signed_in? or admin_signed_in? %>
+	<% if student_signed_in? %>
+	displayStudentTimeline();
+	<% elsif teacher_signed_in? or admin_signed_in? %>
 	$(document).on("blur", ".feedback_txt", function() {
 		var qid = $(this).attr("name").split("_")[1];
 		var sid = <%= @student.id %>;
@@ -231,6 +195,46 @@ function saveFeedback(d, btns, selected) {
  		}
 	});
 	<% end %>
+}
+function displayStudentTimeline() {
+	var timeline_width = $("#timeline_overlay").width();
+	var number_of_lessons = unitArray.length;
+	var lesson_width = timeline_width / number_of_lessons;
+	for (i = 1; i <= number_of_lessons; i++) {
+		var div = document.createElement('div');
+		div.id = "lesson"+i;
+		div.className = "timeline_lesson";
+		$(div).css("width", lesson_width);
+		if (unitArray[i-1].status == "complete") {
+			$(div).css({
+			"background-color": "#1EA62B",
+			"backgroundImage": "url('/assets/workspace/timeline_break.png')"
+			});
+		} else if (unitArray[i-1].status == "active") {
+			$(div).css({
+			"background-color": "#E0CA05",
+			"backgroundImage": "url('/assets/workspace/timeline_break.png')"
+			});
+		} else if (unitArray[i-1].status == "inactive") {
+			$(div).css({
+			"background-color": "none",
+			"backgroundImage": "url('/assets/workspace/timeline_break.png')",
+			"backgroundRepeat": "no-repeat"
+			});
+		} else {
+			div.style.background = "red";
+		}
+		var number = document.createElement('img');
+		number.setAttribute("src", "/assets/workspace/number(0"+i+").png");
+		var header1 = document.createElement('h1');
+		header1.innerHTML = "Lesson "+ i;
+		var header2 = document.createElement('h2');
+		header2.innerHTML = unitArray[i-1].title;
+		div.appendChild(number);
+		div.appendChild(header1);
+		div.appendChild(header2);
+		document.getElementById('timeline_lessons').appendChild(div);
+	}
 }
 
 </script>
