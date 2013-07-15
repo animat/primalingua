@@ -25,6 +25,7 @@ end
 group :development do
   gem "annotate"
   gem "seed_dump"
+  gem "sqlite3"
 end
 
 group :test do

@@ -30,6 +30,7 @@ class Teacher < ActiveRecord::Base
 
   has_many :sections
   has_many :students, through: :sections
+  has_many :notifications, as: :recipientable
 
   def display_name
   	"#{first_name} #{last_name}"

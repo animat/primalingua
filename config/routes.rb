@@ -1,5 +1,9 @@
 Pl2::Application.routes.draw do
 
+  resources :notifications
+
+  resources :student_progresses
+
   devise_for :students, :controllers => {:registrations => "students/registrations"}
   devise_for :teachers, :controllers => {:registrations => "teachers/registrations"}
   devise_for :admins, :controllers => {:registrations => "admins/registrations"}

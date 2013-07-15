@@ -1,0 +1,24 @@
+# == Schema Information
+#
+# Table name: notifications
+#
+#  id                 :integer          not null, primary key
+#  unread             :boolean          default(TRUE)
+#  emailed_at         :boolean
+#  notifiable_id      :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  notifiable_type    :string(255)
+#  recipientable_id   :integer
+#  recipientable_type :string(255)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  unread: false
+  emailed_at: false
+
+two:
+  unread: false
+  emailed_at: false
