@@ -1,17 +1,6 @@
 <% content_for :page_script do %>
 <script type="text/javascript">
 
-
-var unitArray = [
-{"num": "1", "title": "The First Language", "status": "complete"},
-{"num": "2", "title": "Animal Language", "status": "complete"},
-{"num": "3", "title": "Communicating without Words", "status": "active"},
-{"num": "3", "title": "Derivatives and Stuff", "status": "inactive"},
-{"num": "3", "title": "Test Lesson Name", "status": "inactive"},
-{"num": "3", "title": "Test Lesson Name", "status": "inactive"}
-];
-
-
 $(function() {
 	$(document).on("blur", ".question", function() {
 		var qid = $(this).attr("name").split("_")[1];
@@ -30,7 +19,7 @@ $(function() {
 		});
 	});
 	<% if student_signed_in? %>
-	displayStudentTimeline();
+	loadStudentTimeline();
 	<% elsif teacher_signed_in? or admin_signed_in? %>
 	$(document).on("blur", ".feedback_txt", function() {
 		var qid = $(this).attr("name").split("_")[1];
@@ -196,7 +185,27 @@ function saveFeedback(d, btns, selected) {
 	});
 	<% end %>
 }
+function loadStudentTimeline() {
+	/*
+	$.getJSON("<%= section_url(@student.section, @lesson.id) %>").success(function(answers) {
+		for (var i = 0; i < answers.length; i++) {
+			displayAnswer(answers[i].answer);
+			displayFeedback(answers[i].answer);
+		}
+	}).error(function(data) {
+		console.log("Error fetching answer JSON.");
+	});*/
+	displayStudentTimeline();
+}
 function displayStudentTimeline() {
+	var unitArray = [
+		{"num": "1", "title": "The First Language", "status": "complete"},
+		{"num": "2", "title": "Animal Language", "status": "complete"},
+		{"num": "3", "title": "Communicating without Words", "status": "active"},
+		{"num": "3", "title": "Derivatives and Stuff", "status": "inactive"},
+		{"num": "3", "title": "Test Lesson Name", "status": "inactive"},
+		{"num": "3", "title": "Test Lesson Name", "status": "inactive"}
+	];	
 	var timeline_width = $("#timeline_overlay").width();
 	var number_of_lessons = unitArray.length;
 	var lesson_width = timeline_width / number_of_lessons;

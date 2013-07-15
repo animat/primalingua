@@ -2,6 +2,8 @@ class TeachersController < ApplicationController
   layout "workspace", :except => [:index]
 
   def grading
+    @lesson = Lesson.first
+    @sections = Section.first
   end
 
   def planning

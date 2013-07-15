@@ -17,10 +17,7 @@
 	<a href="#" onClick="changeStudent(-1);" id="arrow_left"></a>
 
 	<div id="student_workbook">
-		<h2>Student workbook here</h2>
-		<% 20.times do %>
-			<p>See me??</p>
-		<% end %>
+		<%= @lesson.content.gsub("\\r\\n", "").html_safe %>
 	</div>
 </div>
 

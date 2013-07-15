@@ -19,7 +19,10 @@ class SectionsController < ApplicationController
   # GET /sections/1
   # GET /sections/1.json
   def show
-    render_flex_layout
+    respond_to do |format|
+      format.html { render_flex_layout }
+      format.json { render :json => @section }
+    end
   end
 
   # GET /sections/new
