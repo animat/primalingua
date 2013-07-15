@@ -50,7 +50,19 @@ class LessonsController < ApplicationController
       end
     end
   end
-
+  def mercury_update
+    @lesson = Lesson.find(params[:id])
+    puts "*"*50
+    puts "Saving content..."
+    @lesson.content = params[:content][:workbook_editor][:value]
+    puts @lesson.content
+    if @lesson.save
+      render text: ""
+    else
+      format.html { render action: 'edit' }
+      format.json { render json: @lesson.errors, status: :unprocessable_entity }
+    end
+  end
   # DELETE /lessons/1
   # DELETE /lessons/1.json
   def destroy

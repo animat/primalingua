@@ -1,8 +1,23 @@
+<% content_for :page_script do %>
+<script type="text/javascript">
+	$(document).ready(function() {
+		resizeWindow();
+	});
+	window.onresize = function() {
+		resizeWindow();
+	}
+	function resizeWindow() {
+		var num = window.innerHeight;
+		var middleHeight = window.innerHeight - (document.getElementById('head').offsetHeight + 16) + 15;
+		var middle = document.getElementById('workspace');
+		$(middle).css("height", middleHeight);
+	}
+</script>
+<% end %>
 <div id="grading_area" class="half_width float_left">
 	<div id="student_search">
-		<div id="lesson_select">
-
-		</div>
+		<a href="#" onClick="changeStudent(1);" id="arrow_right"></a>
+		<a href="#" onClick="changeStudent(-1);" id="arrow_left"></a>
 		<select id="student_select" onchange="getLessonPlan();">
 			<option value="1">Colin Roberts</option>
 			<option value="2">Brandon Jackson-Shorts</option>
@@ -13,8 +28,7 @@
 		<select>
 	</div>
 
-	<a href="#" onClick="changeStudent(1);" id="arrow_right"></a>
-	<a href="#" onClick="changeStudent(-1);" id="arrow_left"></a>
+	
 
 	<div id="student_workbook">
 		<%= @lesson.content.gsub("\\r\\n", "").html_safe %>
@@ -24,6 +38,43 @@
 
 <div id="teacher_guide_workbook" class="half_width float_left">
 	<h2>Teachers' guide here</h2>
-</div>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+
+	<br />
+	<br />
+	<br />
+
+	<br />
+	<br />
+
+	<br /><br />
+	<br />
+
+	<br />
+	<br />
+	<br />
+
+	<br />
+	<br />
+	<br />
+
+	<br />
+	<br />
+
+	<br />
+	<br />
+
+	</div>
 
 <br class="clear_float" />
