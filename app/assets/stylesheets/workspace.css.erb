@@ -40,7 +40,6 @@ a {
 	width: 320px;
 	height: 60px;
 	margin: 0 auto;
-	position: relative;
 }
 .nav_option {
 	position: relative;
@@ -75,6 +74,26 @@ a {
 	padding-top: 12px;
 	font-family: Arial Rounded MT Bold, Nunito;
 	display: inline-block;
+}
+#flash_notice {
+	width: 30%;
+	height: 50px;
+	background: rgba(0, 0, 0, 0.65);
+	position: absolute;
+	left: 50%;
+	margin-left: -15%;
+	top: 0;
+	z-index: 2;
+	-webkit-border-bottom-right-radius: 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-moz-border-radius-bottomright: 6px;
+	-moz-border-radius-bottomleft: 6px;
+	border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
+	text-align: center;
+	color: #06C62C;
+	font-family: Arial Rounded MT Bold, Nunito;
+	padding-top: 25px;
 }
 .full_width {
 	max-width: 100%;
@@ -361,6 +380,7 @@ td {
 	height: 50px;
 	display: inline-block;
 	clear: float;
+	position: relative;
 }
 .feedback_txt {
 	height: 50px;
@@ -381,9 +401,29 @@ td {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	background: #eaeaea;
+	position: relative;
+}
+.feedback_editor .feedback_buttons{
+	width: 300px;
+	vertical-align: top;
+	position: relative;
+	z-index: 2;
+	width: 140px;
+	margin-top: 3px;
 }
 .feedback img {
 	vertical-align: middle;
+	display: inline-block;
+	margin-left: 5px;
+}
+#content .feedback_txt {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	height: 15px;
+	width: 75%;
+	margin: 0px;
+	text-align: center;
 }
 .feedback_editor .feedback_editor_text {
 	float: right;
@@ -395,24 +435,6 @@ td {
 	background: none;
 	width: 300px;
 	text-align: right;	
-}
-.feedback_editor .feedback_correct {
-	margin-left: 10px;
-	background: url('/assets/workspace/correct_button.png') no-repeat center;
-}
-.feedback_editor div {
-	width: 37px;
-	height: 40px;
-	display: inline-block;
-}
-.feedback_editor div:hover {
-	cursor: pointer;
-}
-.feedback_editor .feedback_incorrect {
-	background: url('/assets/workspace/incorrect_button.png') no-repeat center;
-}
-.feedback_editor .feedback_incomplete {
-	background: url('/assets/workspace/incomplete_button.png') no-repeat center;
 }
 #lesson_select {
 	position: absolute;
@@ -585,9 +607,9 @@ td {
 	right: 13px;
 }
 #teacher_account_settings {
+	padding-top: 20px;
 	width: 100%;
 	height: 240px;
-	padding-top: 20px;
 	background: url(<%= image_path 'workspace/workbook_shadow.png' %>) no-repeat center top;
 	text-align: center;
 }
@@ -596,8 +618,6 @@ td {
 	height: 210px;
 	background: url(<%= image_path 'workspace/teacher_account_settings_bg.png' %>) no-repeat center top;
 	margin-left: 23px;
-	padding-top: 5px;
-	padding-left: 20px;
 	display: inline-block;
 }
 #teacher_settings h1 {
@@ -632,9 +652,70 @@ td {
 	padding-right: 25px;
 	text-align: center;
 }
+.table_head {
+	position: relative;
+	height: 39px;
+	width: auto;
+	background-image: linear-gradient(bottom, rgb(155,123,171) 0%, rgb(179,130,185) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(155,123,171) 0%, rgb(179,130,185) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(155,123,171) 0%, rgb(179,130,185) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(155,123,171) 0%, rgb(179,130,185) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(155,123,171) 0%, rgb(179,130,185) 100%);
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, rgb(155,123,171)),
+		color-stop(1, rgb(179,130,185))
+	);
+	border-bottom: 1px solid #DEA0F2;
+	outline: 1px solid #774983;
+	padding-top: 5px;
+	padding-left: 20px;
+}
+.table_body {
+	background: #EFE9F3 url(<%= image_path 'workspace/workbook_shadow.png' %>) no-repeat center top;
+	outline: 1px solid #774983;
+	width: auto;
+	height: auto;
+	padding: 10px;
+	color: #4F3157;
+	font-family: Helvetica, Arial Rounded MT Bold, Nunito;
+}
+.table_body input {
+	color: #774983;
+	border: 1px solid #4F3157;
+	margin: 2px;
+	padding: 4px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.table_body input[type="submit"] {
+	color: #4F3157;
+	background: url('/assets/workspace/workspace_button_bg.png') no-repeat center;
+	text-align: center;
+	width: 130px;
+	height: 40px;
+	//color: #8F75AC;
+	padding-top: 5px;
+	font-family: Arial Rounded MT Bold, Nunito;
+	display: inline-block;
+	border: none;
+	font-size: 16px;
+	height: 45px;
+}
 #content .drawing {
 	border: 1px solid black;
 }
-#content .selected_feedback {
-	border: 3px solid blue;
+#content .feedback_correct_btn, #content .feedback_incorrect_btn, #content .feedback_incomplete_btn {
+	opacity: 0.4;
 }
+#content .selected_feedback {
+	opacity: 1;
+	//background: rgba(0, 0, 0, 0.6);
+}
+/*******************************
+            Feedback
+*******************************/
+
