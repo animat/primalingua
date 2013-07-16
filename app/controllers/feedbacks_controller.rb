@@ -24,14 +24,13 @@ class FeedbacksController < ApplicationController
   # POST /feedbacks
   # POST /feedbacks.json
   def create
-    @feedback = Feedback.new(feedback_params)
+    @feedback = Feedback.where(:feedbackable_id => feedback_params[:feedbackable_id], 
+                                :feedbackable_type => feedback_params[:feedbackable_type]).first_or_initialize
 
     respond_to do |format|
-      if @feedback.save
-        format.html { redirect_to @feedback, notice: 'Feedback was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @feedback }
+      if @feedback.update(feedback_params)
+        format.json { render json: @feedback.to_json, status: :created, location: @feedback }
       else
-        format.html { render action: 'new' }
         format.json { render json: @feedback.errors, status: :unprocessable_entity }
       end
     end
@@ -69,6 +68,6 @@ class FeedbacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def feedback_params
-      params.require(:feedback).permit(:type, :content)
+      params.require(:feedback).permit(:id, :status, :content, :feedbackable_type, :feedbackable_id)
     end
 end

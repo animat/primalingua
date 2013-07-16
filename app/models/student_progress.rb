@@ -14,6 +14,7 @@ class StudentProgress < ActiveRecord::Base
 	belongs_to :student
 	belongs_to :lesson
 	has_many :notifications, as: :notifiable
+	has_one :feedback, as: :feedbackable
 
 	attr_accessible :student_id, :lesson_id, :status
 end
