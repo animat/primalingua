@@ -8,6 +8,7 @@ gem 'jbuilder', '~> 1.0.1'
 gem "protected_attributes", "~> 1.0.0"
 gem "jquery-rails"
 gem "devise"
+gem "paperclip"
 gem "mercury-rails", git: 'https://github.com/jejacks0n/mercury.git'
 
 
@@ -21,6 +22,8 @@ group :production, :staging do
   gem "pg"
   gem "rails_12factor"
   gem "unicorn"
+  gem "rails_log_stdout", github: 'heroku/rails_log_stdout'
+  gem "rails3_serve_static_assets", github: 'heroku/rails3_serve_static_assets'
 end
 
 group :development do
@@ -34,4 +37,3 @@ group :test do
   gem "capybara"
   gem "factory_girl"
 end
-gem 'paperclip'
