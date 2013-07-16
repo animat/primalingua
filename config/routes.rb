@@ -12,7 +12,7 @@ Pl2::Application.routes.draw do
 
   resources :students, :except => [:new, :create, :delete] do
     resources :milestones do
-      match "(in_unit/:unit_id)" => "milestones#in_unit", on: :collection, as: :in_unit, via: :get
+      match "(around_lesson/:lesson_id)" => "milestones#around_lesson", on: :collection, as: :around_lesson, via: :get
     end
   end
 

@@ -6,9 +6,17 @@ class MilestonesController < ApplicationController
 		render json: @m.to_json, status: :ok
 	end
 
-	def in_unit
-		@m = Milestone.in_unit(params[:unit_id]).where(:student_id => params[:student_id])
-		render json: @m.to_json, status: :ok
+	def around_lesson
+		@current_lesson = Lesson.select_without_content.find(params[:lesson_id])
+		@lessons_in_unit = Lesson.select_without_content.where(:unit_id => @current_lesson.unit_id)
+		@milestones_in_unit = Milestone.in_unit(@current_lesson.unit_id)
+
+		@lessons = []
+		@lessons_in_unit.each do |lesson|
+			@milestones_in_unit.select {|m| lesson.milestones = [m] if m.lesson_id == lesson.id }
+			@lessons.push(lesson)
+		end
+		render json: @lessons.to_json(include: :milestones), status: :ok
 	end
 
 	def show

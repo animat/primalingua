@@ -26,4 +26,8 @@ class Lesson < ActiveRecord::Base
   def full_title
   	"Unit #{self.unit.number}, lesson #{self.number}: #{self.title}"
   end
+
+  def self.select_without_content
+    select(column_names - ["content"].map(&:to_s))
+  end
 end
