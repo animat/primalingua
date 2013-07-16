@@ -12,7 +12,7 @@ class AnswersController < ApplicationController
       @q = Question.where(:lesson => @lesson).count 
       @a = Answer.by_student(@student).in_lesson(@lesson).count
       if @q == @a
-        create_progress_and_notification(@lesson, @student, @student.teacher, "completed")
+        create_milestone_and_notification(@lesson, @student, @student.teacher, "completed")
       end
       render :json => @answer, :status => :ok
   	else
@@ -25,9 +25,9 @@ class AnswersController < ApplicationController
   	params.require(:answer).permit(:student_id, :question_id, :content)
   end
 
-  def create_progress_and_notification(les, stu, recip, stat)
-    @sp = StudentProgress.where(:student_id => stu, :lesson_id => les, :status => stat).first_or_create!
-    @n = Notification.where(:notifiable => @sp, :recipientable => recip).first_or_create!
-    puts "Student progress: lesson complete! Notifying the teacher now."
+  def create_milestone_and_notification(les, stu, recip, stat)
+    @m = Milestone.where(:student_id => stu, :lesson_id => les, :status => stat).first_or_create!
+    @n = Notification.where(:notifiable => @m, :recipientable => recip).first_or_create!
+    puts "Milestone: lesson complete! Notifying the teacher now."
   end
 end

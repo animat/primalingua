@@ -11,8 +11,8 @@ Pl2::Application.routes.draw do
   get "students/:student_id/lesson/:lesson_id/answers", to: "answers#show", :as => "student_answers_in_lesson"
 
   resources :students, :except => [:new, :create, :delete] do
-    resources :student_progresses do
-      match "(in_unit/:unit_id)" => "student_progresses#in_unit", on: :collection, as: :in_unit, via: :get
+    resources :milestones do
+      match "(in_unit/:unit_id)" => "milestones#in_unit", on: :collection, as: :in_unit, via: :get
     end
   end
 

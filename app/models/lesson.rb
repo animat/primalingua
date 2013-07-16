@@ -17,7 +17,7 @@ class Lesson < ActiveRecord::Base
   has_one :lesson_plan
   has_many :questions
   has_many :sections
-  has_many :student_progresses
+  has_many :milestones
 
   validates_presence_of :unit
 

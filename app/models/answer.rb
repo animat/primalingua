@@ -26,12 +26,8 @@ class Answer < ActiveRecord::Base
   	where(:student_id => sid)
   end
 
-  #def self.in_lesson(lid)
-  #	joins(:question).where("questions.lesson_id = ?", lid)
-  #end
-
-  scope :in_lesson, lambda { |lid|
+  def self.in_lesson (lid)
     joins(:question).
     where("questions.lesson_id = ?", lid)
-  }
+  end
 end
