@@ -31,6 +31,8 @@ class Student < ActiveRecord::Base
   belongs_to :section
   has_one :teacher, through: :section
   has_many :answers
+  has_many :student_progresses
+  has_many :notifications, as: :recipientable
 
   def display_name
   	"#{first_name} #{last_name}"

@@ -1,7 +1,19 @@
 <% content_for :page_script do %>
 <script type="text/javascript">
+	var lesson_id = <%= params[:lesson_id] %>;
+	var student_id = <%= params[:student_id] %>;
 	$(document).ready(function() {
 		resizeWindow();
+		$("#lesson_select_menu").val(lesson_id + "");
+		$("#student_select_menu").val(student_id + "");
+		$("#lesson_select_menu").on('change', function(val) {
+			lesson_id = $(this).val();
+			location.href = "<%= grading_teachers_path %>/student/"+student_id+"/lesson/"+lesson_id;
+		});
+		$("#student_select_menu").on('change', function(val) {
+			student_id = $(this).val();
+			location.href = "<%= grading_teachers_path %>/student/"+student_id+"/lesson/"+lesson_id;
+		});
 	});
 	window.onresize = function() {
 		resizeWindow();
@@ -18,14 +30,8 @@
 	<div id="student_search">
 		<a href="#" onClick="changeStudent(1);" id="arrow_right"></a>
 		<a href="#" onClick="changeStudent(-1);" id="arrow_left"></a>
-		<select id="student_select" onchange="getLessonPlan();">
-			<option value="1">Colin Roberts</option>
-			<option value="2">Brandon Jackson-Shorts</option>
-			<option value="3">John Ghallagher</option>
-			<option value="4">BC Angevine</option>
-			<option value="5">Margaret Roberts</option>
-			<option value="6">Douglas Roberts</option>
-		<select>
+		<%= grouped_collection_select :student, :id, Section.by_teacher(current_teacher.id), :students, :name, :id, :display_name, {}, {:id => "student_select_menu"}%>
+		<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
 	</div>
 
 	
@@ -37,44 +43,6 @@
 
 
 <div id="teacher_guide_workbook" class="half_width float_left">
-	<h2>Teachers' guide here</h2>
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-
-	<br />
-	<br />
-	<br />
-
-	<br />
-	<br />
-
-	<br /><br />
-	<br />
-
-	<br />
-	<br />
-	<br />
-
-	<br />
-	<br />
-	<br />
-
-	<br />
-	<br />
-
-	<br />
-	<br />
-
-	</div>
+	<%= @lesson.content.gsub("\\r\\n", "").html_safe %>
 
 <br class="clear_float" />

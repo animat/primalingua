@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130715143951) do
+ActiveRecord::Schema.define(version: 20130715181211) do
 
   create_table "admins", force: true do |t|
     t.string   "email",                              default: "", null: false
@@ -73,6 +73,17 @@ ActiveRecord::Schema.define(version: 20130715143951) do
     t.datetime "updated_at"
   end
 
+  create_table "notifications", force: true do |t|
+    t.boolean  "unread",             default: true
+    t.boolean  "emailed_at"
+    t.integer  "notifiable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "notifiable_type"
+    t.integer  "recipientable_id"
+    t.string   "recipientable_type"
+  end
+
   create_table "questions", force: true do |t|
     t.integer  "lesson_id"
     t.text     "tg_answer"
@@ -103,6 +114,14 @@ ActiveRecord::Schema.define(version: 20130715143951) do
   end
 
   add_index "sections", ["teacher_id"], name: "index_sections_on_teacher_id"
+
+  create_table "student_progresses", force: true do |t|
+    t.integer  "student_id"
+    t.integer  "lesson_id"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "students", force: true do |t|
     t.string   "email",                              default: "", null: false

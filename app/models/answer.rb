@@ -16,6 +16,7 @@
 class Answer < ActiveRecord::Base
   belongs_to :student
   belongs_to :question
+  has_many :notifications, as: :notifiable
 
   attr_accessible :student_id, :question_id, :content, :feedback, :feedback_status
 
