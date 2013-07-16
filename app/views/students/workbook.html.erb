@@ -18,38 +18,6 @@ $(function() {
 	 		}
 		});
 	});
-	<% if student_signed_in? %>
-	loadStudentTimeline();
-	<% elsif teacher_signed_in? or admin_signed_in? %>
-	$(document).on("blur", ".feedback_txt", function() {
-		var qid = $(this).attr("name").split("_")[1];
-		var sid = <%= @student.id %>;
-		var f = $(this).val();
-		var d = {answer: {student_id: sid, question_id: qid, feedback: f}, authenticity_token: "<%= form_authenticity_token %>"};
-	 	saveFeedback(d);
-	});
-	$(document).on("click", ".feedback_correct_btn", function() {
-		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
-		var sid = <%= @student.id %>;
-		var fs = "correct";
-		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
-		saveFeedback(d, $(this).parent(), ".feedback_correct_btn");
-	});
-	$(document).on("click", ".feedback_incomplete_btn", function() {
-		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
-		var sid = <%= @student.id %>;
-		var fs = "incomplete";
-		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
-		saveFeedback(d, $(this).parent(), ".feedback_incomplete_btn");
-	});
-	$(document).on("click", ".feedback_incorrect_btn", function() {
-		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
-		var sid = <%= @student.id %>;
-		var fs = "incorrect";
-		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
-		saveFeedback(d, $(this).parent(), ".feedback_incorrect_btn");
-	});
-	<% end %>
 	$(".drawing").each(function() {
         var tmpID = $(this).attr("id");
         var r = new RoCanvas;
@@ -88,16 +56,47 @@ $(function() {
 		$("#d_"+num).show();
 		$("#d_"+num).siblings(".drawing_tools").show();
 		return false;
-	})
-
+	});
+	<% if student_signed_in? %>
+	loadStudentTimeline();
+	<% elsif teacher_signed_in? or admin_signed_in? %>
+	$(document).on("blur", ".feedback_txt", function() {
+		var qid = $(this).attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var f = $(this).val();
+		var d = {answer: {student_id: sid, question_id: qid, feedback: f}, authenticity_token: "<%= form_authenticity_token %>"};
+	 	saveFeedback(d);
+	});
+	$(document).on("click", ".feedback_correct_btn", function() {
+		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var fs = "correct";
+		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
+		saveFeedback(d, $(this).parent(), ".feedback_correct_btn");
+	});
+	$(document).on("click", ".feedback_incomplete_btn", function() {
+		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var fs = "incomplete";
+		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
+		saveFeedback(d, $(this).parent(), ".feedback_incomplete_btn");
+	});
+	$(document).on("click", ".feedback_incorrect_btn", function() {
+		var qid = $(this).parent().siblings(".feedback_txt").attr("name").split("_")[1];
+		var sid = <%= @student.id %>;
+		var fs = "incorrect";
+		var d = {answer: {student_id: sid, question_id: qid, feedback_status: fs}, authenticity_token: "<%= form_authenticity_token %>"};
+		saveFeedback(d, $(this).parent(), ".feedback_incorrect_btn");
+	});
+	<% end %>
 	populate();
 })
 
 function populate() {
 	$.getJSON("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>").success(function(answers) {
 		for (var i = 0; i < answers.length; i++) {
-			displayAnswer(answers[i].answer);
-			displayFeedback(answers[i].answer);
+			displayAnswer(answers[i]);
+			displayFeedback(answers[i]);
 		}
 	}).error(function(data) {
 		console.log("Error fetching answer JSON.");
@@ -112,6 +111,7 @@ function replaceDrawing(answer) {
 	$("#d_"+answer.question.id).parent().append(display_div);
 }
 function displayAnswer(answer) {
+	console.log(answer);
 	switch (answer.question.input_type) {
 		case "text":
 			$("[name=q_"+answer.question.id+"]").val(answer.content);
