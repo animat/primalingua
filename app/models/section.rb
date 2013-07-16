@@ -22,6 +22,3 @@ class Section < ActiveRecord::Base
   validates_presence_of :lesson_id
 
 end
-def after_initialize
-  	self.lesson ||= Lesson.first
- end
