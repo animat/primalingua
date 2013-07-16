@@ -111,6 +111,30 @@ a {
 	clear: both;
 }
 /****************************************
+			  Resources
+****************************************/
+#resource {
+	height: auto;
+	width: 100%;
+	position: absolute;
+	top: 197px;
+	z-index: 2;
+	text-align: center;
+	background: #E6D9EA url(<%= image_path 'workspace/workbook_shadow2.png' %>) no-repeat center bottom;
+	overflow-y: scroll;
+}
+#resource ul {
+	margin-bottom: 50px;
+}
+#resource_button {
+	width: 100%;
+	height: 27px;
+	position: absolute;
+	bottom: 0px;
+	background: url(<%= image_path 'workspace/resource_bar2.png' %>) repeat-x center;
+	text-align: center;
+}
+/****************************************
 			Planning view
 ****************************************/
 #lessonplan {
@@ -119,7 +143,26 @@ a {
 	float: left;
 	position: relative;
 	height: 100%;
-	overflow-y:scroll;
+	overflow-y: scroll;
+}
+#workbook_example {
+	max-width: 50%;
+	min-width: 400px;
+	float: right;
+	height: 100%;
+	overflow-y: scroll;
+	position: relative;
+}
+#workbook_tools {
+	width: 250px;
+	height: 40px;
+	position: absolute;
+	top: 25px;
+	right: 5px;
+	display: inline-block;
+	color: #222;
+	font-family: Arial Rounded MT Bold, Nunito;
+	font-size: 10px;
 }
 #lessons {
 	margin: 20px;
@@ -127,7 +170,6 @@ a {
 	box-shadow: 0px 0px 20px 4px rgba(0, 0, 0, 0.2);
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	padding: 20px;
 }
 #lessonplans {
 	margin-right: 50px;
@@ -175,54 +217,60 @@ a {
 /****************************************
 			Grading view
 ****************************************/
-#selectMenu {
+#student_select_menu {
 	position: absolute;
-	right: 40px;
-	top: 40px;
-}
-#student_workbook, #teacher_guide_workbook {
-	min-width: 400px;
-	height: 100%;
-	overflow-y: scroll;
-	position: relative;
+	right: 50px;
+	top: 12px;
 }
 #student_workbook {
 	margin: 0px 20px 20px 20px;
 	padding: 0px 15px;
 }
-#grading_area {
+#teacher_guide_workbook {
+	max-width: 50%;
 	min-width: 400px;
-	position: relative;
+	float: right;
 	height: 100%;
+	overflow-y: scroll;
+	position: relative;
+}
+#grading_area {
+	max-width: 50%;
+	min-width: 400px;
+	height: 100%;
+	float: left;
+	position: relative;
+	overflow-y: auto;
 }
 #student_search {
-	width: 282px;
-	height: 60px;
+	width: 95%;
+	height: 45px;
 	background: url(<%= image_path 'workspace/grading_search.png' %>) no-repeat center;
 	position: absolute;
-	top: 0px;
+	top: 10px;
 	right: 20px;
 	z-index: 2;
+	background-image: -webkit-linear-gradient(top, #B382B9, #9B7BAB);
+	border: 1px solid #6A507C;
+	box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.5);
 }
 #arrow_right {
-	width: 76px;
-	height: 122px;
-	background: url(<%= image_path 'workspace/arrow_right.png' %>) no-repeat center;
+	width: 50px;
+	height: 50px;
+	background: url(<%= image_path 'workspace/arrow_right_2.png' %>) no-repeat center;
 	position: absolute;
 	z-index: 2;
-	top: 50%;
-	right: 20px;
-	margin-top: -66px;
+	top: -2px;
+	right: -3px;
 }
 #arrow_left {
-	width: 76px;
-	height: 122px;
-	background: url(<%= image_path 'workspace/arrow_left.png' %>) no-repeat center;
+	width: 50px;
+	height: 50px;
+	background: url(<%= image_path 'workspace/arrow_left_2.png' %>) no-repeat center;
 	position: absolute;
 	z-index: 2;
-	top: 50%;
-	left: 0px;
-	margin-top: -66px;
+	top: -2px;
+	left: -3px;
 }
 #student_search #student_select {
 	position: absolute;
@@ -234,7 +282,6 @@ a {
 	top: 15px;
 	left: 20px;
 }
-
 /****************************************
 		Shared workbook styles
 ****************************************/
@@ -715,7 +762,3 @@ td {
 	opacity: 1;
 	//background: rgba(0, 0, 0, 0.6);
 }
-/*******************************
-            Feedback
-*******************************/
-

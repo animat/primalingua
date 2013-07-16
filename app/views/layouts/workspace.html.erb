@@ -33,6 +33,14 @@
 					
 				</div>
 			</div>
+			<div id="resource">
+				<div>
+					<%= render :partial => "layouts/resources_box", :locals => {:resources => @resources} %>
+				</div>
+				<div id="resource_button">
+					<%= image_tag("workspace/resource_button2.png") %>
+				</div>
+			</div>
 		<% elsif teacher_signed_in? %>
 			<div id="nav">
 				<%= link_to planning_teachers_path do %>
@@ -58,6 +66,8 @@
 		<% elsif admin_signed_in? %>
 			<div id="nav">
 				<div id="buttons">
+					<%= link_to image_tag("workspace/button_home.png"), teacher_path(current_teacher) %>
+					<%= link_to image_tag("workspace/button_signout.png"), destroy_student_session_path %>
 				</div>
 			</div>
 		<% end %>

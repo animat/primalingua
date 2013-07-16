@@ -1,8 +1,34 @@
-
+<% content_for :page_script do %>
+<script type="text/javascript">
+	$(document).ready(function() {
+		resizeWindow();
+		$("#lesson_select_menu").on('change', function(val) {
+			var loc = $(this).val();
+			location.href = "<%= planning_teachers_path %>/"+loc;
+		});
+	});
+	window.onresize = function() {
+		resizeWindow();
+	}
+	function resizeWindow() {
+		var num = window.innerHeight;
+		var middleHeight = window.innerHeight - (document.getElementById('head').offsetHeight + 16) + 15;
+		var middle = document.getElementById('workspace');
+		$(middle).css("height", middleHeight);
+	}
+</script>
+<% end %>
+<% content_for :head do %>
+	<style>
+		#content {
+			margin: 20px;
+		}
+	</style>
+<% end %>
 <div id="lessonplan" class="half_width">
 	<div id="lessons">
 		<div id="selectMenu">
-		
+			<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
 		</div>
 		<div id="lessonplans">
 			<%= @lesson_plan.content.gsub("\\r\\n", "").html_safe %>
@@ -10,24 +36,16 @@
 	</div>
 </div>
 
-<div id="workbook" class="half_width">
+<div id="workbook_example" class="half_width">
 	<div id="workbook_tools">
-		<label><input type="checkbox" checked=checked onChange="toggleLessonSelect();" />Sync with Lesson Plans</label>
-		<div id="selectMenu2"></div>
 	</div>
-	<div id="content">
-		<% unless flash[:notice].nil? %>
-			<p class="flash_notice"><%= flash[:notice]%></p>
-		<% end %>
-		<% unless flash[:error].nil? %>
-			<p class="flash_error"><%= flash[:error] %></p>
-		<% end %>
-
-		<h1><%= "Unit #{@unit.number}" %></h1>
-		<h2><%= "What is language" %></h2>
-		<h4><%= "Lesson 1: #{@lesson_plan.lesson.title}" %></h4>
-
+	<% unless flash[:notice].nil? %>
+		<p class="flash_notice"><%= flash[:notice]%></p>
+	<% end %>
+	<% unless flash[:error].nil? %>
+		<p class="flash_error"><%= flash[:error] %></p>
+	<% end %>
+	<div id="lesson">
 		<%= @workbook_content.html_safe %>
-
 	</div>
 </div>

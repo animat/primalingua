@@ -1,5 +1,10 @@
 Pl2::Application.routes.draw do
 
+  namespace :mercury do
+    resources :images
+  end
+  mount Mercury::Engine => '/'
+
   devise_for :students, :controllers => {:registrations => "students/registrations"}
   devise_for :teachers, :controllers => {:registrations => "teachers/registrations"}
   devise_for :admins, :controllers => {:registrations => "admins/registrations"}
@@ -20,7 +25,10 @@ Pl2::Application.routes.draw do
     resources :sections
   end
 
-  resources :lessons, :lesson_plans, :resources, :units, :feedbacks, :sections, :answers, :notifications
+  resources :lesson_plans, :resources, :units, :feedbacks, :sections, :answers, :notifications
+  resources :lessons do 
+    member { put :mercury_update}
+  end
   
   root to: 'about#index'
 

@@ -21,6 +21,7 @@ class StudentsController < ApplicationController
         @lesson = @student.section.lesson
       end
   	  @workbook_content = @lesson.content.gsub("\\r\\n", "")
+      @resources = Resource.where(:unit_id => @lesson.unit_id)
   	  render :layout => "workspace"
   	else
   	  flash[:error] = "Please login to a student account to view the workbook."

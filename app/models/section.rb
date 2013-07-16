@@ -21,4 +21,7 @@ class Section < ActiveRecord::Base
   validates_uniqueness_of :code
   validates_presence_of :lesson_id
 
+  def self.by_teacher(tid)
+	where(:teacher_id => tid)
+  end
 end

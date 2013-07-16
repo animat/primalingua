@@ -7,6 +7,12 @@ Admin.create!([
 ], :without_protection => true )
 
 
+Unit.create!([
+  { :id => 1, :number => 1, :title => "First unit", :created_at => "2013-07-09 03:43:34", :updated_at => "2013-07-09 03:47:51" },
+  { :id => 2, :number => 2, :title => "Second unit", :created_at => "2013-07-09 05:10:11", :updated_at => "2013-07-09 05:10:11" },
+  { :id => 3, :number => 3, :title => "Spoken vs. Written", :created_at => "2013-07-10 21:01:39", :updated_at => "2013-07-10 21:01:39" }
+], :without_protection => true )
+
 
 Answer.create!([
   { :id => 1, :student_id => 1, :content => "abc", :question_id => 1, :created_at => "2013-07-10 21:00:00", :updated_at => "2013-07-11 23:30:30", :feedback => "Not there yet...", :feedback_status => "incomplete", :feedback_updated_at => "2013-07-10 21:42:41" },
@@ -329,14 +335,6 @@ StudentProgress.create!([
 
 Teacher.create!([
   { :id => 1, :email => "teacher@example.com", :password => "tester", :password_confirmation => "tester", :reset_password_token => nil, :reset_password_sent_at => nil, :remember_created_at => nil, :sign_in_count => 3, :current_sign_in_at => "2013-07-15 12:43:17", :last_sign_in_at => "2013-07-12 18:43:08", :current_sign_in_ip => "127.0.0.1", :last_sign_in_ip => "127.0.0.1", :created_at => "2013-07-10 20:30:24", :updated_at => "2013-07-15 12:43:17", :first_name => "Margaret", :last_name => "Roberts", :display_name => nil }
-], :without_protection => true )
-
-
-
-Unit.create!([
-  { :id => 1, :number => 1, :title => "First unit", :created_at => "2013-07-09 03:43:34", :updated_at => "2013-07-09 03:47:51" },
-  { :id => 2, :number => 2, :title => "Second unit", :created_at => "2013-07-09 05:10:11", :updated_at => "2013-07-09 05:10:11" },
-  { :id => 3, :number => 3, :title => "Spoken vs. Written", :created_at => "2013-07-10 21:01:39", :updated_at => "2013-07-10 21:01:39" }
 ], :without_protection => true )
 
 

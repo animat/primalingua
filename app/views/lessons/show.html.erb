@@ -13,11 +13,16 @@
   <%= @lesson.title %>
 </p>
 
+
+
 <p>
-  <strong>Content:</strong>
-  <%= @lesson.content.gsub(/\\r\\n/, "").html_safe %>
+ <strong>Content:</strong>
+  	<div id="workbook_editor" class="mercury-region" data-type="editable" contenteditable="true" data-mercury="full">
+  		<%= @lesson.content.gsub(/\\r\\n/, "").html_safe %>
+  	</div>
+
 </p>
 
 
-<%= link_to 'Edit', edit_lesson_path(@lesson) %> |
+<%= link_to 'Edit', "/editor" + request.path, id: "edit_link", data: {save_url: mercury_update_lesson_path(@lesson)} %> |
 <%= link_to 'Back', lessons_path %>
