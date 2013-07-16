@@ -111,6 +111,30 @@ a {
 	clear: both;
 }
 /****************************************
+			  Resources
+****************************************/
+#resource {
+	height: auto;
+	width: 100%;
+	position: absolute;
+	top: 197px;
+	z-index: 2;
+	text-align: center;
+	background: #E6D9EA url(<%= image_path 'workspace/workbook_shadow2.png' %>) no-repeat center bottom;
+	overflow-y: scroll;
+}
+#resource ul {
+	margin-bottom: 50px;
+}
+#resource_button {
+	width: 100%;
+	height: 27px;
+	position: absolute;
+	bottom: 0px;
+	background: url(<%= image_path 'workspace/resource_bar2.png' %>) repeat-x center;
+	text-align: center;
+}
+/****************************************
 			Planning view
 ****************************************/
 #lessonplan {

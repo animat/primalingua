@@ -1,7 +1,18 @@
 <% content_for :page_script do %>
 <script type="text/javascript">
-
+var initHeight;
+var finHeight;
+var headInitHeight;
+var headFinalHeight;
 $(function() {
+	/****************
+			Resource JS
+			   ****************/
+	initHeight = 27;
+	headInitHeight = $("#head_student").css("height");
+	headFinHeight = parseInt(headInitHeight) + (finHeight - initHeight);
+	finHeight = $("#resource").css("height");
+	$("#resource").css("height", initHeight);
 	$(document).on("blur", ".question", function() {
 		var qid = $(this).attr("name").split("_")[1];
 		var sid = <%= @student.id %>;
@@ -33,6 +44,15 @@ $(function() {
                    color: 'black'        
                }
            });
+	});
+	$("#resource_button").on("click", function() {
+		if ($("#resource").css("height") == initHeight+"px") {
+			$("#resource").animate({"height": finHeight}, 200);
+			$("#head_student").animate({"height": headFinHeight}, 200);
+		} else {
+			$("#resource").animate({"height": initHeight}, 200);
+			$("#head_student").animate({"height": headInitHeight}, 200);
+		}
 	});
 	$(document).on("click", ".drawing_save_btn", function() {
 		var qid = $(this).attr("id").toString().split("_")[2];
@@ -248,7 +268,5 @@ function displayStudentTimeline() {
 
 </script>
 <% end %>
-
-<%= debug @student.notifications %>
 
 <%= @workbook_content.html_safe %>
