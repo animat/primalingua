@@ -8,10 +8,16 @@
        
       <div id="section_current_lesson">
         This section is currently on 
-        <%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
+        <br /><%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
         <br /><br />
+        <div>
+          <div><%= link_to image_tag("workspace/button_planning.png"), planning_teachers_path(@section.lesson) %></div>
+          <div><%= link_to image_tag("workspace/button_grading.png"), grading_teachers_path(@section.lesson) %></div>
+          <div><%= link_to image_tag("workspace/button_in_class.png"), in_class_teachers_path(@section.lesson) %></div>
+        </div>
         This section's class code is <h1><%= @section.code %></h1>
       </div>
+
       <div> 
         <%= link_to edit_section_path(@section) do %>
           <div class="workspace_button">

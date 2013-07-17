@@ -3,8 +3,16 @@ class TeachersController < ApplicationController
 
   def grading
     @lesson = Lesson.find(params[:lesson_id])
-    @student = Student.find(params[:student_id])
-    @sections = Section.first
+    if params[:student_id] != nil
+      @student = Section.find(params[:student_id])
+      @section = @student.section
+    elsif params[:section_id] != nil
+      @section = Section.find(params[:section_id])
+      @student = @section.students.first
+    else
+      flash[:error] = "Please select a section before grading."
+      redirect_to :back
+    end
     @resources = Resource.where(:unit_id => @lesson.unit_id)
   end
 

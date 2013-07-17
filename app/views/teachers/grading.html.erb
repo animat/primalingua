@@ -8,11 +8,11 @@
 		$("#student_select_menu").val(student_id + "");
 		$("#lesson_select_menu").on('change', function(val) {
 			lesson_id = $(this).val();
-			location.href = "<%= grading_teachers_path %>/student/"+student_id+"/lesson/"+lesson_id;
+			location.href = "<%= grading_teachers_path %>/lesson/"+lesson_id+"/student/"+student_id;
 		});
 		$("#student_select_menu").on('change', function(val) {
 			student_id = $(this).val();
-			location.href = "<%= grading_teachers_path %>/student/"+student_id+"/lesson/"+lesson_id;
+			location.href = "<%= grading_teachers_path %>/lesson/"+lesson_id+"/student/"+student_id;
 		});
 		populate();
 	});
