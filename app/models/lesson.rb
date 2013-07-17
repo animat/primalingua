@@ -17,7 +17,7 @@ class Lesson < ActiveRecord::Base
   has_one :lesson_plan
   has_many :questions
   has_many :sections
-  has_many :student_progresses
+  has_many :milestones
 
   validates_presence_of :unit
 
@@ -25,5 +25,9 @@ class Lesson < ActiveRecord::Base
 
   def full_title
   	"Unit #{self.unit.number}, lesson #{self.number}: #{self.title}"
+  end
+
+  def self.select_without_content
+    select(column_names - ["content"].map(&:to_s))
   end
 end

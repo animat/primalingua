@@ -2,15 +2,12 @@
 #
 # Table name: answers
 #
-#  id                  :integer          not null, primary key
-#  student_id          :integer
-#  content             :text
-#  question_id         :integer
-#  created_at          :datetime
-#  updated_at          :datetime
-#  feedback            :text
-#  feedback_status     :string(255)
-#  feedback_updated_at :datetime
+#  id          :integer          not null, primary key
+#  student_id  :integer
+#  content     :text
+#  question_id :integer
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 
 class Answer < ActiveRecord::Base
@@ -18,6 +15,7 @@ class Answer < ActiveRecord::Base
   belongs_to :question
   has_one :lesson, :through => :question
   has_many :notifications, as: :notifiable
+  has_one :feedback, as: :feedbackable
 
   attr_accessible :student_id, :question_id, :content, :feedback, :feedback_status
 
@@ -28,12 +26,8 @@ class Answer < ActiveRecord::Base
   	where(:student_id => sid)
   end
 
-  #def self.in_lesson(lid)
-  #	joins(:question).where("questions.lesson_id = ?", lid)
-  #end
-
-  scope :in_lesson, lambda { |lid|
+  def self.in_lesson (lid)
     joins(:question).
     where("questions.lesson_id = ?", lid)
-  }
+  end
 end

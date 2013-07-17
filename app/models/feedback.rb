@@ -11,16 +11,8 @@
 #  updated_at        :datetime
 #
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+class Feedback < ActiveRecord::Base
+	belongs_to :feedbackable, polymorphic: true
 
-one:
-  content: MyText
-  status: MyString
-  feedbackable_type: MyString
-  feedbackable_id: 1
-
-two:
-  content: MyText
-  status: MyString
-  feedbackable_type: MyString
-  feedbackable_id: 1
+	attr_accessible :content, :status, :feedbackable_type, :feedbackable_id
+end

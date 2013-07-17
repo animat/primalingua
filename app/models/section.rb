@@ -24,5 +24,4 @@ class Section < ActiveRecord::Base
   def self.by_teacher(tid)
 	where(:teacher_id => tid)
   end
-
 end
