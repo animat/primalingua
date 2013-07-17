@@ -11,12 +11,9 @@ gem "devise"
 gem "paperclip"
 gem "mercury-rails", git: 'https://github.com/jejacks0n/mercury.git'
 
-
-group :assets do
-  gem 'sass-rails',   '~> 4.0.0'
-  gem 'coffee-rails', '~> 4.0.0'
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'sass-rails',   '~> 4.0.0'
+gem 'coffee-rails', '~> 4.0.0'
+gem 'uglifier', '>= 1.0.3'
 
 group :production, :staging do
   gem "pg"
