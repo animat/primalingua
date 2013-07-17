@@ -8,21 +8,11 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @lesson.title %>
-</p>
+<p id="teachers_guide_notice">You are currently editing the teachers' guide. Any changes made to answers on this page will be saved as answers in the teachers' guide (pending approval).</p>
 
-
-
-<p>
- <strong>Content:</strong>
-  	<div id="workbook_editor" class="mercury-region" data-type="editable" contenteditable="true" data-mercury="full">
-  		<%= @lesson.content.gsub(/\\r\\n/, "").html_safe %>
-  	</div>
-
-</p>
-
+<div id="workbook_editor" class="mercury-region" data-type="editable" contenteditable="true" data-mercury="full">
+	<%= @lesson.content.gsub(/\\r\\n/, "").html_safe %>
+</div>
 
 <%= link_to 'Edit', "/editor" + request.path, id: "edit_link", data: {save_url: mercury_update_lesson_path(@lesson)} %> |
 <%= link_to 'Back', lessons_path %>

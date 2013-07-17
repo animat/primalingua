@@ -1,5 +1,6 @@
 class LessonsController < ApplicationController
   before_action :set_lesson, only: [:show, :edit, :update, :destroy]
+  before_action :verify_admin
 
   # GET /lessons
   # GET /lessons.json
@@ -52,10 +53,7 @@ class LessonsController < ApplicationController
   end
   def mercury_update
     @lesson = Lesson.find(params[:id])
-    puts "*"*50
-    puts "Saving content..."
     @lesson.content = params[:content][:workbook_editor][:value]
-    puts @lesson.content
     if @lesson.save
       render text: ""
     else
@@ -82,5 +80,11 @@ class LessonsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def lesson_params
       params.require(:lesson).permit(:title, :content, :unit)
+    end
+
+    def verify_admin
+      unless admin_signed_in?
+        redirect_to root_path
+      end
     end
 end

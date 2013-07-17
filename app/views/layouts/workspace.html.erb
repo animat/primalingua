@@ -3,20 +3,19 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title><%= yield(:title) or 'Prima Lingua' %></title>
-	<%= stylesheet_link_tag 'workspace' %>
-	<%= stylesheet_link_tag 'rocanvas' %>
+	<%= stylesheet_link_tag 'application' %>
 	<%= javascript_include_tag 'application' %>
 	<link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
 	<%= yield(:head) %>
 	<%= yield(:page_script) %>
 </head>
-<body>
+<body id="workspace">
 	<div id="<%= fullscreen_header_type %>">
 		<div id="topnav">
 			<div id="logo"></div>
 		</div>
 		<% if student_signed_in? %>
-			<div id="nav">
+			<div id="workspace_nav">
 				<div id="buttons">
 					<%= link_to image_tag("workspace/button_signout.png"), destroy_student_session_path %>
 					<%= link_to image_tag("workspace/button_settings.png"), edit_student_registration_path %>
@@ -42,7 +41,7 @@
 				</div>
 			</div>
 		<% elsif teacher_signed_in? %>
-			<div id="nav">
+			<div id="workspace_nav">
 				<%= link_to planning_teachers_path do %>
 					<div class="nav_option">
 						Planning
@@ -64,7 +63,7 @@
 				</div>
 			</div>
 		<% elsif admin_signed_in? %>
-			<div id="nav">
+			<div id="workspace_nav">
 				<div id="buttons">
 					<%= link_to image_tag("workspace/button_home.png"), teacher_path(current_teacher) %>
 					<%= link_to image_tag("workspace/button_signout.png"), destroy_student_session_path %>
