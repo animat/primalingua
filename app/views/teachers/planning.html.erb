@@ -25,6 +25,8 @@
 		}
 	</style>
 <% end %>
+
+<% if current_teacher.premium %>
 <div id="lessonplan" class="half_width">
 	<div id="lessons">
 		<div id="selectMenu">
@@ -49,3 +51,15 @@
 		<%= @workbook_content.html_safe %>
 	</div>
 </div>
+<% else %>
+<div id="lessonplan" class="full_width">
+	<div id="lessons">
+		<div id="selectMenu">
+			<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
+		</div>
+		<div id="lessonplans">
+			<%= @lesson_plan.content.gsub("\\r\\n", "").html_safe %>
+		</div>
+	</div>
+</div>
+<% end %>

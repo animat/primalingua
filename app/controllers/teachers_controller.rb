@@ -2,18 +2,22 @@ class TeachersController < ApplicationController
   layout "workspace", :except => [:index]
 
   def grading
-    @lesson = Lesson.find(params[:lesson_id])
-    if params[:student_id] != nil
-      @student = Section.find(params[:student_id])
-      @section = @student.section
-    elsif params[:section_id] != nil
-      @section = Section.find(params[:section_id])
-      @student = @section.students.first
+    if current_teacher.premium
+      @lesson = Lesson.find(params[:lesson_id])
+      if params[:student_id] != nil
+        @student = Section.find(params[:student_id])
+        @section = @student.section
+      elsif params[:section_id] != nil
+        @section = Section.find(params[:section_id])
+        @student = @section.students.first
+      else
+        flash[:error] = "Please select a section before grading."
+        redirect_to :back
+      end
+      @resources = Resource.where(:unit_id => @lesson.unit_id)
     else
-      flash[:error] = "Please select a section before grading."
-      redirect_to :back
+      redirect_to in_class_teachers_path
     end
-    @resources = Resource.where(:unit_id => @lesson.unit_id)
   end
 
   def planning

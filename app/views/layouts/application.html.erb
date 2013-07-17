@@ -3,13 +3,13 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title><%= yield(:title) or 'Prima Lingua' %></title>
-	<%= stylesheet_link_tag 'layout' %>
+	<%= stylesheet_link_tag "application" %>
 	<%= javascript_include_tag "application" %>
 	<link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
 	<%= yield(:head) %>
 	<%= yield(:page_script) %>
 </head>
-<body>
+<body id="windowed">
 	<div id="header">
 		<% link_to root_path do %>
 			<div id="header_home_link"></div>
