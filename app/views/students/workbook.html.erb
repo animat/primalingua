@@ -12,7 +12,7 @@ $(function() {
 	headInitHeight = $("#head_student").css("height");
 	headFinHeight = parseInt(headInitHeight) + (finHeight - initHeight);
 	finHeight = $("#resource").css("height");
-	$("#resource").css("height", initHeight);
+	//$("#resource").css("height", initHeight);
 	$("#resource_button").on("click", function() {
 		if ($("#resource").css("height") == initHeight+"px") {
 			$("#resource").animate({"height": finHeight}, 200);
@@ -273,4 +273,6 @@ function displayStudentTimeline(lessons) {
 </script>
 <% end %>
 
-<%= @workbook_content.html_safe %>
+<% if @student.teacher.premium %>
+	<%= @workbook_content.html_safe %>
+<% end %>

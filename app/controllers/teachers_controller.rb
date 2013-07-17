@@ -2,9 +2,13 @@ class TeachersController < ApplicationController
   layout "workspace", :except => [:index]
 
   def grading
-    @lesson = Lesson.find(params[:lesson_id])
-    @student = Lesson.find(params[:student_id])
-    @sections = Section.first
+    if current_teacher.premium
+      @lesson = Lesson.find(params[:lesson_id])
+      @student = Lesson.find(params[:student_id])
+      @sections = Section.first
+    else
+      redirect_to in_class_teachers_path
+    end
   end
 
   def planning

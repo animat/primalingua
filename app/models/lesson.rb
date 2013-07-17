@@ -14,6 +14,7 @@
 
 class Lesson < ActiveRecord::Base
   belongs_to :unit
+  has_many :resources, through: :unit
   has_one :lesson_plan
   has_many :questions
   has_many :sections
