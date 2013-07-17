@@ -29,6 +29,9 @@ Pl2::Application.routes.draw do
   resources :lessons do 
     member { put :mercury_update}
   end
+  resources :questions do
+    match "in_lesson/:lesson_id" => "questions#in_lesson", on: :collection, as: :in_lesson, via: :get
+  end
   
   root to: 'about#index'
 
