@@ -16,7 +16,7 @@ class MilestonesController < ApplicationController
 			@milestones_in_unit.select {|m| lesson.milestones = [m] if m.lesson_id == lesson.id }
 			@lessons.push(lesson)
 		end
-		render json: @lessons.to_json(include: :milestones), status: :ok
+		render json: @lessons.to_json(:include => {:milestones => {:include => :feedback}}), status: :ok
 	end
 
 	def show

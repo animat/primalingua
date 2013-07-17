@@ -81,15 +81,22 @@ $(function() {
 		$("#d_"+num).siblings(".drawing_tools").show();
 		return false;
 	});
-	<% if student_signed_in? %>
-	loadStudentTimeline();
 
-	<% elsif teacher_signed_in? or admin_signed_in? %>
+	loadStudentMilestones();
+	<% if teacher_signed_in? or admin_signed_in? %>
 	$(document).on("blur", ".feedback_txt", function() {
-		var qid = $(this).attr("name").split("_")[1];
-		var aid = $("#f_"+qid).data("answer_id");
-		var f = $(this).val();
-		var d = {feedback: {content: f, feedbackable_type: "Answer", feedbackable_id: aid}, authenticity_token: "<%= form_authenticity_token %>"};
+		var info = $(this).attr("name").split("_");
+		var type = info[0];
+		if (type == "a") {
+			var feed_type = "Answer";
+			var qid = info[1];
+			var feed_id = $("#f_"+qid).data("answer_id");
+		} else if (type == "m") {
+			var feed_type = "Milestone";
+			var feed_id = info[1];
+		}
+		var feed_content = $(this).val();
+		var d = {feedback: {content: feed_content, feedbackable_type: feed_type, feedbackable_id: feed_id}, authenticity_token: "<%= form_authenticity_token %>"};
 	 	saveFeedback(d, $(this).parent(), false);
 	});
 	$(document).on("click", ".feedback_correct_btn", function() {
@@ -143,7 +150,6 @@ function replaceDrawing(answer) {
 function displayFeedback(answer) {
 	var $feedbackDiv = $('<div>', {class: "feedback", id: "f_"+answer.question.id, "data-answer_id": answer.id});
 	$("[name=q_"+answer.question.id+"]").after($feedbackDiv);
-	// var $lessonFeedbackDiv = $('<div>', {class: feedback, id: "l_<%= @lesson.id %>"})
 	<% if student_signed_in? %>
 	displayStudentFeedback(answer);
 	<% elsif teacher_signed_in? or admin_signed_in? %>
@@ -170,15 +176,7 @@ function displayStudentFeedback(answer) {
 }
 function displayTeacherFeedback(answer) {
 	<% if teacher_signed_in? or admin_signed_in? %>
-	var $feedbackButtonsDiv = $('<div>', {class: "feedback_buttons"});
-	var $correctBtn = $('<img>', {src: "/assets/workspace/correct_button.png", class: "feedback_correct_btn"});
-	var $incompleteBtn = $('<img>', {src: "/assets/workspace/incomplete_button.png", class: "feedback_incomplete_btn"});
-	var $incorrectBtn = $('<img>', {src: "/assets/workspace/incorrect_button.png", class: "feedback_incorrect_btn"});
-
-	var $feedbackEditorTxt = $('<textarea>', {class: "feedback_txt", name: "f_"+answer.question.id});
-	var $feedbackEditorDiv = $('<div>', {class: "feedback_editor"});
-	$feedbackButtonsDiv.append($correctBtn, $incompleteBtn, $incorrectBtn);
-	$feedbackEditorDiv.append($feedbackButtonsDiv, $feedbackEditorTxt);
+	$feedbackEditorDiv = createFeedbackEditor("f", answer.question.id)
 	
 	if (answer.feedback) {
 		if (answer.feedback.content != null) {
@@ -192,10 +190,29 @@ function displayTeacherFeedback(answer) {
 	$("[name=q_"+answer.question.id+"]").siblings(".feedback").append($feedbackEditorDiv);
 	<% end %>
 }
+function createFeedbackEditor(type, id) {
+	var $feedbackButtonsDiv = $('<div>', {class: "feedback_buttons"});
+	var $correctBtn = $('<img>', {src: "/assets/workspace/correct_button.png", class: "feedback_correct_btn"});
+	var $incompleteBtn = $('<img>', {src: "/assets/workspace/incomplete_button.png", class: "feedback_incomplete_btn"});
+	var $incorrectBtn = $('<img>', {src: "/assets/workspace/incorrect_button.png", class: "feedback_incorrect_btn"});
+
+	var $feedbackEditorTxt = $('<textarea>', {class: "feedback_txt", name: type+"_"+id});
+	var $feedbackEditorDiv = $('<div>', {class: "feedback_editor"});
+	$feedbackButtonsDiv.append($correctBtn, $incompleteBtn, $incorrectBtn);
+	$feedbackEditorDiv.append($feedbackButtonsDiv, $feedbackEditorTxt);
+	return $feedbackEditorDiv;
+}
 function saveStatusFeedback(btn, val) {
-	var qid = btn.parent().siblings(".feedback_txt").attr("name").split("_")[1];
-	var aid = $("#f_"+qid).data("answer_id");
-	var d = {feedback: {status: val, feedbackable_type: "Answer", feedbackable_id: aid}, authenticity_token: "<%= form_authenticity_token %>"};
+	var info = btn.parent().siblings(".feedback_txt").attr("name").split("_");
+	if (info[0] == "a") {
+		var qid = info[1];
+		var feed_id = $("#f_"+qid).data("answer_id");
+		var feed_type = "Answer";
+	} else if (info[0] == "m") {
+		var feed_id = info[1];
+		var feed_type = "Milestone";
+	}
+	var d = {feedback: {status: val, feedbackable_type: feed_type, feedbackable_id: feed_id}, authenticity_token: "<%= form_authenticity_token %>"};
 	saveFeedback(d, btn.parent(), ".feedback_"+val+"_btn");
 }
 function saveFeedback(d, btns, selected) {
@@ -205,9 +222,7 @@ function saveFeedback(d, btns, selected) {
  		url: "<%= feedbacks_path %>",
  		data: d,
  		success: function() {
- 			console.log(btns);
  			if (selected) {
- 				console.log("Selected!");
  				btns.children("img").removeClass("selected_feedback");
 				btns.children(selected).addClass("selected_feedback");
  			}
@@ -218,9 +233,16 @@ function saveFeedback(d, btns, selected) {
 	});
 	<% end %>
 }
-function loadStudentTimeline() {
+function loadStudentMilestones() {
 	$.getJSON("<%= around_lesson_student_milestones_url(@student, @lesson) %>").success(function(lessons) {
-		displayStudentTimeline(lessons);
+		<% if student_signed_in? %>
+			displayStudentTimeline(lessons);
+		<% end %>
+		for (var i = 0; i < lessons.length; i++) {
+			if (lessons[i].id == <%= @lesson.id %>) {
+				displayMilestoneFeedback(lessons[i]);
+			}
+		}
 	}).error(function(data) {
 		console.log("Error fetching answer JSON.");
 	});
@@ -235,8 +257,6 @@ function displayStudentTimeline(lessons) {
 		$div.css("width", lesson_width);
 
 		if (lesson.milestones.length > 0) {
-			console.log("Displaying lesson...");
-			console.log(lesson);
 			if (lesson.milestones[0].status == "correct") {
 				$div.css({
 					"background-color": "#1EA62B",
@@ -269,6 +289,23 @@ function displayStudentTimeline(lessons) {
 		$div.append($header1);
 		$div.append($header2);
 		$('#timeline_lessons').append($div);
+	}
+}
+function displayMilestoneFeedback(lesson) {
+	console.log("Displaying milestone feedback");
+	console.log(lesson);
+	if (lesson.milestones[0] != null) {
+		$feedbackEditorDiv = createFeedbackEditor("m", lesson.milestones[0].id)
+		if (lesson.milestones[0].feedback.content != null) {
+			$feedbackEditorDiv.children(".feedback_txt").val(lesson.milestones[0].feedback.content);
+		}
+		if (lesson.milestones[0].feedback.status != null) {
+			$feedbackEditorDiv.find(".feedback_"+lesson.milestones[0].feedback.status+"_btn").addClass("selected_feedback");
+		}
+		$milestoneFeedback = $("<div>");
+		$milestoneFeedback.append("<p>Teacher feedback on this lesson:</p>");
+		$milestoneFeedback.append($feedbackEditorDiv)
+		$("#content").append($milestoneFeedback);
 	}
 }
 
