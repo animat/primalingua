@@ -9,10 +9,13 @@ $(function() {
 			Resource JS
 			   ****************/
 	initHeight = 27;
-	headInitHeight = $("#head_student").css("height");
-	headFinHeight = parseInt(headInitHeight) + (finHeight - initHeight);
 	finHeight = $("#resource").css("height");
+	headInitHeight = $("#head_student").css("height");
+	headFinHeight = parseInt(headInitHeight) + (parseInt(finHeight) - initHeight);
 	$("#resource").css("height", initHeight);
+	/****************
+			Populate Questions
+			   ****************/
 	$(document).on("blur", ".question", function() {
 		var qid = $(this).attr("name").split("_")[1];
 		var sid = <%= @student.id %>;

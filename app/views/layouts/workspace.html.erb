@@ -43,21 +43,6 @@
 			</div>
 		<% elsif teacher_signed_in? %>
 			<div id="nav">
-				<%= link_to planning_teachers_path do %>
-					<div class="nav_option">
-						Planning
-					</div>
-				<% end %>
-				<%= link_to grading_teachers_path do %>
-					<div class="nav_option">
-						Grading
-					</div>
-				<% end %>
-				<%= link_to in_class_teachers_path do %>
-					<div class="nav_option">
-						In Class
-					</div>
-				<% end %>
 				<div id="buttons">
 					<%= link_to image_tag("workspace/button_home.png"), teacher_path(current_teacher) %>
 					<%= link_to image_tag("workspace/button_signout.png"), destroy_student_session_path %>

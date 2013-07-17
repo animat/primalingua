@@ -14,6 +14,7 @@
 			student_id = $(this).val();
 			location.href = "<%= grading_teachers_path %>/student/"+student_id+"/lesson/"+lesson_id;
 		});
+		populate();
 	});
 	window.onresize = function() {
 		resizeWindow();

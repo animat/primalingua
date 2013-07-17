@@ -3,8 +3,9 @@ class TeachersController < ApplicationController
 
   def grading
     @lesson = Lesson.find(params[:lesson_id])
-    @student = Lesson.find(params[:student_id])
+    @student = Student.find(params[:student_id])
     @sections = Section.first
+    @resources = Resource.where(:unit_id => @lesson.unit_id)
   end
 
   def planning
@@ -12,6 +13,7 @@ class TeachersController < ApplicationController
     @lesson_plan = @lesson.lesson_plan
     @unit = @lesson.unit
     @workbook_content = @lesson.content.gsub("\\r\\n", "")
+    @resources = Resource.where(:unit_id => @lesson.unit_id)
   end
 
   def in_class
