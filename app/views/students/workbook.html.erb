@@ -9,10 +9,10 @@ $(function() {
 		Resource JS
 	****************/
 	initHeight = 27;
-	headInitHeight = $("#head_student").css("height");
-	headFinHeight = parseInt(headInitHeight) + (finHeight - initHeight);
 	finHeight = $("#resource").css("height");
-	//$("#resource").css("height", initHeight);
+	headInitHeight = $("#head_student").css("height");
+	headFinHeight = parseInt(headInitHeight) + (parseInt(finHeight) - initHeight);
+	$("#resource").css("height", initHeight);
 	$("#resource_button").on("click", function() {
 		if ($("#resource").css("height") == initHeight+"px") {
 			$("#resource").animate({"height": finHeight}, 200);
@@ -22,8 +22,10 @@ $(function() {
 			$("#head_student").animate({"height": headInitHeight}, 200);
 		}
 	});
-
-
+	
+	/****************
+	Populate Questions
+	****************/
 	$(document).on("blur", ".question", function() {
 		var qid = $(this).attr("name").split("_")[1];
 		var sid = <%= @student.id %>;
