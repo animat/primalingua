@@ -34,11 +34,11 @@
 #about_nav li a {
 	display: block;
     padding: 6px 14px;
-    color: #000;
+    color: #000 !important;
 	text-decoration: none;
 }
 #about_nav li a:hover {
-	color: #FFF;
+	color: #FFF !important;
 	text-shadow: none;
 	background: url(image-path('nav_arrow.png')) no-repeat top right #973f98;
 }

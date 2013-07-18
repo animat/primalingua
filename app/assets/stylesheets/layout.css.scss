@@ -185,12 +185,12 @@ p.flash_error {
 #nav li a {
 	display: block;
     padding: 6px 14px;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 	text-decoration: none;
 	text-shadow: 2px 2px 2px #973f98;
 }
 #nav li a:hover {
-	color: #973f98;
+	color: #973f98 !important;
 	text-shadow: none;
 	background-color: #FFF;
 }
@@ -237,7 +237,7 @@ p.flash_error {
 	background: url(image-path('body_header.gif')) no-repeat;
 }
 .wrapper {
-	padding: 0px 55px;
+	padding: 0px 55px !important;
 }
 #body_footer {
 	width: 970px;
