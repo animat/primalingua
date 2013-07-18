@@ -44,7 +44,7 @@ $(function() {
         </div>
         <div class="section_info">
           <div><%= link_to image_tag("workspace/button_planning.png"), planning_teachers_path(@section.lesson) %></div>
-          <div><%= link_to image_tag("workspace/button_grading.png"), grading_teachers_path(@section.lesson) %></div>
+          <div><%= link_to image_tag("workspace/button_grading.png"), grading_teachers_path(@section.lesson, 0, @section) %></div>
           <div><%= link_to image_tag("workspace/button_in_class.png"), in_class_teachers_path(@section.lesson) %></div>
         </div>
         <p>This section's class code is <strong><%= @section.code %></strong></p>
@@ -71,7 +71,7 @@ $(function() {
 <div id="student_grid">
   <div>
     <% @section.students.each do |s| %>
-      <a href="<%= workbook_student_path(s) %>" class="teacher_student">
+      <a href="<%= grading_teachers_path(@section.lesson, s, @section) %>" class="teacher_student">
         <h1><%= s.display_name %></h1>
       </a>
     <% end %>

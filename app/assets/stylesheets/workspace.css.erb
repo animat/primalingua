@@ -62,7 +62,7 @@ body#workspace {
 	border-top: 1px solid #fff;
 }
 .workspace_button {
-	background: url('/assets/workspace/workspace_button_bg.png') no-repeat center;
+	background: url(<%= image_path 'workspace/workspace_button_bg.png' %>) no-repeat center;
 	padding-top: 10px;
 	text-align: center;
 	width: 130px;
@@ -130,6 +130,9 @@ body#workspace {
 	bottom: 0px;
 	background: url(<%= image_path 'workspace/resource_bar2.png' %>) repeat-x center;
 	text-align: center;
+}
+#resource_button:hover {
+	cursor: pointer;
 }
 /****************************************
 			Planning view
@@ -509,7 +512,7 @@ td {
 #timeline {
 	width: 100%;
 	height: 125px;
-	//background: url('/assets/workspace/timeline.png') no-repeat center;
+	//background: url(<%= image_path 'workspace/timeline.png' %>) no-repeat center;
 	margin: 0 auto;
 	position: absolute;
 	top: 60px;
@@ -525,13 +528,13 @@ td {
 	width: 14px;
 	height: 125px;
 	float: left;
-	background: #ACA0DE url("/assets/workspace/time_end_left.png") no-repeat center;
+	background: #ACA0DE url(<%= image_path 'workspace/time_end_left.png' %>) no-repeat center;
 }
 #timeline_end_right {
 	width: 14px;
 	height: 125px;
 	float: right;
-	background: #ACA0DE url("/assets/workspace/time_end_right.png") no-repeat center;
+	background: #ACA0DE url(<%= image_path 'workspace/time_end_right.png' %>) no-repeat center;
 }
 #timeline_lessons {
 	height: 125px;
@@ -539,7 +542,7 @@ td {
 	top: 0px;
 	margin-left: 106px;
 	margin-right: 94px;
-	background: url('/assets/workspace/timeline_bg.png') repeat-x center;
+	background: url(<%= image_path 'workspace/timeline_bg.png' %>) repeat-x center;
 }
 .timeline_lesson {
 	position: relative;
@@ -558,7 +561,7 @@ td {
 	z-index: 2;
 	top: -7px;
 	left: 0px;
-	background: url('/assets/workspace/time_middle.png') repeat-x center;
+	background: url(<%= image_path 'workspace/time_middle.png' %>) repeat-x center;
 }
 .timeline_lesson h1 {
 	color: rgba(255, 255, 255, 0.65);
@@ -581,7 +584,7 @@ td {
 #timeline_arrow_right {
 	width: 76px;
 	height: 122px;
-	background: url('/assets/workspace/arrow_right.png') no-repeat center;
+	background: url(<%= image_path 'workspace/arrow_right.png' %>) no-repeat center;
 	position: absolute;
 	z-index: 2;
 	top: 50%;
@@ -591,7 +594,7 @@ td {
 #timeline_arrow_left {
 	width: 76px;
 	height: 122px;
-	background: url('/assets/workspace/arrow_left.png') no-repeat center;
+	background: url(<%= image_path 'workspace/arrow_left.png' %>) no-repeat center;
 	position: absolute;
 	z-index: 2;
 	top: 50%;
@@ -611,7 +614,7 @@ td {
 .teacher_class {
 	width: 180px; /*    Took away 20px     */
 	height: 186px;
-	background: url('/assets/workspace/teacher_class_bg.png') no-repeat center;
+	background: url(<%= image_path 'workspace/teacher_class_bg.png' %>) no-repeat center;
 	padding-top: 14px;
 	padding-left: 27px;
 	padding-right: 25px;
@@ -673,7 +676,7 @@ td {
 	margin-left: 23px;
 	display: inline-block;
 }
-#teacher_settings h1 {
+.table_head h1 {
 	font-size: 16px;
 	text-decoration: none;
 	color: #4F3157;
@@ -708,7 +711,7 @@ td {
 .teacher_student {
 	width: 180px; /*    Took away 20px     */
 	height: 186px;
-	background: url('/assets/workspace/teacher_student_bg.png') no-repeat center;
+	background: url(<%= image_path 'workspace/teacher_student_bg.png' %>) no-repeat center;
 	padding-top: 14px;
 	padding-left: 27px;
 	color: #4F3157;
@@ -718,6 +721,11 @@ td {
 	text-decoration: none;
 	padding-right: 25px;
 	text-align: center;
+}
+#section_edit {
+	width: 500px;
+	height: 200px;
+	margin: 50px auto;
 }
 .table_head {
 	position: relative;
@@ -760,7 +768,7 @@ td {
 }
 .table_body input[type="submit"] {
 	color: #4F3157;
-	background: url('/assets/workspace/workspace_button_bg.png') no-repeat center;
+	background: url(<%= image_path 'workspace/workspace_button_bg.png' %>) no-repeat center;
 	text-align: center;
 	width: 130px;
 	height: 40px;

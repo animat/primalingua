@@ -17,8 +17,8 @@
 		<% if student_signed_in? %>
 			<div id="workspace_nav">
 				<div id="buttons">
-					<%= link_to image_tag("workspace/button_signout.png"), destroy_student_session_path %>
 					<%= link_to image_tag("workspace/button_settings.png"), edit_student_registration_path %>
+					<%= link_to image_tag("workspace/button_signout.png"), destroy_student_session_path %>
 				</div>
 			</div>
 			<div id="timeline">

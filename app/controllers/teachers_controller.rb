@@ -5,10 +5,10 @@ class TeachersController < ApplicationController
   def grading
     if current_teacher.premium
       @lesson = Lesson.find(params[:lesson_id])
-      if params[:student_id] != nil
-        @student = Section.find(params[:student_id])
+      if params[:student_id].to_i != 0
+        @student = Student.find(params[:student_id])
         @section = @student.section
-      elsif params[:section_id] != nil
+      elsif params[:section_id].to_i != 0
         @section = Section.find(params[:section_id])
         @student = @section.students.first
       else
@@ -49,7 +49,7 @@ class TeachersController < ApplicationController
 
   def show
     @teacher = Teacher.find(params[:id])
-    @sections = @teacher.sections
+    @sections = @teacher.sections.order(:name)
     @resource = Teacher
   end
 end
