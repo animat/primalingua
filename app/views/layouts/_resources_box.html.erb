@@ -1,6 +1,27 @@
 <h1>Resources go here!</h1>
 <ul>
-<% resources.each do |r| %>
-	<li><%= r.primary %></li>
-<% end %>
+<div class="resource_section">
+	<h2>Links</h2>
+	<% resources.map{|r| (r.content_type == "link") ? r : nil}.each do |r| %>
+		<% unless r.nil? %>
+			<li><%= r.primary %></li>
+		<% end %>
+	<% end %>
+</div>
+<div class="resource_section">
+	<h2>Terms</h2>
+	<% resources.map{|r| (r.content_type == "term") ? r : nil}.each do |r| %>
+		<% unless r.nil? %>
+			<li><%= r.primary %></li>
+		<% end %>
+	<% end %>
+</div>
+<div class="resource_section">
+	<h2>Vocab</h2>
+	<% resources.map{|r| (r.content_type == "vocab") ? r : nil}.each do |r| %>
+		<% unless r.nil? %>
+			<li><%= r.primary %></li>
+		<% end %>?
+	<% end %>
+</div>
 </ul>

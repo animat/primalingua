@@ -30,5 +30,6 @@ class StudentsController < ApplicationController
   end
 
   def settings
+    
   end
 end
