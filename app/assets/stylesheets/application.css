@@ -15,5 +15,6 @@
  *= require students
  *= require teachers
  *= require admin
+ *= require section
  *= require rocanvas
  */

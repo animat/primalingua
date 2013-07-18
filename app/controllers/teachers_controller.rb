@@ -1,5 +1,6 @@
 class TeachersController < ApplicationController
   layout "workspace", :except => [:index]
+  protect_from_forgery :except => [:update_section_lesson]
 
   def grading
     if current_teacher.premium
@@ -31,6 +32,15 @@ class TeachersController < ApplicationController
   def in_class
   	@lesson = Lesson.first(:include => :unit)
   	@workbook_content = @lesson.content.gsub("\\r\\n", "")
+  end
+
+  def update_section_lesson
+    @sections = Section.where(id: params[:section_ids])
+    @sections.each do |s|
+      s.lesson_id = params[:section][:lesson_id]
+      s.save
+    end
+    render json: "Success", status: :ok
   end
 
   def index
