@@ -1,29 +1,30 @@
 <% content_for :page_script do %>
 <script type="text/javascript">
-	$(document).ready(function() {
-		resizeWindow();
-		$("#lesson_select_menu").on('change', function(val) {
-			var loc = $(this).val();
-			location.href = "<%= planning_teachers_path %>/"+loc;
-		});
-	});
-	window.onresize = function() {
-		resizeWindow();
-	}
-	function resizeWindow() {
-		var num = window.innerHeight;
-		var middleHeight = window.innerHeight - (document.getElementById('head').offsetHeight + 16) + 15;
-		var middle = document.getElementById('workspace');
-		$(middle).css("height", middleHeight);
-	}
+$(document).on("ready", function() {
+	resizeWindow();
+	setTimelineHeight();
+});
+$("#lesson_select_menu").on('change', function(val) {
+	var loc = $(this).val();
+	location.href = "<%= planning_teachers_path %>/"+loc;
+});
+window.onresize = function() {
+	resizeWindow();
+}
+function resizeWindow() {
+	var num = window.innerHeight;
+	var middleHeight = window.innerHeight - (document.getElementById('head').offsetHeight + 16) + 15;
+	var middle = document.getElementById('workspace');
+	$(middle).css("height", middleHeight);
+}
 </script>
 <% end %>
 <% content_for :head do %>
-	<style>
-		#content {
-			margin: 20px;
-		}
-	</style>
+<style>
+	#content {
+		margin: 20px;
+	}
+</style>
 <% end %>
 
 <% if current_teacher.premium %>

@@ -1,6 +1,6 @@
 <% content_for :head do %>
 <script type="text/javascript">
-$(function() {
+$(document).on("ready", function() {
   $("#lesson_save_options").hide();
   $("#lesson_select_menu").on("change", function() {
     $("#lesson_save_options").slideDown();

@@ -11,8 +11,8 @@ function populate(url, audience) {
 function displayAnswer(answer) {
 	switch (answer.question.input_type) {
 		case "text":
-			$("[name=q_"+answer.question.id+"]").val(answer.content);
-			$("[name=q_"+answer.question.id+"]").data({"answer_id": answer.id});
+			$(".populate_student_answers [name=q_"+answer.question.id+"]").val(answer.content);
+			$(".populate_student_answers [name=q_"+answer.question.id+"]").data({"answer_id": answer.id});
 			break;
 		case "drawing_base64":
 			replaceDrawing(answer);
@@ -70,7 +70,7 @@ function displayTeacherFeedback(answer) {
 			$feedbackButtonsDiv.children(".feedback_"+answer.feedback.status+"_btn").addClass("selected_feedback");
 		}
 	}
-	$("[name=q_"+answer.question.id+"]").siblings(".feedback").append($feedbackEditorDiv);
+	$(".populate_student_answers [name=q_"+answer.question.id+"]").siblings(".feedback").append($feedbackEditorDiv);
 }
 function createFeedbackEditor(type, id) {
 	var $feedbackButtonsDiv = $('<div>', {class: "feedback_buttons"});
@@ -176,16 +176,22 @@ function displayStudentTimeline(lessons) {
 function setTimelineHeight() {
 	initHeight = 27;
 	finHeight = $("#resource").css("height");
-	headInitHeight = $("#head_student").css("height");
+	if ($("#head_student").length) {
+		var $head = $("#head_student");
+	} else {
+		var $head = $("#head");
+		$("#resource").css("top", 57);
+	}
+	headInitHeight = $head.height();
 	headFinHeight = parseInt(headInitHeight) + (parseInt(finHeight) - initHeight);
 	$("#resource").css("height", initHeight);
 	$("#resource_button").on("click", function() {
 		if ($("#resource").css("height") == initHeight+"px") {
 			$("#resource").animate({"height": finHeight}, 200);
-			$("#head_student").animate({"height": headFinHeight}, 200);
+			$head.animate({"height": headFinHeight}, 200);
 		} else {
 			$("#resource").animate({"height": initHeight}, 200);
-			$("#head_student").animate({"height": headInitHeight}, 200);
+			$head.animate({"height": headInitHeight}, 200);
 		}
 	});
 }
@@ -199,8 +205,6 @@ function updateTimelineWidth() {
 	}
 }
 function displayMilestoneFeedback(lesson) {
-	console.log("Displaying milestone feedback");
-	console.log(lesson);
 	if (lesson.milestones[0] != null) {
 		$feedbackEditorDiv = createFeedbackEditor("m", lesson.milestones[0].id)
 		if (lesson.milestones[0].feedback.content != null) {

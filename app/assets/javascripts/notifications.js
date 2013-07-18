@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on("ready", function() {
 	if ($('#flash_notice').length > 0) {
 		var d = $("#flash_notice");
 		d.css("top", 0);

@@ -6,7 +6,7 @@ var headInitHeight;
 var headFinalHeight;
 var lesson_array;
 
-$(function() {
+$(document).on("ready", function() {
 	/****************
 		Resource JS
 	****************/
@@ -110,5 +110,7 @@ $(function() {
 </script>
 <% end %>
 <% if @student.teacher.premium %>
-	<%= @workbook_content.html_safe %>
+	<div class="populate_student_answers">
+		<%= @workbook_content.html_safe %>
+	</div>
 <% end %>
