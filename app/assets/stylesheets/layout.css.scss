@@ -1,4 +1,4 @@
-* {
+#windowed * {
 	margin: 0;
 	padding: 0;
 }
@@ -53,21 +53,21 @@ body#windowed {
 #windowed select {
 	font-size: 1em;
 }
-a {
+#windowed a {
 	text-decoration: none;
 }
-a:link, a:visited, a:active {
+#windowed a:link, #windowed a:visited, #windowed a:active {
 	color:#FF6600;
 }
-a:hover {
+#windowed a:hover {
 	color:#FF6600;
 	text-decoration: none;
 }
-a.invis {
+#windowed a.invis {
 	color: #FFF;
 	text-decoration: none;
 }
-a.warning {
+#windowed a.warning {
 	color: #FF0000;
 	text-decoration: none;
 }
