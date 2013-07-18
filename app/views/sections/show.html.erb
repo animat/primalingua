@@ -1,3 +1,14 @@
+<% content_for :head do %>
+<script type="text/javascript">
+$(function() {
+  $("#lesson_save_options").hide();
+  $("#lesson_select_menu").on("change", function() {
+    $("#lesson_save_options").slideDown();
+  })
+});
+</script>
+<% end %> 
+
 <div id="section_head">
   <div id="teacher_section_settings_container">
     <div id="teacher_section_settings">
@@ -7,15 +18,36 @@
      <div class="table_body">
        
       <div id="section_current_lesson">
-        This section is currently on 
-        <br /><%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
-        <br /><br />
-        <div>
+        <div class="section_info">
+          <%= form_tag(update_section_lesson_teacher_path, {method: :post, remote: true, authenticity_token: false}) do %>
+            <p>
+              <label>This section is currently on...<br />
+                <%= grouped_collection_select :section, :lesson_id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
+              </label>
+            </p>
+            <div id="lesson_save_options">
+              Also update... 
+              <% current_teacher.sections.each do |s| %>
+                <% if s == @section %>
+                  <%= hidden_field_tag "section_ids[]", s.id %>
+                <% else %>
+                  <label>
+                    <%= check_box_tag "section_ids[]", s.id %>
+                    <%= s.name %>
+                  </label>
+                <% end %>
+              <% end %>
+              <br />
+              <%= submit_tag "Save" %>
+            </div>
+          <% end %>
+        </div>
+        <div class="section_info">
           <div><%= link_to image_tag("workspace/button_planning.png"), planning_teachers_path(@section.lesson) %></div>
           <div><%= link_to image_tag("workspace/button_grading.png"), grading_teachers_path(@section.lesson, 0, @section) %></div>
           <div><%= link_to image_tag("workspace/button_in_class.png"), in_class_teachers_path(@section.lesson) %></div>
         </div>
-        This section's class code is <h1><%= @section.code %></h1>
+        <p>This section's class code is <strong><%= @section.code %></strong></p>
       </div>
 
       <div> 

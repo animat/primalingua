@@ -1,0 +1,27 @@
+#section_current_lesson {
+	font-size: 15px;
+	padding: 20px;
+	text-decoration: none;
+	color: #4F3157;
+	font-family: Arial Rounded MT Bold, Nunito;
+	text-align: left;
+}
+
+#section_current_lesson .section_info {
+	margin-bottom: 20px;
+}
+
+#section_current_lesson select {
+	margin: 5px 0px;
+}
+#section_current_lesson button {
+	padding: 10px;
+}
+
+#student_grid {
+	width: 66%;
+	padding-top: 40px;
+	text-align: center;	
+	display: inline-block;
+	vertical-align: top;
+}
