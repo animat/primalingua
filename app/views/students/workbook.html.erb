@@ -1,4 +1,4 @@
-<% content_for :page_script do %>
+<% content_for :head do %>
 <script type="text/javascript">
 var initHeight;
 var finHeight;
@@ -10,20 +10,7 @@ $(function() {
 	/****************
 		Resource JS
 	****************/
-	initHeight = 27;
-	finHeight = $("#resource").css("height");
-	headInitHeight = $("#head_student").css("height");
-	headFinHeight = parseInt(headInitHeight) + (parseInt(finHeight) - initHeight);
-	$("#resource").css("height", initHeight);
-	$("#resource_button").on("click", function() {
-		if ($("#resource").css("height") == initHeight+"px") {
-			$("#resource").animate({"height": finHeight}, 200);
-			$("#head_student").animate({"height": headFinHeight}, 200);
-		} else {
-			$("#resource").animate({"height": initHeight}, 200);
-			$("#head_student").animate({"height": headInitHeight}, 200);
-		}
-	});
+	setTimelineHeight();
 	$(window).resize(function() {
 		updateTimelineWidth();
 	});
@@ -37,7 +24,7 @@ $(function() {
 	 	$.ajax({
 	 		type: "POST",
 	 		url: "<%= answers_url %>",
-	 		data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>"},
+	 		data: {answer: {student_id: sid, question_id: qid, content: c}},
 	 		success: function() {
 	 			alert("Saved!");
 	 		},
@@ -69,7 +56,7 @@ $(function() {
 		$.ajax({
         	type: "POST",
 			url: "<%= answers_url %>",
-			data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>"},
+			data: {answer: {student_id: sid, question_id: qid, content: c}},
 	 		success: function() {
 	 			alert("Saved!");
 	 		},
@@ -86,7 +73,7 @@ $(function() {
 		return false;
 	});
 
-	loadStudentMilestones();
+	loadStudentMilestones("<%= around_lesson_student_milestones_url(@student, @lesson) %>", <%= student_signed_in? %>, <%= @lesson.id %>);
 	<% if teacher_signed_in? or admin_signed_in? %>
 	$(document).on("blur", ".feedback_txt", function() {
 		var info = $(this).attr("name").split("_");
@@ -100,8 +87,8 @@ $(function() {
 			var feed_id = info[1];
 		}
 		var feed_content = $(this).val();
-		var d = {feedback: {content: feed_content, feedbackable_type: feed_type, feedbackable_id: feed_id}, authenticity_token: "<%= form_authenticity_token %>"};
-	 	saveFeedback(d, $(this).parent(), false);
+		var d = {feedback: {content: feed_content, feedbackable_type: feed_type, feedbackable_id: feed_id}};
+	 	saveFeedback("<%= feedbacks_path %>", d, $(this).parent(), false);
 	});
 	$(document).on("click", ".feedback_correct_btn", function() {
 		saveStatusFeedback($(this), "correct");
@@ -113,222 +100,15 @@ $(function() {
 		saveStatusFeedback($(this), "incorrect");
 	});
 	<% end %>
-	populate();
-})
-
-function populate() {
-	$.getJSON("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>").success(function(answers) {
-		for (var i = 0; i < answers.length; i++) {
-			displayAnswer(answers[i]);
-			displayFeedback(answers[i]);
-		}
-	}).error(function(data) {
-		console.log("Error fetching answer JSON.");
-	});
-}
-function displayAnswer(answer) {
-	switch (answer.question.input_type) {
-		case "text":
-			$("[name=q_"+answer.question.id+"]").val(answer.content);
-			$("[name=q_"+answer.question.id+"]").data({"answer_id": answer.id});
-			break;
-		case "drawing_base64":
-			replaceDrawing(answer);
-			break;
-		default:
-			console.log("Input type not recognized for Answer#"+answer.id);
-			break;
-	}
-}
-function replaceDrawing(answer) {
-	$("#d_"+answer.question.id).hide();
-	$("#d_"+answer.question.id).siblings(".drawing_tools").hide();
-	var $img_tag = $('<img>', {src: answer.content});
-	var $redo_btn = $('<button>', {class: "drawing_redo_btn", text: "Redo drawing",
-			data: {drawing_id: answer.question.id, answer_id: answer.id}})
-	var $display_div = $('<div>', {class: "completed_drawing", name: "q_"+answer.question.id, data: {"answer_id": answer.id}});
-	$display_div.append($img_tag);
-	$display_div.append($redo_btn);
-	$("#d_"+answer.question.id).parent().append($display_div);
-}
-function displayFeedback(answer) {
-	var $feedbackDiv = $('<div>', {class: "feedback", id: "f_"+answer.question.id, "data-answer_id": answer.id});
-	$("[name=q_"+answer.question.id+"]").after($feedbackDiv);
 	<% if student_signed_in? %>
-	displayStudentFeedback(answer);
-	<% elsif teacher_signed_in? or admin_signed_in? %>
-	displayTeacherFeedback(answer);
+	var audience = "student";
+	<% elsif (teacher_signed_in? or admin_signed_in?) %>
+	var audience = "teacher";
 	<% end %>
-}
-function displayStudentFeedback(answer) {
-	if (answer.feedback) {
-		if (answer.feedback.status != null) {
-			var feedbackTypes = ["incomplete", "correct", "incorrect"];
-			if ($.inArray(answer.feedback.status, feedbackTypes) > -1) {
-				var $feedbackImg = $('<img>', {src: "/assets/workspace/"+answer.feedback.status+"_icon.png"})
-				$("#f_"+answer.question.id).append($feedbackImg);
-			} else {
-				console.log("Feedback status not recognized for Answer#"+answer.id);
-			}
-		}
-		if (answer.feedback.content != null) {
-			var $feedbackTxt = $('<textarea>', {class: "feedback_txt", name: "f_"+answer.question.id, disabled: "disabled"});
-			$feedbackTxt.val(answer.feedback.content);
-			$("#f_"+answer.question.id).append($feedbackTxt);
-		}
-	}
-}
-function displayTeacherFeedback(answer) {
-	<% if teacher_signed_in? or admin_signed_in? %>
-	$feedbackEditorDiv = createFeedbackEditor("f", answer.question.id)
-	
-	if (answer.feedback) {
-		if (answer.feedback.content != null) {
-			$feedbackEditorTxt.val(answer.feedback.content);
-		}
-		if (answer.feedback.status != null) {
-			$feedbackButtonsDiv.children(".feedback_"+answer.feedback.status+"_btn").addClass("selected_feedback");
-		}
-	}
-
-	$("[name=q_"+answer.question.id+"]").siblings(".feedback").append($feedbackEditorDiv);
-	<% end %>
-}
-function createFeedbackEditor(type, id) {
-	var $feedbackButtonsDiv = $('<div>', {class: "feedback_buttons"});
-	var $correctBtn = $('<img>', {src: "/assets/workspace/correct_button.png", class: "feedback_correct_btn"});
-	var $incompleteBtn = $('<img>', {src: "/assets/workspace/incomplete_button.png", class: "feedback_incomplete_btn"});
-	var $incorrectBtn = $('<img>', {src: "/assets/workspace/incorrect_button.png", class: "feedback_incorrect_btn"});
-
-	var $feedbackEditorTxt = $('<textarea>', {class: "feedback_txt", name: type+"_"+id});
-	var $feedbackEditorDiv = $('<div>', {class: "feedback_editor"});
-	$feedbackButtonsDiv.append($correctBtn, $incompleteBtn, $incorrectBtn);
-	$feedbackEditorDiv.append($feedbackButtonsDiv, $feedbackEditorTxt);
-	return $feedbackEditorDiv;
-}
-function saveStatusFeedback(btn, val) {
-	var info = btn.parent().siblings(".feedback_txt").attr("name").split("_");
-	if (info[0] == "a") {
-		var qid = info[1];
-		var feed_id = $("#f_"+qid).data("answer_id");
-		var feed_type = "Answer";
-	} else if (info[0] == "m") {
-		var feed_id = info[1];
-		var feed_type = "Milestone";
-	}
-	var d = {feedback: {status: val, feedbackable_type: feed_type, feedbackable_id: feed_id}, authenticity_token: "<%= form_authenticity_token %>"};
-	saveFeedback(d, btn.parent(), ".feedback_"+val+"_btn");
-}
-function saveFeedback(d, btns, selected) {
-	<% if teacher_signed_in? or admin_signed_in? %>
-	$.ajax({
- 		type: "POST",
- 		url: "<%= feedbacks_path %>",
- 		data: d,
- 		success: function() {
- 			if (selected) {
- 				btns.children("img").removeClass("selected_feedback");
-				btns.children(selected).addClass("selected_feedback");
- 			}
- 		},
- 		error: function() {
- 			console.log("Problem saving data...");
- 		}
-	});
-	<% end %>
-}
-function loadStudentMilestones() {
-	$.getJSON("<%= around_lesson_student_milestones_url(@student, @lesson) %>").success(function(lessons) {
-		<% if student_signed_in? %>
-			displayStudentTimeline(lessons);
-			lesson_array = lessons;
-		<% end %>
-		for (var i = 0; i < lessons.length; i++) {
-			if (lessons[i].id == <%= @lesson.id %>) {
-				displayMilestoneFeedback(lessons[i]);
-			}
-		}
-	}).error(function(data) {
-		console.log("Error fetching answer JSON.");
-	});
-}
-function displayStudentTimeline(lessons) {
-	var timeline_width = $("#timeline_overlay").width() - 24;
-	var lesson_width = timeline_width / lessons.length;
-
-	for (i = 0; i < lessons.length; i++) {
-		var lesson = lessons[i];
-		var $div = $('<a>', {class: "timeline_lesson", id: "lesson"+(i+1), href: "<%= workbook_student_path(@student) %>/"+lesson.id});
-		$div.css("width", lesson_width);
-		if (lesson.milestones.length > 0) {
-			if (lesson.milestones[0].status == "correct") {
-				$div.css({
-					"background-color": "#1EA62B",
-					"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
-				});
-			} else if (lesson.milestones[0].status == "incomplete") {
-				$div.css({
-					"background-color": "#E0CA05",
-					"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
-				});
-			} else if (lesson.milestones[0].status == "incorrect") {
-				$div.css({
-					"background-color": "#ff0000",
-					"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
-				});
-			} else {
-				console.log("Unrecognized milestone status on lesson #"+lesson.id);
-			}
-		} else {
-			$div.css({
-				"background-color": "none",
-				"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')",
-				"backgroundRepeat": "no-repeat"
-			});
-		}
-		var $num_img = $('<img>', {src: "/assets/workspace/number(0"+lesson.number+").png"});
-		var $header1 = $('<h1>', {text: "Lesson "+lesson.number});
-		var $header2 = $('<h2>', {text: lesson.title});
-		var $timeline_lesson_overlay = $('<div>', {class: "timeline_lesson_overlay"});
-		$div.append($num_img);
-		$div.append($header1);
-		$div.append($header2);
-		$div.append($timeline_lesson_overlay);
-		$('#timeline_lessons').append($div);
-	}
-	$("#timeline_arrow_right").attr("href", "<%= workbook_student_path(@student, @lesson.unit.nextUnitLesson.id) %>")
-	$("#timeline_arrow_left").attr("href", "<%= workbook_student_path(@student, @lesson.unit.previousUnitLesson.id) %>")
-}
-function updateTimelineWidth() {
-	var timeline_width = $(window).width() - 188 - 24;
-	var lesson_width = timeline_width / lesson_array.length;
-	for (i = 0; i < lesson_array.length; i++) {
-		var $lesson = $("#lesson"+(i+1));
-		console.log($lesson);
-		$lesson.width(lesson_width);
-	}
-}
-function displayMilestoneFeedback(lesson) {
-	console.log("Displaying milestone feedback");
-	console.log(lesson);
-	if (lesson.milestones[0] != null) {
-		$feedbackEditorDiv = createFeedbackEditor("m", lesson.milestones[0].id)
-		if (lesson.milestones[0].feedback.content != null) {
-			$feedbackEditorDiv.children(".feedback_txt").val(lesson.milestones[0].feedback.content);
-		}
-		if (lesson.milestones[0].feedback.status != null) {
-			$feedbackEditorDiv.find(".feedback_"+lesson.milestones[0].feedback.status+"_btn").addClass("selected_feedback");
-		}
-		$milestoneFeedback = $("<div>");
-		$milestoneFeedback.append("<p>Teacher feedback on this lesson:</p>");
-		$milestoneFeedback.append($feedbackEditorDiv)
-		$("#content").append($milestoneFeedback);
-	}
-}
-
+	populate("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>", audience);
+})
 </script>
 <% end %>
-
 <% if @student.teacher.premium %>
 	<%= @workbook_content.html_safe %>
 <% end %>
