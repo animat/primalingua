@@ -4,6 +4,8 @@ var initHeight;
 var finHeight;
 var headInitHeight;
 var headFinalHeight;
+var lesson_array;
+
 $(function() {
 	/****************
 		Resource JS
@@ -22,7 +24,9 @@ $(function() {
 			$("#head_student").animate({"height": headInitHeight}, 200);
 		}
 	});
-	
+	$(window).resize(function() {
+		updateTimelineWidth();
+	});
 	/****************
 	Populate Questions
 	****************/
@@ -237,6 +241,7 @@ function loadStudentMilestones() {
 	$.getJSON("<%= around_lesson_student_milestones_url(@student, @lesson) %>").success(function(lessons) {
 		<% if student_signed_in? %>
 			displayStudentTimeline(lessons);
+			lesson_array = lessons;
 		<% end %>
 		for (var i = 0; i < lessons.length; i++) {
 			if (lessons[i].id == <%= @lesson.id %>) {
@@ -248,14 +253,13 @@ function loadStudentMilestones() {
 	});
 }
 function displayStudentTimeline(lessons) {
-	var timeline_width = $("#timeline_overlay").width();
+	var timeline_width = $("#timeline_overlay").width() - 24;
 	var lesson_width = timeline_width / lessons.length;
 
 	for (i = 0; i < lessons.length; i++) {
 		var lesson = lessons[i];
-		var $div = $('<div>', {class: "timeline_lesson", id: "lesson"+(i+1)});
+		var $div = $('<a>', {class: "timeline_lesson", id: "lesson"+(i+1), href: "<%= workbook_student_path(@student) %>/"+lesson.id});
 		$div.css("width", lesson_width);
-
 		if (lesson.milestones.length > 0) {
 			if (lesson.milestones[0].status == "correct") {
 				$div.css({
@@ -285,10 +289,23 @@ function displayStudentTimeline(lessons) {
 		var $num_img = $('<img>', {src: "/assets/workspace/number(0"+lesson.number+").png"});
 		var $header1 = $('<h1>', {text: "Lesson "+lesson.number});
 		var $header2 = $('<h2>', {text: lesson.title});
+		var $timeline_lesson_overlay = $('<div>', {class: "timeline_lesson_overlay"});
 		$div.append($num_img);
 		$div.append($header1);
 		$div.append($header2);
+		$div.append($timeline_lesson_overlay);
 		$('#timeline_lessons').append($div);
+	}
+	$("#timeline_arrow_right").attr("href", "<%= workbook_student_path(@student, @lesson.unit.nextUnitLesson.id) %>")
+	$("#timeline_arrow_left").attr("href", "<%= workbook_student_path(@student, @lesson.unit.previousUnitLesson.id) %>")
+}
+function updateTimelineWidth() {
+	var timeline_width = $(window).width() - 188 - 24;
+	var lesson_width = timeline_width / lesson_array.length;
+	for (i = 0; i < lesson_array.length; i++) {
+		var $lesson = $("#lesson"+(i+1));
+		console.log($lesson);
+		$lesson.width(lesson_width);
 	}
 }
 function displayMilestoneFeedback(lesson) {
