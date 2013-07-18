@@ -22,7 +22,7 @@ class Students::RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
-  	super
+    render :layout => "workspace"
   end
 
   def update
