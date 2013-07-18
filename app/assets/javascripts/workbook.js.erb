@@ -54,7 +54,7 @@ function displayStudentFeedback(answer) {
 			}
 		}
 		if (answer.feedback.content != null) {
-			var $feedbackTxt = $('<textarea>', {class: "feedback_txt", name: "f_"+answer.question.id, disabled: "disabled"});
+			var $feedbackTxt = $('<textarea>', {name: "f_"+answer.question.id, disabled: "disabled"});
 			$feedbackTxt.val(answer.feedback.content);
 			$("#f_"+answer.question.id).append($feedbackTxt);
 		}
@@ -113,7 +113,7 @@ function saveFeedback(save_url, d, btns, selected) {
  		}
 	});
 }
-function loadStudentMilestones(url, is_student, current_lesson_id) {
+function loadStudentMilestones(url, is_student, current_lesson_id, audience) {
 	$.getJSON(url).success(function(lessons) {
 		if (is_student) {
 			displayStudentTimeline(lessons);
@@ -121,7 +121,7 @@ function loadStudentMilestones(url, is_student, current_lesson_id) {
 		}
 		for (var i = 0; i < lessons.length; i++) {
 			if (lessons[i].id == current_lesson_id) {
-				displayMilestoneFeedback(lessons[i]);
+				displayMilestoneFeedback(lessons[i], audience);
 			}
 		}
 	}).error(function(data) {
@@ -204,18 +204,44 @@ function updateTimelineWidth() {
 		$lesson.width(lesson_width);
 	}
 }
-function displayMilestoneFeedback(lesson) {
+function displayMilestoneFeedback(lesson, audience) {
 	if (lesson.milestones[0] != null) {
-		$feedbackEditorDiv = createFeedbackEditor("m", lesson.milestones[0].id)
-		if (lesson.milestones[0].feedback.content != null) {
-			$feedbackEditorDiv.children(".feedback_txt").val(lesson.milestones[0].feedback.content);
+		var m = lesson.milestones[0];
+		$milestoneFeedback = $("<div>", {id: "m_"+m.id});
+		if (audience == "teacher") {
+			$feedbackEditorDiv = createFeedbackEditor("m", m.id)
+			if (m.feedback.content != null) {
+				$feedbackEditorDiv.children(".feedback_txt").val(m.feedback.content);
+			}
+			if (m.feedback.status != null) {
+				$feedbackEditorDiv.find(".feedback_"+m.feedback.status+"_btn").addClass("selected_feedback");
+			}
+			$milestoneFeedback.append("<p>Teacher feedback on this lesson:</p>");
+			$milestoneFeedback.append($feedbackEditorDiv)
+			$("#content").append($milestoneFeedback);
+		} else if (audience == "student") {
+			$studentFeedbackDiv = $("<div>");
+			if (m.feedback.status != null) {
+				var feedbackTypes = ["incomplete", "correct", "incorrect"];
+				if ($.inArray(m.feedback.status, feedbackTypes) > -1) {
+					var $feedbackImg = $('<img>', {src: "/assets/workspace/"+m.feedback.status+"_icon.png"})
+					$studentFeedbackDiv.append($feedbackImg);
+				} else {
+					console.log("Feedback status not recognized for Milestone#"+m.id);
+				}
+			}
+			if (m.feedback.content != null) {
+				var $feedbackTxt = $('<textarea>', {name: "m_"+m.id, disabled: "disabled"});
+				$feedbackTxt.val(m.feedback.content);
+				$studentFeedbackDiv.append($feedbackTxt);
+				console.log("Trying to display the feedback text");
+				console.log($studentFeedbackDiv);
+			}
+			if (m.feedback.status != null || m.feedback.content != null) {
+				$milestoneFeedback.append("<p>Teacher feedback on this lesson:</p>");
+				$milestoneFeedback.append($studentFeedbackDiv);
+				$("#content").append($milestoneFeedback);
+			}
 		}
-		if (lesson.milestones[0].feedback.status != null) {
-			$feedbackEditorDiv.find(".feedback_"+lesson.milestones[0].feedback.status+"_btn").addClass("selected_feedback");
-		}
-		$milestoneFeedback = $("<div>");
-		$milestoneFeedback.append("<p>Teacher feedback on this lesson:</p>");
-		$milestoneFeedback.append($feedbackEditorDiv)
-		$("#content").append($milestoneFeedback);
 	}
 }

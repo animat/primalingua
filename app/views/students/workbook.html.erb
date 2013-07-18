@@ -73,7 +73,6 @@ $(document).on("ready", function() {
 		return false;
 	});
 
-	loadStudentMilestones("<%= around_lesson_student_milestones_url(@student, @lesson) %>", <%= student_signed_in? %>, <%= @lesson.id %>);
 	<% if teacher_signed_in? or admin_signed_in? %>
 	$(document).on("blur", ".feedback_txt", function() {
 		var info = $(this).attr("name").split("_");
@@ -105,6 +104,7 @@ $(document).on("ready", function() {
 	<% elsif (teacher_signed_in? or admin_signed_in?) %>
 	var audience = "teacher";
 	<% end %>
+	loadStudentMilestones("<%= around_lesson_student_milestones_url(@student, @lesson) %>", <%= student_signed_in? %>, <%= @lesson.id %>, audience);
 	populate("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>", audience);
 })
 </script>
