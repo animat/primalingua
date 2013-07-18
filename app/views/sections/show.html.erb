@@ -12,7 +12,7 @@
         <br /><br />
         <div>
           <div><%= link_to image_tag("workspace/button_planning.png"), planning_teachers_path(@section.lesson) %></div>
-          <div><%= link_to image_tag("workspace/button_grading.png"), grading_teachers_path(@section.lesson) %></div>
+          <div><%= link_to image_tag("workspace/button_grading.png"), grading_teachers_path(lesson: @section.lesson, section: @section) %></div>
           <div><%= link_to image_tag("workspace/button_in_class.png"), in_class_teachers_path(@section.lesson) %></div>
         </div>
         This section's class code is <h1><%= @section.code %></h1>
