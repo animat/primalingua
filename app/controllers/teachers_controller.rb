@@ -31,7 +31,7 @@ class TeachersController < ApplicationController
   end
 
   def in_class
-  	@lesson = Lesson.first(:include => :unit)
+  	@lesson = Lesson.find(params[:lesson_id])
   	@workbook_content = @lesson.content.gsub("\\r\\n", "")
   end
 
