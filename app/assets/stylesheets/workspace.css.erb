@@ -263,22 +263,19 @@ body#workspace {
 	border: 1px solid #6A507C;
 	box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.5);
 }
-#arrow_right {
+#student_arrow_right, #student_arrow_left {
 	width: 50px;
 	height: 50px;
-	background: url(<%= image_path 'workspace/arrow_right_2.png' %>) no-repeat center;
 	position: absolute;
-	z-index: 2;
 	top: -2px;
+	z-index: 2;
+}
+#student_arrow_right {
+	background: url(<%= image_path 'workspace/arrow_right_2.png' %>) no-repeat center;
 	right: -3px;
 }
-#arrow_left {
-	width: 50px;
-	height: 50px;
+#student_arrow_left {
 	background: url(<%= image_path 'workspace/arrow_left_2.png' %>) no-repeat center;
-	position: absolute;
-	z-index: 2;
-	top: -2px;
 	left: -3px;
 }
 #student_search #student_select {

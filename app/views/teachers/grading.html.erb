@@ -37,18 +37,38 @@ var student_id = <%= params[:student_id] %>;
 $(document).on("ready", function() {
 	setTimelineHeight();
 	resizeWindow();
-	$("#lesson_select_menu").val(lesson_id + "");
-	$("#student_select_menu").val(student_id + "");
-	$("#lesson_select_menu").on('change', function(val) {
-		lesson_id = $(this).val();
-		location.href = "<%= grading_teachers_path %>/lesson/"+lesson_id+"/student/"+student_id;
-	});
-	$("#student_select_menu").on('change', function(val) {
-		student_id = $(this).val();
-		location.href = "<%= grading_teachers_path %>/lesson/"+lesson_id+"/student/"+student_id;
-	});
 	loadStudentMilestones("<%= around_lesson_student_milestones_url(@student, @lesson) %>", <%= student_signed_in? %>, <%= @lesson.id %>, "teacher");
 	populate("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>", "teacher");
+});
+$(document).on('change', "#lesson_select_menu", function(val) {
+	lesson_id = $(this).val();
+	location.href = "/teachers/grading/lesson/"+lesson_id+"/student/"+<%= params[:student_id] %>+"/section/"+<%= params[:section_id] %>;
+});
+$(document).on('change', "#student_select_menu", function(val) {
+	student_id = $(this).val();
+	location.href = "/teachers/grading/lesson/"+<%= params[:lesson_id] %>+"/student/"+student_id+"/section/"+<%= params[:section_id] %>;
+});
+$(document).on("click", "#student_arrow_right", function() {
+	var current_id = $("#student_select_menu").val();
+	var current_index = $("#student_select_menu")[0].selectedIndex;
+	var total_num = $("#student_select_menu option").length;
+	if (current_index < total_num - 1) {
+		var next_index = current_index + 1;
+		var next_value = $("#student_select_menu")[0][next_index].value;
+		location.href = "/teachers/grading/lesson/"+<%= params[:lesson_id] %>+"/student/"+next_value+"/section/"+<%= params[:section_id] %>;
+	}
+	return false;
+});
+$(document).on("click", "#student_arrow_left", function() {
+	var current_id = $("#student_select_menu").val();
+	var current_index = $("#student_select_menu")[0].selectedIndex;
+	var total_num = $("#student_select_menu option").length;
+	if (current_index > 0) {
+		var next_index = current_index - 1;
+		var next_value = $("#student_select_menu")[0][next_index].value;
+		location.href = "/teachers/grading/lesson/"+<%= params[:lesson_id] %>+"/student/"+next_value+"/section/"+<%= params[:section_id] %>;
+	}
+	return false;
 });
 window.onresize = function() {
 	resizeWindow();
@@ -63,8 +83,8 @@ function resizeWindow() {
 <% end %>
 <div id="grading_area" class="half_width float_left populate_student_answers">
 	<div id="student_search">
-		<a href="#" onClick="changeStudent(1);" id="arrow_right"></a>
-		<a href="#" onClick="changeStudent(-1);" id="arrow_left"></a>
+		<%= link_to "", "#", id: "student_arrow_right" %>
+		<%= link_to "", "#", id: "student_arrow_left" %>
 		<%= grouped_collection_select :student, :id, Section.by_teacher(current_teacher.id), :students, :name, :id, :display_name, {}, {:id => "student_select_menu"}%>
 		<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
 	</div>
