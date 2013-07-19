@@ -16,7 +16,10 @@ class TeachersController < ApplicationController
         flash[:error] = "Please select a section before grading."
         redirect_to :back
       end
-      @resources = Resource.where(:unit_id => @lesson.unit_id)
+      @milestone = Milestone.where(student: @student, lesson: @lesson).first_or_create!
+      if @milestone.feedback.nil?
+        @f = Feedback.create(feedbackable: @milestone)
+      end
     else
       redirect_to in_class_teachers_path
     end
@@ -39,6 +42,7 @@ class TeachersController < ApplicationController
     @sections = Section.where(id: params[:section_ids])
     @sections.each do |s|
       s.lesson_id = params[:section][:lesson_id]
+
       s.save
     end
     render json: "Success", status: :ok

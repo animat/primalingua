@@ -137,23 +137,25 @@ function displayStudentTimeline(lessons) {
 		var $div = $('<a>', {class: "timeline_lesson", id: "lesson"+(i+1), "data-lesson_id": lesson.id});
 		$div.css("width", lesson_width);
 		if (lesson.milestones.length > 0) {
-			if (lesson.milestones[0].status == "correct") {
-				$div.css({
-					"background-color": "#1EA62B",
-					"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
-				});
-			} else if (lesson.milestones[0].status == "incomplete") {
-				$div.css({
-					"background-color": "#E0CA05",
-					"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
-				});
-			} else if (lesson.milestones[0].status == "incorrect") {
-				$div.css({
-					"background-color": "#ff0000",
-					"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
-				});
-			} else {
-				console.log("Unrecognized milestone status on lesson #"+lesson.id);
+			if (lesson.milestones[0].feedback != null) {
+				if (lesson.milestones[0].feedback.status == "correct") {
+					$div.css({
+						"background-color": "#1EA62B",
+						"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
+					});
+				} else if (lesson.milestones[0].feedback.status == "incomplete") {
+					$div.css({
+						"background-color": "#E0CA05",
+						"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
+					});
+				} else if (lesson.milestones[0].feedback.status == "incorrect") {
+					$div.css({
+						"background-color": "#ff0000",
+						"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
+					});
+				} else {
+					console.log("Unrecognized milestone status on lesson #"+lesson.id);
+				}
 			}
 		} else {
 			$div.css({
@@ -209,12 +211,14 @@ function displayMilestoneFeedback(lesson, audience) {
 		var m = lesson.milestones[0];
 		$milestoneFeedback = $("<div>", {id: "m_"+m.id});
 		if (audience == "teacher") {
-			$feedbackEditorDiv = createFeedbackEditor("m", m.id)
-			if (m.feedback.content != null) {
-				$feedbackEditorDiv.children(".feedback_txt").val(m.feedback.content);
-			}
-			if (m.feedback.status != null) {
-				$feedbackEditorDiv.find(".feedback_"+m.feedback.status+"_btn").addClass("selected_feedback");
+			$feedbackEditorDiv = createFeedbackEditor("m", m.id);
+			if (m.feedback != null) {
+				if (m.feedback.content != null) {
+					$feedbackEditorDiv.children(".feedback_txt").val(m.feedback.content);
+				}
+				if (m.feedback.status != null) {
+					$feedbackEditorDiv.find(".feedback_"+m.feedback.status+"_btn").addClass("selected_feedback");
+				}
 			}
 			$milestoneFeedback.append("<p>Teacher feedback on this lesson:</p>");
 			$milestoneFeedback.append($feedbackEditorDiv)
@@ -224,7 +228,7 @@ function displayMilestoneFeedback(lesson, audience) {
 			if (m.feedback.status != null) {
 				var feedbackTypes = ["incomplete", "correct", "incorrect"];
 				if ($.inArray(m.feedback.status, feedbackTypes) > -1) {
-					var $feedbackImg = $('<img>', {src: "/assets/workspace/"+m.feedback.status+"_icon.png"})
+					var $feedbackImg = $('<img>', {src: "/images/workbook_templates/"+m.feedback.status+"_icon.png"})
 					$studentFeedbackDiv.append($feedbackImg);
 				} else {
 					console.log("Feedback status not recognized for Milestone#"+m.id);

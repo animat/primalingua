@@ -70,7 +70,7 @@ $(document).on("ready", function() {
 </div>
 <div id="student_grid">
   <div>
-    <% @section.students.each do |s| %>
+    <% @section.students.order(:last_name, :first_name).each do |s| %>
       <a href="<%= grading_teachers_path(@section.lesson, s, @section) %>" class="teacher_student">
         <h1><%= s.display_name %></h1>
       </a>
