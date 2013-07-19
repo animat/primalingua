@@ -1,5 +1,31 @@
 <% content_for :page_script do %>
 <script type="text/javascript">
+
+$(document).on("blur", ".feedback_txt", function() {
+	var info = $(this).attr("name").split("_");
+	var type = info[0];
+	if (type == "f") {
+		var feed_type = "Answer";
+		var qid = info[1];
+		var feed_id = $("#f_"+qid).data("answer_id");
+	} else if (type == "m") {
+		var feed_type = "Milestone";
+		var feed_id = info[1];
+	}
+	var feed_content = $(this).val();
+	var d = {feedback: {content: feed_content, feedbackable_type: feed_type, feedbackable_id: feed_id}, authenticity_token: "<%= form_authenticity_token %>"};
+ 	saveFeedback("<%= feedbacks_path %>", d, $(this).parent(), false);
+});
+$(document).on("click", ".feedback_correct_btn", function() {
+	saveStatusFeedback("<%= feedbacks_url %>", $(this), "correct", "<%= form_authenticity_token %>");
+});
+$(document).on("click", ".feedback_incomplete_btn", function() {
+	saveStatusFeedback("<%= feedbacks_url %>", $(this), "incomplete", "<%= form_authenticity_token %>");
+});
+$(document).on("click", ".feedback_incorrect_btn", function() {
+	saveStatusFeedback("<%= feedbacks_url %>", $(this), "incorrect", "<%= form_authenticity_token %>");
+});
+
 var initHeight;
 var finHeight;
 var headInitHeight;
@@ -21,6 +47,7 @@ $(document).on("ready", function() {
 		student_id = $(this).val();
 		location.href = "<%= grading_teachers_path %>/lesson/"+lesson_id+"/student/"+student_id;
 	});
+	loadStudentMilestones("<%= around_lesson_student_milestones_url(@student, @lesson) %>", <%= student_signed_in? %>, <%= @lesson.id %>, "teacher");
 	populate("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>", "teacher");
 });
 window.onresize = function() {
@@ -52,5 +79,5 @@ function resizeWindow() {
 
 <div id="teacher_guide_workbook" class="half_width float_left">
 	<%= @lesson.content.gsub("\\r\\n", "").html_safe %>
-
-<br class="clear_float" />
+	<br class="clear_float" />
+</div>

@@ -64,10 +64,10 @@ function displayTeacherFeedback(answer) {
 	$feedbackEditorDiv = createFeedbackEditor("f", answer.question.id)
 	if (answer.feedback) {
 		if (answer.feedback.content != null) {
-			$feedbackEditorTxt.val(answer.feedback.content);
+			$feedbackEditorDiv.find(".feedback_txt").val(answer.feedback.content);
 		}
 		if (answer.feedback.status != null) {
-			$feedbackButtonsDiv.children(".feedback_"+answer.feedback.status+"_btn").addClass("selected_feedback");
+			$feedbackEditorDiv.find(".feedback_"+answer.feedback.status+"_btn").addClass("selected_feedback");
 		}
 	}
 	$(".populate_student_answers [name=q_"+answer.question.id+"]").siblings(".feedback").append($feedbackEditorDiv);
@@ -84,9 +84,9 @@ function createFeedbackEditor(type, id) {
 	$feedbackEditorDiv.append($feedbackButtonsDiv, $feedbackEditorTxt);
 	return $feedbackEditorDiv;
 }
-function saveStatusFeedback(btn, val) {
+function saveStatusFeedback(url, btn, val, auth_token) {
 	var info = btn.parent().siblings(".feedback_txt").attr("name").split("_");
-	if (info[0] == "a") {
+	if (info[0] == "f") {
 		var qid = info[1];
 		var feed_id = $("#f_"+qid).data("answer_id");
 		var feed_type = "Answer";
@@ -94,8 +94,8 @@ function saveStatusFeedback(btn, val) {
 		var feed_id = info[1];
 		var feed_type = "Milestone";
 	}
-	var d = {feedback: {status: val, feedbackable_type: feed_type, feedbackable_id: feed_id}};
-	saveFeedback(d, btn.parent(), ".feedback_"+val+"_btn");
+	var d = {feedback: {status: val, feedbackable_type: feed_type, feedbackable_id: feed_id}, authenticity_token: auth_token};
+	saveFeedback(url, d, btn.parent(), ".feedback_"+val+"_btn");
 }
 function saveFeedback(save_url, d, btns, selected) {
 	$.ajax({
@@ -134,7 +134,7 @@ function displayStudentTimeline(lessons) {
 
 	for (i = 0; i < lessons.length; i++) {
 		var lesson = lessons[i];
-		var $div = $('<a>', {class: "timeline_lesson", id: "lesson"+(i+1), data: {"lesson_id": lesson.id}});
+		var $div = $('<a>', {class: "timeline_lesson", id: "lesson"+(i+1), "data-lesson_id": lesson.id});
 		$div.css("width", lesson_width);
 		if (lesson.milestones.length > 0) {
 			if (lesson.milestones[0].status == "correct") {

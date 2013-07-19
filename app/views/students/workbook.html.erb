@@ -6,34 +6,23 @@ var headInitHeight;
 var headFinalHeight;
 var lesson_array;
 
-$(document).on("ready", function() {
-	/****************
-		Resource JS
-	****************/
-	setTimelineHeight();
-	$(window).resize(function() {
-		updateTimelineWidth();
+$(document).on("blur", ".question", function() {
+	var qid = $(this).attr("name").split("_")[1];
+	var sid = <%= @student.id %>;
+	var c = $(this).val();
+ 	$.ajax({
+ 		type: "POST",
+ 		url: "<%= answers_url %>",
+ 		data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>"},
+ 		success: function() {
+ 			alert("Saved!");
+ 		},
+ 		error: function() {
+ 			alert("Problem saving data...");
+ 		}
 	});
-	/****************
-	Populate Questions
-	****************/
-	$(document).on("blur", ".question", function() {
-		var qid = $(this).attr("name").split("_")[1];
-		var sid = <%= @student.id %>;
-		var c = $(this).val();
-	 	$.ajax({
-	 		type: "POST",
-	 		url: "<%= answers_url %>",
-	 		data: {answer: {student_id: sid, question_id: qid, content: c}},
-	 		success: function() {
-	 			alert("Saved!");
-	 		},
-	 		error: function() {
-	 			alert("Problem saving data...");
-	 		}
-		});
-	});
-	$(".drawing").each(function() {
+});
+$(".drawing").each(function() {
         var tmpID = $(this).attr("id");
         var r = new RoCanvas;
             r.RO(tmpID, {
@@ -48,64 +37,43 @@ $(document).on("ready", function() {
                    color: 'black'        
                }
            });
-	});
-	$(document).on("click", ".drawing_save_btn", function() {
-		var qid = $(this).attr("id").toString().split("_")[2];
-		var sid = <%= @student.id %>;
-		var c = document.getElementById("d_"+qid).toDataURL();
-		$.ajax({
+});
+$(document).on("click", ".drawing_save_btn", function() {
+	var qid = $(this).attr("id").toString().split("_")[2];
+	var sid = <%= @student.id %>;
+	var c = document.getElementById("d_"+qid).toDataURL();
+	$.ajax({
         	type: "POST",
-			url: "<%= answers_url %>",
-			data: {answer: {student_id: sid, question_id: qid, content: c}},
-	 		success: function() {
-	 			alert("Saved!");
-	 		},
-	 		error: function() {
-	 			alert("Problem saving data...");
-	 		}
-		});
+		url: "<%= answers_url %>",
+		data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>"},
+ 		success: function() {
+ 			alert("Saved!");
+ 		},
+ 		error: function() {
+ 			alert("Problem saving data...");
+ 		}
 	});
-	$(document).on("click", ".drawing_redo_btn", function() {
-		var num = $(this).data("drawing_id");
-		$("#d_"+num).siblings(".completed_drawing").hide();
-		$("#d_"+num).show();
-		$("#d_"+num).siblings(".drawing_tools").show();
-		return false;
-	});
+});
+$(document).on("click", ".drawing_redo_btn", function() {
+	var num = $(this).data("drawing_id");
+	$("#d_"+num).siblings(".completed_drawing").hide();
+	$("#d_"+num).show();
+	$("#d_"+num).siblings(".drawing_tools").show();
+	return false;
+});
 
-	<% if teacher_signed_in? or admin_signed_in? %>
-	$(document).on("blur", ".feedback_txt", function() {
-		var info = $(this).attr("name").split("_");
-		var type = info[0];
-		if (type == "a") {
-			var feed_type = "Answer";
-			var qid = info[1];
-			var feed_id = $("#f_"+qid).data("answer_id");
-		} else if (type == "m") {
-			var feed_type = "Milestone";
-			var feed_id = info[1];
-		}
-		var feed_content = $(this).val();
-		var d = {feedback: {content: feed_content, feedbackable_type: feed_type, feedbackable_id: feed_id}};
-	 	saveFeedback("<%= feedbacks_path %>", d, $(this).parent(), false);
+$(document).on("click", ".timeline_lesson", function() {
+	var lid = $(this).data("lesson_id");
+	location.href = "/students/" + <%= @student.id %> + "/workbook/" + lid;
+});
+
+$(document).on("ready", function() {
+	setTimelineHeight();
+	$(window).resize(function() {
+		updateTimelineWidth();
 	});
-	$(document).on("click", ".feedback_correct_btn", function() {
-		saveStatusFeedback($(this), "correct");
-	});
-	$(document).on("click", ".feedback_incomplete_btn", function() {
-		saveStatusFeedback($(this), "incomplete");
-	});
-	$(document).on("click", ".feedback_incorrect_btn", function() {
-		saveStatusFeedback($(this), "incorrect");
-	});
-	<% end %>
-	<% if student_signed_in? %>
-	var audience = "student";
-	<% elsif (teacher_signed_in? or admin_signed_in?) %>
-	var audience = "teacher";
-	<% end %>
-	loadStudentMilestones("<%= around_lesson_student_milestones_url(@student, @lesson) %>", <%= student_signed_in? %>, <%= @lesson.id %>, audience);
-	populate("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>", audience);
+	loadStudentMilestones("<%= around_lesson_student_milestones_url(@student, @lesson) %>", <%= student_signed_in? %>, <%= @lesson.id %>, "student");
+	populate("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>", "student");
 })
 </script>
 <% end %>

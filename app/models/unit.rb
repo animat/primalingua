@@ -14,18 +14,18 @@ class Unit < ActiveRecord::Base
   has_many :resources
 
   attr_accessible :number, :title
-  def nextUnitLesson
+  def next_unit_lesson
   	unless self.id == 21
-	  	@nextUnitId = self.id + 1
-	  	return Lesson.where(:unit_id => @nextUnitId).first
+	  	@next_unit_id = self.id + 1
+	  	return Lesson.where(:unit_id => @next_unit_id).first
 	 else
 	 	return Lesson.where(:unit_id => self.id).first
 	 end
   end
-  def previousUnitLesson
+  def previous_unit_lesson
   	unless self.id == 1
-	  	@nextUnitId = self.id - 1
-	  	return Lesson.where(:unit_id => @nextUnitId).first
+	  	@prev_unit_id = self.id - 1
+	  	return Lesson.where(:unit_id => @prev_unit_id).first
 	 else
 	 	return Lesson.where(:unit_id => self.id).first
 	 end
