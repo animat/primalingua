@@ -2,7 +2,7 @@
 <script type="text/javascript">
 $(document).on("ready", function() {
   $("#lesson_save_options").hide();
-  $("#lesson_select_menu").on("change", function() {
+  $("#save_lesson_select_menu").on("change", function() {
     $("#lesson_save_options").slideDown();
   })
 });
@@ -22,7 +22,7 @@ $(document).on("ready", function() {
           <%= form_tag(update_section_lesson_teacher_path, {method: :post, remote: true, authenticity_token: false}) do %>
             <p>
               <label>This section is currently on...<br />
-                <%= grouped_collection_select :section, :lesson_id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
+                <%= grouped_collection_select :section, :lesson_id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "save_lesson_select_menu"}%>
               </label>
             </p>
             <div id="lesson_save_options">
@@ -47,7 +47,7 @@ $(document).on("ready", function() {
           <div><%= link_to image_tag("workspace/button_grading.png"), grading_teachers_path(@section.lesson, 0, @section) %></div>
           <div><%= link_to image_tag("workspace/button_in_class.png"), in_class_teachers_path(@section.lesson) %></div>
         </div>
-        <p>This section's class code is <strong><%= @section.code %></strong></p>
+        <p>This section's class code is <em><%= @section.code %></em></p>
       </div>
 
       <div> 

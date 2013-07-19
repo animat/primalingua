@@ -11,10 +11,12 @@
 </head>
 <body id="workspace">
 	<div id="<%= fullscreen_header_type %>">
-		<div id="topnav">
-			<div id="logo"></div>
-		</div>
 		<% if student_signed_in? %>
+			<div id="topnav">
+				<%= link_to student_path(current_student) do %>
+					<div id="logo"></div>
+				<% end %>
+			</div>
 			<div id="workspace_nav">
 				<div id="buttons">
 					<%= link_to image_tag("workspace/button_settings.png"), edit_student_registration_path %>
@@ -43,6 +45,11 @@
 				</div>
 			<% end %>
 		<% elsif teacher_signed_in? %>
+			<div id="topnav">
+				<%= link_to teacher_path(current_teacher) do %>
+					<div id="logo"></div>
+				<% end %>
+			</div>
 			<div id="workspace_nav">
 				<div id="buttons">
 					<%= link_to image_tag("workspace/button_home.png"), teacher_path(current_teacher) %>
@@ -60,6 +67,11 @@
 			</div>
 			<% end %>
 		<% elsif admin_signed_in? %>
+			<div id="topnav">
+				<%= link_to admin_path(current_admin) do %>
+					<div id="logo"></div>
+				<% end %>
+			</div>
 			<div id="workspace_nav">
 				<div id="buttons">
 					<%= link_to image_tag("workspace/button_home.png"), teacher_path(current_teacher) %>
