@@ -47,7 +47,7 @@ function displayStudentFeedback(answer) {
 		if (answer.feedback.status != null) {
 			var feedbackTypes = ["incomplete", "correct", "incorrect"];
 			if ($.inArray(answer.feedback.status, feedbackTypes) > -1) {
-				var $feedbackImg = $('<img>', {src: "/assets/workspace/"+answer.feedback.status+"_icon.png"})
+				var $feedbackImg = $('<img>', {src: "/images/workbook_templates/"+answer.feedback.status+"_icon.png"})
 				$("#f_"+answer.question.id).append($feedbackImg);
 			} else {
 				console.log("Feedback status not recognized for Answer#"+answer.id);
@@ -74,9 +74,9 @@ function displayTeacherFeedback(answer) {
 }
 function createFeedbackEditor(type, id) {
 	var $feedbackButtonsDiv = $('<div>', {class: "feedback_buttons"});
-	var $correctBtn = $('<img>', {src: "/assets/workspace/correct_button.png", class: "feedback_correct_btn"});
-	var $incompleteBtn = $('<img>', {src: "/assets/workspace/incomplete_button.png", class: "feedback_incomplete_btn"});
-	var $incorrectBtn = $('<img>', {src: "/assets/workspace/incorrect_button.png", class: "feedback_incorrect_btn"});
+	var $correctBtn = $('<img>', {src: "/images/workbook_templates/correct_button.png", class: "feedback_correct_btn"});
+	var $incompleteBtn = $('<img>', {src: "/images/workbook_templates/incomplete_button.png", class: "feedback_incomplete_btn"});
+	var $incorrectBtn = $('<img>', {src: "/images/workbook_templates/incorrect_button.png", class: "feedback_incorrect_btn"});
 
 	var $feedbackEditorTxt = $('<textarea>', {class: "feedback_txt", name: type+"_"+id});
 	var $feedbackEditorDiv = $('<div>', {class: "feedback_editor"});
@@ -162,7 +162,7 @@ function displayStudentTimeline(lessons) {
 				"backgroundRepeat": "no-repeat"
 			});
 		}
-		var $num_img = $('<img>', {src: "/assets/workspace/number(0"+lesson.number+").png"});
+		var $num_img = $('<img>', {src: "/images/workbook_templates/number(0"+lesson.number+").png"});
 		var $header1 = $('<h1>', {text: "Lesson "+lesson.number});
 		var $header2 = $('<h2>', {text: lesson.title});
 		var $timeline_lesson_overlay = $('<div>', {class: "timeline_lesson_overlay"});
