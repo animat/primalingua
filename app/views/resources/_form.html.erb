@@ -12,12 +12,20 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :type %><br />
-    <%= f.text_field :type %>
+    <%= f.label :content_type %><br />
+    <%= f.text_field :content_type %>
   </div>
   <div class="field">
-    <%= f.label :content %><br />
-    <%= f.text_area :content %>
+    <%= f.label :primary %><br />
+    <%= f.text_area :primary, :cols => 100, :rows => 3 %>
+  </div>
+  <div class="field">
+    <%= f.label :secondary %><br />
+    <%= f.text_area :secondary, :cols => 100, :rows => 3 %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :cols => 100, :rows => 3 %>
   </div>
   <div class="actions">
     <%= f.submit %>

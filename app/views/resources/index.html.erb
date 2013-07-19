@@ -3,8 +3,9 @@
 <table>
   <thead>
     <tr>
+      <th>Unit #</th>
       <th>Type</th>
-      <th>Content</th>
+      <th>Primary</th>
       <th></th>
       <th></th>
       <th></th>
@@ -14,8 +15,9 @@
   <tbody>
     <% @resources.each do |resource| %>
     <tr>
-      <td><%= resource.type %></td>
-      <td><%= resource.content %></td>
+      <td><%= resource.unit.number unless resource.unit.nil? %></td>
+      <td><%= resource.content_type %></td>
+      <td><%= resource.primary %></td>
       <td><%= link_to 'Show', resource %></td>
       <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
       <td><%= link_to 'Destroy', resource, method: :delete, data: { confirm: 'Are you sure?' } %></td>
