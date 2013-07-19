@@ -119,6 +119,8 @@ body#workspace {
 	text-align: center;
 	background: #E6D9EA url(<%= image_path 'workspace/workbook_shadow2.png' %>) no-repeat center bottom;
 	overflow-y: hidden;
+	color: #3F284F;
+	font-family: Arial Rounded MT Bold, Nunito;
 }
 #resource ul {
 	margin-bottom: 50px;
@@ -135,8 +137,26 @@ body#workspace {
 	cursor: pointer;
 }
 .resource_section {
-	width: 33%;
-
+	width: 20%;
+	height: inherit;
+	vertical-align: top;
+	background: url(<%= image_path 'workspace/resource_divider.png' %>) no-repeat left;
+}
+#resource_container {
+	padding-bottom: 50px;
+	width: 100%;
+}
+.resource_pad {
+	padding-left: 10%;
+	padding-right: 10%;
+	text-align: left;
+}
+#resource_header td {
+	padding: 0px;
+	padding-top: 10px;
+}
+#resource_header h2 {
+	margin: 0px;
 }
 /****************************************
 			Planning view
