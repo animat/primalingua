@@ -16,4 +16,8 @@ class Resource < ActiveRecord::Base
 	belongs_to :unit
 
 	attr_accessible :content_type, :primary, :secondary, :description, :unit_id
+
+	def self.content_types
+		["link", "vocab", "term", "activity", "game"]
+	end
 end

@@ -11,10 +11,8 @@
 </head>
 <body id="windowed">
 	<div id="header">
-		<% link_to root_path do %>
-			<div id="header_home_link"></div>
-		<% end %>
-		<div id="header_frog"></div>
+		<%= link_to image_tag("button_login_student.png"), new_student_session_path %>
+		<%= link_to image_tag("button_login_teacher.png"), new_teacher_session_path %>
 		<br class="clearFloat" />
 		<div id="nav">
 			<% if admin_signed_in? %>
@@ -51,7 +49,6 @@
 		</div>
 	</div>
  	<div id="body">
-		<div id="body_header"></div>
 		<div class="wrapper">
 			<% unless flash[:notice].nil? %>
 				<p class="flash_notice"><%= flash[:notice]%></p>
