@@ -16,10 +16,7 @@ class TeachersController < ApplicationController
         flash[:error] = "Please select a section before grading."
         redirect_to :back
       end
-      @milestone = Milestone.where(student: @student, lesson: @lesson).first_or_create!
-      if @milestone.feedback.nil?
-        @f = Feedback.create(feedbackable: @milestone)
-      end
+      create_default_milestone_and_feedback(@lesson, @student)
     else
       redirect_to in_class_teachers_path
     end

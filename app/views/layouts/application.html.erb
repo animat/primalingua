@@ -11,42 +11,22 @@
 </head>
 <body id="windowed">
 	<div id="header">
-		<%= link_to image_tag("button_login_student.png"), new_student_session_path %>
-		<%= link_to image_tag("button_login_teacher.png"), new_teacher_session_path %>
+		<%= link_to image_tag("header_home_link.gif"), root_url, id: "header_home_link" %>
+		<%= link_to image_tag("button_login_student.png"), new_student_session_path, id: "login_student_btn" %>
+		<%= link_to image_tag("button_login_teacher.png"), new_teacher_session_path, id: "login_teacher_btn" %>
 		<br class="clearFloat" />
-		<div id="nav">
-			<% if admin_signed_in? %>
-			<ul>
-				<li><%= link_to "Teachers", teachers_path %></li>
-				<li><%= link_to "Units", units_path %></li>
-				<li><%= link_to "Lessons", lessons_path %></li>
-				<li><%= link_to "Lesson Plans", lesson_plans_path %></li>
-				<li><%= link_to "Resources", resources_path %></li>
-				<li><%= link_to "Sign out", destroy_admin_session_path %></li>
-			</ul>
-			<% end %>
-			<% if teacher_signed_in? %>
-			<ul>
-				<li><%= link_to "Overview", teacher_path(current_teacher) %></li>
-				<li><%= link_to "Sign out", destroy_teacher_session_path %></li>
-			</ul>
-			<% end %>
-			<% if student_signed_in? %>
-			<ul>
-				<li><%= link_to "Overview", student_path(current_student) %></li>
-				<li><%= link_to "Workbook", workbook_student_path(current_student) %></li>
-				<li><%= link_to "Sign out", destroy_student_session_path %></li>
-			</ul>
-			<% end %>
-			<% if !admin_signed_in? and !teacher_signed_in? and !student_signed_in? %>
-			<ul>
-				<li><%= link_to "About", root_path %></li>
-				<li><%= link_to "Admin", new_admin_session_path %></li>
-				<li><%= link_to "Teacher", new_teacher_session_path %></li>
-				<li><%= link_to "Student", new_student_session_path %></li>
-			</ul>
-			<% end %>
-		</div>
+		<% if admin_signed_in? %>
+			<div id="nav">
+				<ul>
+					<li><%= link_to "Teachers", teachers_path %></li>
+					<li><%= link_to "Units", units_path %></li>
+					<li><%= link_to "Lessons", lessons_path %></li>
+					<li><%= link_to "Lesson Plans", lesson_plans_path %></li>
+					<li><%= link_to "Resources", resources_path %></li>
+					<li><%= link_to "Sign out", destroy_admin_session_path %></li>
+				</ul>
+			</div>
+		<% end %>
 	</div>
  	<div id="body">
 		<div class="wrapper">
@@ -62,24 +42,24 @@
 	</div>
 	<div id="footer">
 		<div id="animat_links">
-			<div id="prima_lingua">
-				<%= link_to image_tag("footer/prima_lingua_frog.gif"), "http://www.primalingua.net" %>
-				<h4>PRIMA LINGUA</h4>
-				<p class="tag_line">The preparatory course<br /> for the study of foreign languages</p>
+			<div id="linguazone">
+				<%= link_to image_tag("footer/linguazone_frog.gif"), "http://www.linguazone.com" %>
+				<h4>LinguaZone</h4>
+				<p class="tag_line">Online teaching tools<br />customized for your classroom</p>
 			</div>
 			<div id="lz_camps">
-				<%= link_to image_tag("footer/camp_frog.gif"), "http://www.linguazonecamps.com" %>
-				<h4>LZ LANGUAGE CAMPS</h4>
+				<%= link_to image_tag("footer/camp_frog.gif"), "http://www.lzacademy.com" %>
+				<h4>LZ Language Academy</h4>
 				<p class="tag_line">Summer camps in 10 languages<br /> for ages 4 - 17 in Suburban Philadelphia</p>
 			</div>
 			<br class="clearFloat" />
 		</div>
 		<div id="get_to_know_us">
 			<h4>GET TO KNOW US</h4>
-			<p>We love languages, games, and technology. LinguaZone.com is the way we fuse all three together and offer fun and creative ways for teachers to interact with their 21st century students. We're all about activity-based programs and engaging language learning. Get in touch if you're interested in learning more.</p>
+			<p>Our mission is to kindle the love of language learning in young students. We love connecting with creative, engaging language teachers from all over the world to help us further this goal. Interested in getting in touch? Drop us a line!</p>
 		</div>
 		<br class="clearFloat" />
-		<p class="copyright">&copy; Animat, LLC 2006 - <%= Time.now.year %></p>
+		<p class="copyright">&copy; Animat, LLC 2005 - <%= Time.now.year %></p>
 	</div>
 </body>
 </html>

@@ -18,9 +18,9 @@ class MilestonesController < ApplicationController
 			@milestones_in_unit.select {|m| lesson.milestones = [m] if m.lesson_id == lesson.id }
 			@lessons.push(lesson)
 		end
-		render json: @lessons.to_json, status: :ok
+		#render json: @lessons.to_json, status: :ok
 		# TODO: Lessons are attaching feedback for ALL students, not specified student if using include param below
-		#render json: @lessons.to_json(:include => {:milestones => {:include => :feedback}}), status: :ok
+		render json: @lessons.to_json(:include => {:milestones => {:include => :feedback}}), status: :ok
 	end
 
 	def show

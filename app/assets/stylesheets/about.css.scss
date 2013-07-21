@@ -2,9 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.about_content {
+	float: left;
+	width: 610px;
+}
+
 #about_nav {
 	width: 215px;
-	margin-right: 5px;
+	margin-right: 20px;
+	margin-bottom: 10px;
 	padding: 5px;
 	float: left;
 }
@@ -27,9 +33,14 @@
 	left: -25px;
 	width: 222px;
 	padding-left: 0px;
+	padding-bottom: 5px;
+}
+#about_nav ul:last-child {
+	border-bottom: 1px solid #973f98;
 }
 #about_nav li {
 	list-style: none;
+	margin-bottom: 0px;
 }
 #about_nav li a {
 	display: block;

@@ -13,6 +13,7 @@ body#windowed {
 	background-color: #C0D6FA;
 	text-align: center;
 	min-width: 970px;
+	line-height: 1.3em;
 }
 #windowed img {
 	border: none;
@@ -22,7 +23,7 @@ body#windowed {
 	line-height: 1.4em;
 }
 #windowed h1 {
-	color: #333;
+	color: #973f98;
 	font-size: 2.4em;
 	font-family: 'Trebuchet MS', Helvetica, Verdana, Arial, sans-serif;
 }
@@ -30,10 +31,24 @@ body#windowed {
 	color: #973f98;
 	padding-top: 10px;
 	font-size: 1.75em;
+	line-height: 1.1em;
 }
 #windowed h3 {
 	font-family: Helvetica, Lucida Sans Unicode, sans-serif;
 	color: #333;
+}
+#windowed h1, #windowed h2, #windowed h3 {
+	padding-top: 10px;
+	margin-bottom: .7em;
+}
+#windowed h1.course_header {
+	margin-bottom: .1em;
+}
+#windowed h3.course_subheader {
+	margin-top: 0px;
+	margin-bottom: 25px;
+	font-style: italic;
+	color: #555;
 }
 #windowed input {
 	font-family: Helvetica, Lucida Sans Unicode, sans-serif;
@@ -76,6 +91,14 @@ body#windowed {
 	list-style-type: disc;
 	list-style-position: inside;
 }
+#windowed ol {
+	padding-left: 2em;
+	list-style-position: inside;
+}
+#windowed li {
+	margin-bottom: 0.5em;
+}
+
 #windowed hr {
 	width: 95%;
 	margin: 30px auto;
@@ -146,16 +169,23 @@ p.flash_error {
 	width: 970px;
 	height: 165px;
 	margin: 0 auto;
-	border: 1px solid red;
-	background: url(image-path('layout_head.jpg')) no-repeat center;
+	background: url(image-path('layout_head.gif')) no-repeat center;
 }
 #header_home_link {
 	float: left;
-	width: 560px;
-	height: 100px;
-	background: url(image-path('header_home_link.gif')) no-repeat;
-	margin-top: 5px;
-	margin-left: 10px;
+	width: 530px;
+	height: 150px;
+	margin-left: 40px;
+}
+#login_student_btn {
+	position: absolute;
+	top: 50px;
+	right: 180px;
+}
+#login_teacher_btn {
+	position: absolute;
+	top: 50px;
+	right: 360px;
 }
 #header_frog {
 	float: right;
@@ -270,7 +300,7 @@ p.flash_error {
 }
 #footer p.tag_line {
 	font-size: .9em;
-	color: #122d5d;
+	color: #f4f4f4;
 	text-align: center;
 }
 #footer p.copyright {
@@ -281,7 +311,7 @@ p.flash_error {
 	float: left;
 	width: 67%;
 }
-#prima_lingua {
+#linguazone {
 	float: left;
 	width: 50%;
 }
@@ -296,4 +326,14 @@ p.flash_error {
 }
 #get_to_know_us a {
 	color: #122d5d;
+}
+
+div#table_of_contents {
+	float: left;
+}
+div#table_of_contents h3 {
+	margin-top: 15px;
+}
+div#table_of_contents ol {
+	list-style-type: none;
 }

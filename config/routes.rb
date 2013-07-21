@@ -36,16 +36,13 @@ Pl2::Application.routes.draw do
   end
   
   root to: 'about#index'
-
-  get "about/contact"
-  get "about/history"
-  get "about/in_your_curriculum"
-  get "about/index"
-  get "about/subscribing"
-  get "about/tour_online_resources"
-  get "about/what_is"
-  get "about/whats_in_it"
-  get "about/who_is_it_for"
-  get "about/workbook"
+  get "about/general_info", as: "about_general_info"
+  get "about/history", as: "about_history"
+  get "about/linguazone", as: "about_linguazone"
+  get "about/who_uses_pl", as: "about_who_uses_pl"
+  get "about/workbook_contents", as: "about_workbook_contents"
+  get "about/goals", as: "about_goals"
+  get "about/requirements", as: "about_requirements"
+  get "about/what_is_included", as: "about_what_is_included"
   
 end

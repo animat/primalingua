@@ -30,4 +30,11 @@ class ApplicationController < ActionController::Base
       return true
     end
   end
+
+  def create_default_milestone_and_feedback(l, s)
+    @milestone = Milestone.where(student: s, lesson: l).first_or_create!
+    if @milestone.feedback.nil?
+      @f = Feedback.create(feedbackable_type: "Milestone", feedbackable_id: @milestone.id)
+    end
+  end
 end

@@ -15,7 +15,9 @@ $(document).on("blur", ".question", function() {
  		url: "<%= answers_url %>",
  		data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>"},
  		success: function() {
- 			alert("Saved!");
+ 			var $save_notice = $("<p>", {innerHTML: "Saved!"});
+ 			$(this).append($save_notice);
+ 			$save_notice.fadeOut(2000);
  		},
  		error: function() {
  			alert("Problem saving data...");

@@ -1,31 +1,28 @@
 class AboutController < ApplicationController
-  def contact
+  def general_info
+  end
+
+  def goals
   end
 
   def history
   end
 
-  def in_your_curriculum
-  end
-
   def index
   end
 
-  def subscribing
+  def linguazone
   end
 
-  def tour_online_resources
+  def requirements
   end
 
-  def what_is
+  def what_is_included
   end
 
-  def whats_in_it
+  def who_uses_pl
   end
 
-  def who_is_it_for
-  end
-
-  def workbook
+  def workbook_contents
   end
 end
