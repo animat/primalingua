@@ -1,14 +1,5 @@
 class StudentsController < ApplicationController
-  before_action :authorize_student, only: [:show, :edit, :update, :destroy]
-
-  def show
-  	if student_signed_in? or teacher_signed_in? or admin_signed_in?
-      @student = Student.find(params[:id])
-  	else
-  	  flash[:error] = "Please sign in to view that page."
-  	  redirect_to root_path
-  	end
-  end
+  before_action :authorize_student
 
   def workbook
     @student = Student.find(params[:student_id])

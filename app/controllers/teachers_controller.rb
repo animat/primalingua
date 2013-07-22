@@ -1,6 +1,7 @@
 class TeachersController < ApplicationController
   layout "workspace", :except => [:index]
   protect_from_forgery :except => [:update_section_lesson]
+  before_action :authorize_teacher
 
   def grading
     if current_teacher.premium

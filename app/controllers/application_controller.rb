@@ -37,4 +37,28 @@ class ApplicationController < ActionController::Base
       @f = Feedback.create(feedbackable_type: "Milestone", feedbackable_id: @milestone.id)
     end
   end
+
+  def authorize_student
+    if student_signed_in?
+      if current_student.id == params[:id]
+        # Access granted
+      else
+        flash[:error] = "You do not have permission to view that page."
+        redirect_to workbook_student_url(current_student)
+      end
+    else
+      flash[:error] = "Please login to view that page."
+      redirect_to root_url
+    end
+  end
+
+  def authorize_teacher
+    if teacher_signed_in? or admin_signed_in?
+      # TODO: Insecure (could one teacher go to another teacher's page?)
+      # Access granted
+    else
+      flash[:error] = "Please login to view that page."
+      redirect_to root_url
+    end
+  end
 end
