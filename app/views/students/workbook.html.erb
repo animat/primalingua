@@ -70,7 +70,7 @@ $(document).on("click", ".timeline_lesson", function() {
 });
 
 $(document).on("ready", function() {
-	setTimelineHeight();
+	setTimelineHeight(<%= @student.teacher.premium %>);
 	$(window).resize(function() {
 		updateTimelineWidth();
 	});

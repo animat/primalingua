@@ -1,12 +1,9 @@
-<table id="resource_container">
-	<tr id="resource_header">
+<div id="resource_container">
+	<div>
 		<% Resource.content_types.each do |ct| %>
-			<td><h2><%= ct %></h2></td>
-		<% end %>
-	</tr>
-	<tr>
-		<% Resource.content_types.each do |ct| %>
-			<td class="resource_section">
+			<div class="resource_section">
+				<h2><%= image_tag "workspace/"+ct+"_icon.png" %><%= " "+ct %></h2>
+				<div class="resource_border"></div>
 				<div class="resource_pad">
 					<% resources.map{|r| (r.content_type == ct) ? r : nil}.each do |r| %>
 						<% unless r.nil? %>
@@ -14,7 +11,7 @@
 						<% end %>
 					<% end %>
 				</div>
-			</td>	
+			</div>	
 		<% end %>
-	</tr>
-</table>
+	</div>
+</div>

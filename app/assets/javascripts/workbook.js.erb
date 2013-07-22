@@ -1,3 +1,8 @@
+var initHeight;
+var finHeight;
+var headInitHeight;
+var headFinHeight;
+var $head;
 function populate(url, audience) {
 	$.getJSON(url).success(function(answers) {
 		for (var i = 0; i < answers.length; i++) {
@@ -178,27 +183,36 @@ function displayStudentTimeline(lessons) {
 		$('#timeline_lessons').append($div);
 	}
 }
-function setTimelineHeight() {
-	initHeight = 27;
-	finHeight = $("#resource").css("height");
+function setTimelineHeight(premium) {
 	if ($("#head_student").length) {
-		var $head = $("#head_student");
+		$head = $("#head_student");
 	} else {
-		var $head = $("#head");
+		$head = $("#head");
 		$("#resource").css("top", 57);
 	}
+	initHeight = 27;
+	finHeight = $("#resource").css("height");
 	headInitHeight = $head.height();
 	headFinHeight = parseInt(headInitHeight) + (parseInt(finHeight) - initHeight);
 	$("#resource").css("height", initHeight);
+	if (!premium) {
+		openResources();
+	}
 	$("#resource_button").on("click", function() {
 		if ($("#resource").css("height") == initHeight+"px") {
-			$("#resource").animate({"height": finHeight}, 200);
-			$head.animate({"height": headFinHeight}, 200);
+			openResources();
 		} else {
-			$("#resource").animate({"height": initHeight}, 200);
-			$head.animate({"height": headInitHeight}, 200);
+			closeResources();
 		}
 	});
+}
+function closeResources() {
+	$("#resource").animate({"height": initHeight}, 200);
+	$head.animate({"height": headInitHeight}, 200);
+}
+function openResources() {
+	$("#resource").animate({"height": finHeight}, 200);
+	$head.animate({"height": headFinHeight}, 200);
 }
 function updateTimelineWidth() {
 	var timeline_width = $(window).width() - 188 - 24;

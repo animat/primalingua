@@ -15,7 +15,7 @@
 	<div id="<%= fullscreen_header_type %>">
 		<% if student_signed_in? %>
 			<div id="topnav">
-				<%= link_to student_path(current_student) do %>
+				<%= link_to workbook_student_path(current_student) do %>
 					<div id="logo"></div>
 				<% end %>
 			</div>

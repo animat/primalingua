@@ -4,8 +4,15 @@ $(document).on("ready", function() {
   $("#lesson_save_options").hide();
   $("#save_lesson_select_menu").on("change", function() {
     $("#lesson_save_options").slideDown();
-  })
+  });
 });
+$(document).on("ajax:complete", '#update_section', function(evt, resp) {
+    if (resp.status >= 200 && resp.status < 300 || resp.status === 304) {
+      $("#lesson_save_options").slideUp();
+    } else {
+      alert("Sorry -- there was an error saving your changes.");
+    }
+  });
 </script>
 <% end %> 
 
@@ -19,7 +26,7 @@ $(document).on("ready", function() {
        
       <div id="section_current_lesson">
         <div class="section_info">
-          <%= form_tag(update_section_lesson_teacher_path, {method: :post, remote: true, authenticity_token: false}) do %>
+          <%= form_tag(update_section_lesson_teacher_path, {method: :post, remote: true, authenticity_token: false, id: "update_section"}) do %>
             <p>
               <label>This section is currently on...<br />
                 <%= grouped_collection_select :section, :lesson_id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "save_lesson_select_menu"}%>
@@ -44,7 +51,7 @@ $(document).on("ready", function() {
         </div>
         <div class="section_info">
           <div><%= link_to image_tag("workspace/button_planning.png"), planning_teachers_path(@section.lesson) %></div>
-          <div><%= link_to image_tag("workspace/button_grading.png"), grading_teachers_path(@section.lesson, 0, @section) %></div>
+          <div><%= link_to image_tag("workspace/button_grading.png"), grading_teachers_path(@section.lesson, 0, @section) if current_teacher.premium %></div>
           <div><%= link_to image_tag("workspace/button_in_class.png"), in_class_teachers_path(@section.lesson) %></div>
         </div>
         <p>This section's class code is <em><%= @section.code %></em></p>
