@@ -10,6 +10,7 @@ gem "jquery-rails"
 gem "devise"
 gem "paperclip"
 gem "mercury-rails", git: 'https://github.com/jejacks0n/mercury.git'
+gem "airbrake"
 
 
 group :assets do
