@@ -36,6 +36,8 @@ Pl2::Application.routes.draw do
   end
   
   root to: 'about#index'
+  get "about/contact_us", as: "about_contact_us"
+  post "about/contact_us"
   get "about/general_info", as: "about_general_info"
   get "about/history", as: "about_history"
   get "about/linguazone", as: "about_linguazone"
