@@ -4,6 +4,7 @@ class SectionsController < ApplicationController
   # GET /sections
   # GET /sections.json
   def index
+    @title = "Prima Lingua: Viewing all sections"
     if teacher_signed_in?
       @teacher = Teacher.find(current_teacher)
       @sections = Section.where(:teacher_id => @teacher.id)
@@ -19,6 +20,7 @@ class SectionsController < ApplicationController
   # GET /sections/1
   # GET /sections/1.json
   def show
+    @title = "Prima Lingua: #{@section.name}"
     respond_to do |format|
       format.html { render_flex_layout }
       format.json { render :json => @section }
@@ -27,6 +29,7 @@ class SectionsController < ApplicationController
 
   # GET /sections/new
   def new
+    @title = "Prima Lingua: Create a new section"
     if params[:teacher_id]
       @teacher = Teacher.find(params[:teacher_id])
       @section = Section.new
@@ -39,6 +42,7 @@ class SectionsController < ApplicationController
 
   # GET /sections/1/edit
   def edit
+    @title = "Prima Lingua: Edit your section"
     @teacher = @section.teacher
     render_flex_layout
   end

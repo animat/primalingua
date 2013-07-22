@@ -4,6 +4,7 @@ class TeachersController < ApplicationController
   before_action :authorize_teacher
 
   def grading
+    @title = "Prima Lingua: Grading workbooks"
     if current_teacher.premium
       @lesson = Lesson.find(params[:lesson_id])
       if params[:student_id].to_i != 0
@@ -24,6 +25,7 @@ class TeachersController < ApplicationController
   end
 
   def planning
+    @title = "Prima Lingua: Planning lessons"
     @lesson = Lesson.find(params[:lesson_id])
     @lesson_plan = @lesson.lesson_plan
     @unit = @lesson.unit
@@ -32,6 +34,7 @@ class TeachersController < ApplicationController
   end
 
   def in_class
+    @title = "Prima Lingua: Workbook in class"
   	@lesson = Lesson.find(params[:lesson_id])
   	@workbook_content = @lesson.content.gsub("\\r\\n", "")
   end
@@ -51,6 +54,7 @@ class TeachersController < ApplicationController
   end
 
   def show
+    @title = "Prima Lingua: Teacher homepage"
     @teacher = Teacher.find(params[:id])
     @sections = @teacher.sections.order(:name)
     @resource = Teacher

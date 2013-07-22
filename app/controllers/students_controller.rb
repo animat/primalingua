@@ -12,6 +12,8 @@ class StudentsController < ApplicationController
       end
   	  @workbook_content = @lesson.content.gsub("\\r\\n", "")
       
+      @title = "Prima Lingua: #{@lesson.title}"
+
       create_default_milestone_and_feedback(@lesson, @student)
   	  render :layout => "workspace"
   	else
