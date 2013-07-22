@@ -50,10 +50,11 @@ body#windowed {
 	font-style: italic;
 	color: #555;
 }
-#windowed input {
+#windowed input, #windowed textarea {
 	font-family: Helvetica, Lucida Sans Unicode, sans-serif;
 	font-size: 1.2em;
 	color: #333;
+	padding: 3px;
 }
 #windowed input[type="submit"] {
 	font-size: 1em;
@@ -306,6 +307,10 @@ p.flash_error {
 #footer p.copyright {
 	padding-top: 5px;
 	text-align: center;
+}
+#footer p a {
+	color: white !important;
+	text-decoration: underline;	
 }
 #animat_links {
 	float: left;

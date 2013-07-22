@@ -1,0 +1,24 @@
+<%= render "layouts/about_nav" %>
+
+	<div class="about_content">
+	<h1>Get in touch with us</h1>
+	<div id="contact_form">
+		<%= form_for :email, url: about_contact_us_path, method: "post" do |f| %>
+			<p><%= f.label :name, "Your name:" %><br /><%= f.text_field :name %></p>
+			<p><%= f.label :address, "Your email address:" %><br /><%= f.text_field :address %></p>
+			<p><%= f.label :school, "Your school:" %><br /><%= f.text_field :school %></p>
+			<p><%= f.label :location, "Your school's city and state:" %><br /><%= f.text_field :location %></p>
+			<p><%= f.label :msg, "Your message:" %><br /><%= f.text_area :msg, {rows: 8, cols: 50 } %></p>
+			<p><%= f.submit "Send message "%></p>
+		<% end %>
+	</div>
+	<div id="contact_details">
+		<h2>By email:</h2>
+		<p><%= mail_to "colin@primalingua.net" %></p>
+		<h2>By phone:</h2>
+		<p>215.948.2153</p>
+		<h2>By snail mail:</h2>
+		<p>417 Yorkshire Road<br />Bryn Mawr, PA 19010</p>
+	</div>
+</div>
+<br class="clearFloat" />
