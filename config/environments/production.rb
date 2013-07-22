@@ -79,7 +79,7 @@ Pl2::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
 
-
+  GA.tracker = "UA-90617-1"
 
 
   config.action_mailer.default_url_options = { :host => 'primalingua.net' }
