@@ -1,9 +1,8 @@
 class StudentsController < ApplicationController
-  def index
-  end
+  before_action :authorize_student, only: [:show, :edit, :update, :destroy]
 
   def show
-  	if student_signed_in? or teacher_signed_in? or admin_admined_in?
+  	if student_signed_in? or teacher_signed_in? or admin_signed_in?
       @student = Student.find(params[:id])
   	else
   	  flash[:error] = "Please sign in to view that page."
@@ -28,9 +27,5 @@ class StudentsController < ApplicationController
   	  flash[:error] = "Please login to a student account to view the workbook."
   	  redirect_to root_path
   	end
-  end
-
-  def settings
-    
   end
 end
