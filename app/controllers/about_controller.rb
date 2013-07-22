@@ -9,6 +9,7 @@ class AboutController < ApplicationController
   end
 
   def index
+    @title = "Prima Lingua: An introductory course for the study of foreign languages"
   end
 
   def linguazone
