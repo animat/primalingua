@@ -1,15 +1,5 @@
 class StudentsController < ApplicationController
-  def index
-  end
-
-  def show
-  	if student_signed_in? or teacher_signed_in? or admin_admined_in?
-      @student = Student.find(params[:id])
-  	else
-  	  flash[:error] = "Please sign in to view that page."
-  	  redirect_to root_path
-  	end
-  end
+  before_action :authorize_student
 
   def workbook
     @student = Student.find(params[:student_id])
@@ -22,15 +12,13 @@ class StudentsController < ApplicationController
       end
   	  @workbook_content = @lesson.content.gsub("\\r\\n", "")
       
+      @title = "Prima Lingua: #{@lesson.title}"
+
       create_default_milestone_and_feedback(@lesson, @student)
   	  render :layout => "workspace"
   	else
   	  flash[:error] = "Please login to a student account to view the workbook."
   	  redirect_to root_path
   	end
-  end
-
-  def settings
-    
   end
 end

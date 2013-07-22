@@ -10,6 +10,7 @@ gem "jquery-rails"
 gem "devise"
 gem "paperclip"
 gem "mercury-rails", git: 'https://github.com/jejacks0n/mercury.git'
+gem "airbrake"
 
 
 group :assets do
@@ -20,6 +21,7 @@ end
 
 group :production, :staging do
   gem "pg"
+  gem "google-analytics-rails"
   gem "rails_12factor"
   gem "unicorn"
   gem "rails_log_stdout", github: 'heroku/rails_log_stdout'

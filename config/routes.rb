@@ -17,7 +17,7 @@ Pl2::Application.routes.draw do
   get "students/:student_id/workbook(/:lesson_id)", to: "students#workbook", as: "workbook_student"
   get "students/:student_id/lesson/:lesson_id/answers", to: "answers#show", as: "student_answers_in_lesson"
 
-  resources :students, :except => [:new, :create, :delete] do
+  resources :students, :except => [:new, :create, :show, :edit, :update, :delete] do
     resources :milestones do
       match "(around_lesson/:lesson_id)" => "milestones#around_lesson", on: :collection, as: :around_lesson, via: :get
     end
