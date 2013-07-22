@@ -154,6 +154,9 @@ function displayStudentTimeline(lessons) {
 						"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
 					});
 				} else {
+					$div.css({
+						"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
+					});
 					console.log("Unrecognized milestone status on lesson #"+lesson.id);
 				}
 			}
