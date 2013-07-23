@@ -17,12 +17,12 @@
     <%= collection_select :lesson, :unit_id, Unit.all, :id, :title, :prompt => true %>
   </div>
   <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
     <%= f.label :number %><br />
     <%= f.text_field :number %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
   </div>
 	<div class="field">
 		<%= f.label :completed %><br />

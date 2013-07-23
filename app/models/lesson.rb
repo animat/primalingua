@@ -22,7 +22,7 @@ class Lesson < ActiveRecord::Base
 
   validates_presence_of :unit
 
-  attr_accessible :title, :content, :unit_id
+  attr_accessible :title, :content, :number, :completed, :unit_id
 
   def full_title
   	"Unit #{self.unit.number}, lesson #{self.number}: #{self.title}"
