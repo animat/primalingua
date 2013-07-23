@@ -16,4 +16,4 @@
 //= require workbook
 //= require notifications
 //= require rocanvas
-
+//= require fancybox

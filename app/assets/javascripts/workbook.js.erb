@@ -3,6 +3,20 @@ var finHeight;
 var headInitHeight;
 var headFinHeight;
 var $head;
+
+
+$(document).on("ready", function() {
+	$("a.fancybox").fancybox();
+});
+
+$(document).on("click", "#resource_button", function() {
+	if ($("#resource").css("height") == initHeight+"px") {
+		openResources();
+	} else {
+		closeResources();
+	}
+});
+
 function populate(url, audience) {
 	$.getJSON(url).success(function(answers) {
 		for (var i = 0; i < answers.length; i++) {
@@ -183,7 +197,7 @@ function displayStudentTimeline(lessons) {
 		$('#timeline_lessons').append($div);
 	}
 }
-function setTimelineHeight(premium) {
+function setTimelineHeight() {
 	if ($("#head_student").length) {
 		$head = $("#head_student");
 	} else {
@@ -195,16 +209,6 @@ function setTimelineHeight(premium) {
 	headInitHeight = $head.height();
 	headFinHeight = parseInt(headInitHeight) + (parseInt(finHeight) - initHeight);
 	$("#resource").css("height", initHeight);
-	if (!premium) {
-		openResources();
-	}
-	$("#resource_button").on("click", function() {
-		if ($("#resource").css("height") == initHeight+"px") {
-			openResources();
-		} else {
-			closeResources();
-		}
-	});
 }
 function closeResources() {
 	$("#resource").animate({"height": initHeight}, 200);

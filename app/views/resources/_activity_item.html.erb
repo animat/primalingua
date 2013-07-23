@@ -1,1 +1,11 @@
-<%= "#{resource.primary}" %>
+<div class="game_item">
+	<table>
+		<tr>
+			<td><%= link_to image_tag(resource.path_to_thumbnail), resource.secondary, {class: "resource_game fancybox", data: {game_path: "#{resource.secondary}"}} %></td>
+			<td><%= link_to resource.primary, resource.secondary, {class: "resource_game fancybox", data: {game_path: "#{resource.secondary}"}} %>
+				<br />
+				<span><%= "#{resource.description}" %></span>
+			</td>
+		</tr>
+	</table>
+</div>

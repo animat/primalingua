@@ -54,13 +54,15 @@ body#workspace {
 .nav_option:hover {
 	background: rgba(0, 0, 0, 0.05);
 }
-#workspace {
+div#workspace {
 	width: 100%;
-	//height: 100%;
+	/*height: 100%;*/
 	position: relative;
 	background: #E6EDF7 url(<%= image_path 'workspace/workbook_shadow.png' %>) no-repeat center top;
 	border-top: 1px solid #fff;
+	padding-top: 25px;
 }
+
 .workspace_button {
 	background: url(<%= image_path 'workspace/workspace_button_bg.png' %>) no-repeat center;
 	padding-top: 10px;
@@ -117,7 +119,7 @@ body#workspace {
 	top: 197px;
 	z-index: 2;
 	text-align: center;
-	background: #E6D9EA url(<%= image_path 'workspace/workbook_shadow2.png' %>) no-repeat center bottom;
+	background: #f7e5fd url(<%= image_path 'workspace/workbook_shadow2.png' %>) no-repeat center bottom;
 	overflow-y: hidden;
 	color: #3F284F;
 	font-family: Arial Rounded MT Bold, Nunito;
@@ -826,5 +828,16 @@ td {
 }
 #content .selected_feedback {
 	opacity: 1;
-	//background: rgba(0, 0, 0, 0.6);
+	/*background: rgba(0, 0, 0, 0.6);*/
+}
+
+#resource table {
+	border-collapse: collapse;
+	width: 100%;
+}
+#resource table td {
+	padding: 0px 2px;
+}
+#resource div.game_item span {
+	font-size: .9em;
 }

@@ -19,6 +19,6 @@ class Resource < ActiveRecord::Base
 	attr_accessible :content_type, :primary, :secondary, :description, :unit_id, :path_to_thumbnail
 
 	def self.content_types
-		["link", "vocab", "term", "activity", "game"]
+		["activity", "game", "vocab", "term", "image", "video", "note", "link"]
 	end
 end

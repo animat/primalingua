@@ -9,9 +9,9 @@ gem "protected_attributes", "~> 1.0.0"
 gem "jquery-rails"
 gem "devise"
 gem "paperclip"
-gem "swf_fu", "~> 2.0"
 gem "mercury-rails", git: 'https://github.com/jejacks0n/mercury.git'
 gem "airbrake"
+gem "fancybox2-rails", "~> 0.2.4"
 
 
 group :assets do
