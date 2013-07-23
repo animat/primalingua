@@ -1,13 +1,33 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Type:</strong>
-  <%= @resource.type %>
+  <strong>Content type:</strong>
+  <%= @resource.content_type %>
 </p>
 
 <p>
-  <strong>Content:</strong>
-  <%= @resource.content %>
+  <strong>Primary:</strong>
+  <%= @resource.primary %>
+</p>
+
+<p>
+  <strong>Secondary:</strong>
+  <%= @resource.secondary %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @resource.description %>
+</p>
+
+<p>
+  <strong>Thumbnail:</strong>
+  <%= image_tag @resource.path_to_thumbnail unless @resource.path_to_thumbnail.nil? %>
+</p>
+
+<p>
+  <strong>Unit:</strong>
+  <%= @resource.unit.title unless @resource.unit.nil? %>
 </p>
 
 

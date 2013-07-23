@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xml>
+	<set>
+		<question value="Why do kangaroos thump their hind legs?" animal="kangaroo" />
+		<answer decoy="false" value="to show danger" />
+		<answer decoy="true" value="to signal their young" />
+		<answer decoy="true" value="because their backside itches" />
+		<answer decoy="true" value="to summon a mate" />
+	</set>
+	<set>
+		<question value="Why do bees dance?" animal="bee" />
+		<answer decoy="true" value="to show the way to a new hive" />
+		<answer decoy="true" value="to distract their enemy" />
+		<answer decoy="false" value="to show location of nectar" />
+		<answer decoy="true" value="to alert the hive of danger" />
+	</set>
+	<set>
+		<question value = "Why do chimpanzees touch hands?" animal = "chimpanzee" />
+		<answer decoy="true" value="to signal a predator approaching" />
+		<answer decoy = "true" value="to request a mate" />
+		<answer decoy = "true" value="to play patty-cake" />
+		<answer decoy="false" value="to greet each other" />
+	</set>
+	<set>
+		<question value="Why do elephants entwine trunks?" animal="elephant" />
+		<answer decoy="true" value="to request help guarding their young" />
+		<answer decoy="true" value="to point to a food source" />
+		<answer decoy="true" value="to show a resting place" />
+		<answer decoy="false" value="to show affection" />
+	</set>
+	<set>
+		<question value="Why do elephants trumpet?" animal="elephant" />
+		<answer decoy="true" value="to express joy" />
+		<answer decoy="true" value="to frighten an enemy" />
+		<answer decoy="true" value="to call friends to a discovery" />
+		<answer decoy="false" value="to signal danger" />
+	</set>
+	<set>
+		<question value="Why do white-tailed deers flick their tails?" animal="white-tailed deer" />
+		<answer decoy="true" value="to point to fresh grass" />
+		<answer decoy="true" value="to greet another deer" />
+		<answer decoy="true" value="to conduct an orchestra" />
+		<answer decoy="false" value="to show danger" />
+	</set>
+	<set>
+		<question value="Why do dogs stretch their front legs and lower bodies?" animal="dog" />
+		<answer decoy="true" value="to show they are tired" />
+		<answer decoy="true" value="to ask for food" />
+		<answer decoy="true" value="to try and make friends" />
+		<answer decoy="false" value="to show they want to play" />
+	</set>
+	<set>
+		<question value="Why do fiddler crabs wave their giant claws?" animal="fiddler crab" />
+		<answer decoy="true" value="to show they are tired" />
+		<answer decoy="true" value="to ask for food" />
+		<answer decoy="true" value="to try and make friends" />
+		<answer decoy="false" value="to show they want to play" />
+	</set>
+	<set>
+		<question value="Why do horses rub noses together?" animal="horse" />
+		<answer decoy="true" value="to become familiar with each other scents" />
+		<answer decoy="true" value="to signal an approach" />
+		<answer decoy="true" value="to show dominance" />
+		<answer decoy="false" value="to show affection" />
+	</set>
+	<set>
+		<question value="Why do snakes hiss?" animal="snake" />
+		<answer decoy="true" value="to calm babies" />
+		<answer decoy="true" value="to distinguish dominance" />
+		<answer decoy="true" value="to signal sadness" />
+		<answer decoy="false" value="to scare off intruders" />
+	</set>
+	<set>
+		<question value="Why do rabbits show the white part of their tail?" animal="rabbit" />
+		<answer decoy="true" value="to show playfulness" />
+		<answer decoy="true" value="to tell others where food is" />
+		<answer decoy="true" value="to signal a death" />
+		<answer decoy="false" value="to get babies to follow them" />
+	</set>
+	<set>
+		<question value="Why do cats wave their tail?" animal="cat" />
+		<answer decoy="true" value="to show they are thirsty" />
+		<answer decoy="true" value="to show boredom" />
+		<answer decoy="true" value="when they need a litter box" />
+		<answer decoy="false" value="to signal irritation" />
+	</set>
+	<set>
+		<question value="Why do rhesus monkeys frown?" animal="rhesus monkey" />
+		<answer decoy="true" value="to show they are sad" />
+		<answer decoy="true" value="to show others a water source" />
+		<answer decoy="true" value="to show extreme hunger" />
+		<answer decoy="false" value="to show they are nervous" />
+	</set>
+	<set>
+		<question value="Why do rhesus monkeys raise their eyebrows?" animal="rhesus monkey" />
+		<answer decoy="true" value="to show disbelief" />
+		<answer decoy="true" value="to frighten off predators" />
+		<answer decoy="true" value="to look dark and mysterious" />
+		<answer decoy="false" value="to show friendship" />
+	</set>
+	<set>
+		<question value="Why do hippopotami drog dung?" animal="hippopotamus" />
+		<answer decoy="true" value="to signal danger" />
+		<answer decoy="true" value="to attract a mate" />
+		<answer decoy="true" value="to express anxiety" />
+		<answer decoy="false" value="to mark their territory" />
+	</set>
+	<set>
+		<question value="Why do dolphins click?" animal="dolphin" />
+		<answer decoy="true" value="to ask for food" />
+		<answer decoy="true" value="to tell other dolphins they are having a child" />
+		<answer decoy="true" value="to express happiness" />
+		<answer decoy="false" value="when hunting prey" />
+	</set>
+	<set>
+		<question value="Why do mosquitoes whine?" animal="mosquito" />
+		<answer decoy="true" value="to attract a mate" />
+		<answer decoy="true" value="to express loneliness" />
+		<answer decoy="true" value="when they are angry" />
+		<answer decoy="false" value="to signal a nearby supply of blood" />
+	</set>
+	<set>
+		<question value="Why do caterpillars emit an odor?" animal="caterpillar" />
+		<answer decoy="true" value="to mark their territory" />
+		<answer decoy="true" value="to show they are going in a cocoon" />
+		<answer decoy="true" value="to attract a mate" />
+		<answer decoy="false" value="to ask ants to be their bodyguards" />
+	</set>
+	<set>
+		<question value="Why do whales sing?" animal="whale" />
+		<answer decoy="true" value="to express loss" />
+		<answer decoy="true" value="to show joy" />
+		<answer decoy="true" value="to entertain their friends" />
+		<answer decoy="false" value="To identify themselves to others" />
+	</set>
+</xml>

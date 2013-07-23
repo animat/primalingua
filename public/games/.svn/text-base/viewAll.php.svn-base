@@ -1,0 +1,1 @@
+<?phpinclude_once('../includes/include.php');printHeader( "View All Prima Lingua Games", "students", "../" );echo "<table width='100%' border='1'>  <tr>    <td align='center' height='30'><a href='playGame.php?game_id=21'>Cargo Copter</td>  </tr></table>";printFooter( "../" );?>

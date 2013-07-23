@@ -40,7 +40,7 @@
 				</div>
 				<div id="resource">
 					<div>
-						<%= render :partial => "layouts/resources_box", :locals => {:resources => @lesson.unit.resources} %>
+						<%= render :partial => "resources/panel", :locals => {:resources => @lesson.unit.resources} %>
 					</div>
 					<div id="resource_button">
 						<%= image_tag("workspace/resource_button2.png") %>
@@ -62,7 +62,7 @@
 			<% if @lesson %>
 			<div id="resource">
 				<div>
-					<%= render :partial => "layouts/resources_box", :locals => {:resources => @lesson.unit.resources} %>
+					<%= render :partial => "resources/panel", :locals => {:resources => @lesson.unit.resources} %>
 				</div>
 				<div id="resource_button">
 					<%= image_tag("workspace/resource_button2.png") %>

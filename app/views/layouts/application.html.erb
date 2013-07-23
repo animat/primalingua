@@ -15,11 +15,16 @@
 <body id="windowed">
 	<div id="header">
 		<%= link_to image_tag("header_home_link.gif"), root_url, id: "header_home_link" %>
-		<%= link_to image_tag("button_login_student.png"), new_student_session_path, id: "login_student_btn" %>
-		<%= link_to image_tag("button_login_teacher.png"), new_teacher_session_path, id: "login_teacher_btn" %>
+		<% unless admin_signed_in? %>
+			<%= link_to image_tag("button_login_student.png"), new_student_session_path, id: "login_student_btn" %>
+			<%= link_to image_tag("button_login_teacher.png"), new_teacher_session_path, id: "login_teacher_btn" %>
+		<% end %>
 		<br class="clearFloat" />
-		<% if admin_signed_in? %>
-			<div id="nav">
+	</div>
+ 	<div id="body">
+		<div class="wrapper">
+			<% if admin_signed_in? %>
+			<div id="admin_nav">
 				<ul>
 					<li><%= link_to "Teachers", teachers_path %></li>
 					<li><%= link_to "Units", units_path %></li>
@@ -29,10 +34,7 @@
 					<li><%= link_to "Sign out", destroy_admin_session_path %></li>
 				</ul>
 			</div>
-		<% end %>
-	</div>
- 	<div id="body">
-		<div class="wrapper">
+			<% end %>
 			<% unless flash[:notice].nil? %>
 				<p class="flash_notice"><%= flash[:notice]%></p>
 			<% end %>

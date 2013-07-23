@@ -1,0 +1,18 @@
+<sentences>
+	<sentence id="1">
+		<chunk part="sub">The boy</chunk>
+		<chunk part="trans_verb">kicked</chunk>
+		<chunk part="d_o">the dog</chunk>
+		<chunk part="na">at the store.</chunk>
+	</sentence>
+	<sentence id="2">
+		<chunk part="sub">Colin</chunk>
+		<chunk part="trans_verb">eats</chunk>
+		<chunk part="d_o">cake.</chunk>
+	</sentence>
+	<sentence id="3">
+		<chunk part="sub">Sam</chunk>
+		<chunk part="intrans_verb">smells</chunk>
+		<chunk part="na">like tuna.</chunk>
+	</sentence>
+</sentences>

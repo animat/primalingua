@@ -14,6 +14,11 @@ class Unit < ActiveRecord::Base
   has_many :resources
 
   attr_accessible :number, :title
+
+  def full_title
+  	"Unit #{self.number}: #{self.title}"
+  end
+
   def next_unit_lesson
   	unless self.id == 21
 	  	@next_unit_id = self.id + 1

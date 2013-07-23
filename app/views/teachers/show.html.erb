@@ -1,7 +1,13 @@
 <div id="teacher_class_overview">
-	<div>
-		<%= render partial: "sections/preview", collection: @sections, as: :section %>
-	</div>
+	<% if @sections.empty? %>
+		<h1>Welcome!</h1>
+		<p>Welcome to your new teacher account on PrimaLingua.net.<br />To get started, create a new class.</p>
+		<br />
+	<% else %>
+		<div>
+			<%= render partial: "sections/preview", collection: @sections, as: :section %>
+		</div>
+	<% end %>
 	<div>
 		<%= link_to new_teacher_section_path(@teacher) do %>
 			<div class="workspace_button">

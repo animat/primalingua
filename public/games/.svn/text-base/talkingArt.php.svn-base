@@ -1,0 +1,22 @@
+<?php
+
+include_once("../includes/include.php");
+
+printHeader( "Prima Lingua :: Games!", "students", "../" );
+
+echo '
+<center>Songs and artwork for Unit II:</center>
+<br />
+<a href="talkingArt/Sigur-Ros.mp3">Song #1</a>
+<br />
+<a href="talkingArt/Manitoba.mp3">Song #2</a>
+<br />
+<br />
+<a href="talkingArt/grass.jpg">Picture #1</a>
+<br />
+<a href="talkingArt/blue.jpg">Picture #2</a>
+<br /> 
+';
+
+printFooter( "../" );
+?>

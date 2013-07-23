@@ -76,11 +76,16 @@ $(document).on("ajax:complete", '#update_section', function(evt, resp) {
   </div>
 </div>
 <div id="student_grid">
-  <div>
+  <% if @section.students.empty? %>
+    <h1>This class is empty.</h1>
+    <p>Invite your students to create their own accounts using the class code <strong><%= @section.code %></strong>.</p>
+  <% else %>
+    <div>
     <% @section.students.order(:last_name, :first_name).each do |s| %>
       <a href="<%= grading_teachers_path(@section.lesson, s, @section) %>" class="teacher_student">
         <h1><%= s.display_name %></h1>
       </a>
     <% end %>
   </div>
+  <% end %>
 </div>
