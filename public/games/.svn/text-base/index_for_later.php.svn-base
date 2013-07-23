@@ -1,7 +1,0 @@
-<?php
-include_once('../includes/header.php');
-
-echo "Games index is here!";
-
-include_once('../includes/footer.php');
-?>
