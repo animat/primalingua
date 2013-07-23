@@ -24,7 +24,6 @@ $(document).on("click", "#resource_button", function() {
 		closeResources();
 	}
 });
-
 function populate(url, audience) {
 	$.getJSON(url).success(function(answers) {
 		for (var i = 0; i < answers.length; i++) {
@@ -134,6 +133,7 @@ function saveFeedback(save_url, d, btns, selected) {
  				btns.children("img").removeClass("selected_feedback");
 				btns.children(selected).addClass("selected_feedback");
  			}
+ 			
  		},
  		error: function() {
  			console.log("Problem saving data...");

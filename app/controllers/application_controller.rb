@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   def authorize_student
     if student_signed_in?
-      if current_student.id == params[:id]
+      if current_student.id == params[:student_id].to_i
         # Access granted
       else
         flash[:error] = "You do not have permission to view that page."
