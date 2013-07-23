@@ -30,6 +30,14 @@ class Lesson < ActiveRecord::Base
   	"Unit #{self.unit.number}, lesson #{self.number}: #{self.title}"
   end
 
+  def display_completed_lesson
+    if self.completed
+      self.content.gsub("\\r\\n", "").html_safe
+    else
+      "<h2 class='under_construction'>The web version of this lesson is under construction.</h2>".html_safe
+    end
+  end
+
   def self.select_without_content
     select(column_names - ["content"].map(&:to_s))
   end

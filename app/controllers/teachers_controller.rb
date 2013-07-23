@@ -29,14 +29,11 @@ class TeachersController < ApplicationController
     @lesson = Lesson.find(params[:lesson_id])
     @lesson_plan = @lesson.lesson_plan
     @unit = @lesson.unit
-    @workbook_content = @lesson.content.gsub("\\r\\n", "")
-    @resources = Resource.where(:unit_id => @lesson.unit_id)
   end
 
   def in_class
     @title = "Prima Lingua: Workbook in class"
   	@lesson = Lesson.find(params[:lesson_id])
-  	@workbook_content = @lesson.content.gsub("\\r\\n", "")
   end
 
   def update_section_lesson
@@ -57,6 +54,6 @@ class TeachersController < ApplicationController
     @title = "Prima Lingua: Teacher homepage"
     @teacher = Teacher.find(params[:id])
     @sections = @teacher.sections.order(:name)
-    @resource = Teacher
+    #@resource = Teacher
   end
 end

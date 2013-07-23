@@ -10,7 +10,7 @@ class StudentsController < ApplicationController
       else
         @lesson = @student.section.lesson
       end
-  	  @workbook_content = @lesson.content.gsub("\\r\\n", "")
+  	  @workbook_content = @lesson.display_completed_lesson
       
       @title = "Prima Lingua: #{@lesson.title}"
 

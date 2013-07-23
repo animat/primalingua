@@ -92,12 +92,12 @@ function resizeWindow() {
 	
 
 	<div id="student_workbook">
-		<%= @lesson.content.gsub("\\r\\n", "").html_safe %>
+		<%= @lesson.display_completed_lesson %>
 	</div>
 </div>
 
 
 <div id="teacher_guide_workbook" class="half_width float_left">
-	<%= @lesson.content.gsub("\\r\\n", "").html_safe %>
+	<%= @lesson.display_completed_lesson %>
 	<br class="clear_float" />
 </div>
