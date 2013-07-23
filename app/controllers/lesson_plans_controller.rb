@@ -4,7 +4,7 @@ class LessonPlansController < ApplicationController
   # GET /resources
   # GET /resources.json
   def index
-    @lesson_plans = LessonPlan.order("lessons.unit_id, lessons.number").all
+    @lesson_plans = LessonPlan.includes(:lesson).order("lessons.unit_id, lessons.number").all
   end
 
   # GET /resources/1
