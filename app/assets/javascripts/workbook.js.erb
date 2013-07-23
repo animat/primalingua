@@ -6,7 +6,15 @@ var $head;
 
 
 $(document).on("ready", function() {
-	$("a.fancybox").fancybox();
+	$("a.fancybox").fancybox({
+		helpers: {
+			overlay: {
+				css: {
+					"background": "rgba(40, 30, 40, 0.90)"
+				}
+			}
+		}
+	});
 });
 
 $(document).on("click", "#resource_button", function() {
