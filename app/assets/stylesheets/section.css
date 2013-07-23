@@ -1,9 +1,21 @@
-#section_current_lesson {
+#new_section_div {
+	width: 60%;
+	margin: 0px auto;
+}
+
+#new_section_div div.field, #new_section_div div.actions {
+	margin-top: 10px;
+}
+
+#section_current_lesson, #teacher_class_overview {
 	font-size: 15px;
 	padding: 20px;
 	text-decoration: none;
 	color: #4F3157;
 	font-family: Arial Rounded MT Bold, Nunito;
+}
+
+#section_current_lesson {
 	text-align: left;
 }
 

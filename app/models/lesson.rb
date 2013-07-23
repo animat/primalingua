@@ -24,7 +24,7 @@ class Lesson < ActiveRecord::Base
 
   attr_accessible :title, :content, :number, :completed, :unit_id
 
-  default_scope order("unit_id DESC, number DESC")
+  default_scope order("unit_id ASC, number ASC")
 
   def full_title
   	"Unit #{self.unit.number}, lesson #{self.number}: #{self.title}"
