@@ -4,7 +4,7 @@
   <tbody>
     <% @lesson_plans.each do |lp| %>
     <tr>
-      <td><%= truncate (lp.content.html_safe) %></td>
+      <td><%= lp.lesson.full_title unless lp.lesson.nil? %></td>
       <td><%= link_to 'Show', lp %></td>
       <td><%= link_to 'Edit', edit_lesson_plan_path(lp) %></td>
       <td><%= link_to 'Destroy', lp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
