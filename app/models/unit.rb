@@ -15,6 +15,8 @@ class Unit < ActiveRecord::Base
 
   attr_accessible :number, :title
 
+  default_scope order("number DESC")
+
   def full_title
   	"Unit #{self.number}: #{self.title}"
   end

@@ -15,7 +15,7 @@
   <tbody>
     <% @lessons.each do |lesson| %>
     <tr>
-      <td><%= lesson.title %></td>
+      <td><%= lesson.full_title %></td>
       <td><%= lesson.content.length %></td>
 			<td><%= (lesson.completed) ? "Completed" : "" %>
       <td><%= link_to 'Show', lesson %></td>
