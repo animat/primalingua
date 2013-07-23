@@ -15,7 +15,7 @@ class MilestonesController < ApplicationController
 
 		@lessons = []
 		@lessons_in_unit.each do |lesson|
-			@milestones_in_unit.select {|m| lesson.milestones = [m] if m.lesson_id == lesson.id }
+			#@milestones_in_unit.select {|m| lesson.milestones = [m] if m.lesson_id == lesson.id }
 			@lessons.push(lesson)
 		end
 		#render json: @lessons.to_json, status: :ok

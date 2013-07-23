@@ -121,19 +121,22 @@ function saveStatusFeedback(url, btn, val, auth_token) {
 		var feed_type = "Milestone";
 	}
 	var d = {feedback: {status: val, feedbackable_type: feed_type, feedbackable_id: feed_id}, authenticity_token: auth_token};
-	saveFeedback(url, d, btn.parent(), ".feedback_"+val+"_btn");
+	saveFeedback(url, d, btn.parent().parent(), ".feedback_"+val+"_btn");
 }
 function saveFeedback(save_url, d, btns, selected) {
+	var $img = $("<img>", {class: "feedback_response_img", src: "/images/_spinner.gif"});
+	btns.append($img);
 	$.ajax({
  		type: "POST",
  		url: save_url,
  		data: d,
  		success: function() {
  			if (selected) {
- 				btns.children("img").removeClass("selected_feedback");
-				btns.children(selected).addClass("selected_feedback");
+ 				btns.find("img").removeClass("selected_feedback");
+				btns.find(selected).addClass("selected_feedback");
  			}
- 			
+ 			$img.attr("src", "/images/check.png");
+ 			$img.fadeOut(750);
  		},
  		error: function() {
  			console.log("Problem saving data...");
