@@ -1,10 +1,9 @@
 <h1>Listing lessons</h1>
 
-<table>
+<table style="width: 100%;">
   <thead>
     <tr>
       <th>Title</th>
-      <th>Content count</th>
 			<th>Completed?</th>
       <th></th>
       <th></th>
@@ -16,11 +15,10 @@
     <% @lessons.each do |lesson| %>
     <tr>
       <td><%= lesson.full_title %></td>
-      <td><%= lesson.content.length %></td>
-			<td><%= (lesson.completed) ? "Completed" : "" %>
-      <td><%= link_to 'Show', lesson %></td>
-      <td><%= link_to 'Edit', edit_lesson_path(lesson) %></td>
-      <td><%= link_to 'Destroy', lesson, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+			<td><%= (lesson.completed) ? "Y" : "" %>
+      <td><%= link_to 'TG Editor', lesson %></td>
+      <td><%= link_to 'Basic editor', edit_lesson_path(lesson) %></td>
+      <td><%= link_to 'Mercury editor', "/editor/lessons/#{lesson.id}" %></td>
     </tr>
     <% end %>
   </tbody>

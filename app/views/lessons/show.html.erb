@@ -54,4 +54,5 @@ function displayQuestion(question) {
 </div>
 
 <%= link_to 'Edit', "/editor" + request.path, id: "edit_link", data: {save_url: mercury_update_lesson_path(@lesson)} %> |
-<%= link_to 'Back', lessons_path %>
+<%= link_to 'Back', lessons_path %> |
+<%= link_to "Next lesson", "/editor/lessons/#{@lesson.next.id}" %>

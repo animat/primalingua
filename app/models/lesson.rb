@@ -30,6 +30,10 @@ class Lesson < ActiveRecord::Base
   	"Unit #{self.unit.number}, lesson #{self.number}: #{self.title}"
   end
 
+  def next
+    Lesson.where("id > ?", self.id).first
+  end
+
   def display_completed_lesson
     if self.completed
       self.content.gsub("\\r\\n", "").html_safe
