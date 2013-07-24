@@ -1,10 +1,5 @@
 Pl2::Application.routes.draw do
 
-  namespace :mercury do
-    resources :images
-  end
-  mount Mercury::Engine => '/'
-
   devise_for :students, :controllers => {:registrations => "students/registrations"}
   devise_for :teachers, :controllers => {:registrations => "teachers/registrations"}
   devise_for :admins, :controllers => {:registrations => "admins/registrations"}
@@ -46,5 +41,12 @@ Pl2::Application.routes.draw do
   get "about/goals", as: "about_goals"
   get "about/requirements", as: "about_requirements"
   get "about/what_is_included", as: "about_what_is_included"
+  
+  namespace :mercury do
+    resources :images
+  end
+  mount Mercury::Engine => '/'
+  match "mercury/snippets/:name/preview(.:format)", to: "mercury#snippet_preview", via: :post
+  match "mercury/snippets/:name/options(.:format)", to: "mercury#snippet_options", via: :post
   
 end

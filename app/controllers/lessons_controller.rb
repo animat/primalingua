@@ -53,7 +53,14 @@ class LessonsController < ApplicationController
   end
   def mercury_update
     @lesson = Lesson.find(params[:id])
-    @lesson.content = params[:content][:workbook_editor][:value]
+    @page = Nokogiri::HTML.fragment(params[:content][:workbook_editor][:value])
+    @page.css("div.text_area_question-snippet").each do |div|
+      new_q = Question.create!(lesson_id: @lesson.id, input_type: "text")
+      new_html_str = render_to_string("/mercury/snippets/text_area_question/preview.html", layout: false)
+      new_html_str.gsub!(/name=""/, "name=\"q_#{new_q.id}\"")
+      div.replace(new_html_str)
+    end
+    @lesson.content = @page.to_s
     if @lesson.save
       render text: ""
     else

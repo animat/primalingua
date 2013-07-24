@@ -12,6 +12,7 @@ gem "paperclip"
 gem "mercury-rails", git: 'https://github.com/jejacks0n/mercury.git'
 gem "airbrake"
 gem "fancybox2-rails", "~> 0.2.4"
+gem "nokogiri"
 
 
 group :assets do

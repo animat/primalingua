@@ -200,6 +200,7 @@ DEPENDENCIES
   jbuilder (~> 1.0.1)
   jquery-rails
   mercury-rails!
+  nokogiri
   paperclip
   pg
   protected_attributes (~> 1.0.0)
