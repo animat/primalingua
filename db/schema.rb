@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130722171941) do
+ActiveRecord::Schema.define(version: 20130725154315) do
 
   create_table "admins", force: true do |t|
     t.string   "email",                              default: "", null: false
@@ -128,8 +128,6 @@ ActiveRecord::Schema.define(version: 20130722171941) do
     t.integer  "lesson_id"
   end
 
-  add_index "sections", ["teacher_id"], name: "index_sections_on_teacher_id"
-
   create_table "students", force: true do |t|
     t.string   "email",                              default: "", null: false
     t.string   "encrypted_password",     limit: 128, default: "", null: false
@@ -179,6 +177,7 @@ ActiveRecord::Schema.define(version: 20130722171941) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "custom_css"
   end
 
 end

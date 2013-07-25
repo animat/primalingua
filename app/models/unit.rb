@@ -13,7 +13,7 @@ class Unit < ActiveRecord::Base
   has_many :lessons
   has_many :resources
 
-  attr_accessible :number, :title
+  attr_accessible :number, :title, :custom_css
 
   default_scope order("number ASC")
 

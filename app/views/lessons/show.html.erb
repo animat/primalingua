@@ -1,3 +1,6 @@
+<% content_for :head do %>
+<%= @lesson.unit.custom_css.html_safe unless @lesson.unit.custom_css.nil? %>
+<% end %>
 <% content_for :page_script do %>
 <script type="text/javascript">
 $(document).on("ready", function() {
@@ -55,4 +58,4 @@ function displayQuestion(question) {
 
 <%= link_to 'Edit', "/editor" + request.path, id: "edit_link", data: {save_url: mercury_update_lesson_path(@lesson)} %> |
 <%= link_to 'Back', lessons_path %> |
-<%= link_to "Next lesson", "/editor/lessons/#{@lesson.next.id}" %>
+<%= link_to "Next lesson", "/editor/lessons/#{@lesson.next.id}" unless @lesson.next.nil? %>
