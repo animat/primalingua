@@ -9,3 +9,11 @@ p#teachers_guide_notice {
 	padding: 20px;
 	margin: 30px auto 0px auto;
 }
+
+table#lessons_list {
+	width: 100%;
+}
+table#lessons_list tr td:first-child {
+	text-align: left;
+	padding: 5px;
+}

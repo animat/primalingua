@@ -1,13 +1,13 @@
 <h1>Listing lessons</h1>
 
-<table style="width: 100%;">
+<table class="with_border" id="lessons_list">
   <thead>
     <tr>
       <th>Title</th>
 			<th>Completed?</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th width="75px"></th>
+      <th width="75px"></th>
+      <th width="75px"></th>
     </tr>
   </thead>
 
@@ -16,9 +16,9 @@
     <tr>
       <td><%= lesson.full_title %></td>
 			<td><%= (lesson.completed) ? "Y" : "" %>
-      <td><%= link_to 'TG Editor', lesson %></td>
-      <td><%= link_to 'Basic editor', edit_lesson_path(lesson) %></td>
-      <td><%= link_to 'Mercury editor', "/editor/lessons/#{lesson.id}" %></td>
+      <td><%= link_to 'TG', lesson %></td>
+      <td><%= link_to 'Basic', edit_lesson_path(lesson) %></td>
+      <td><%= link_to 'Mercury', "/editor/lessons/#{lesson.id}" %></td>
     </tr>
     <% end %>
   </tbody>
