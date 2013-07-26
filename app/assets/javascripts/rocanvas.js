@@ -31,7 +31,7 @@ var RoCanvas= function () {
 		custom_color: true,
 		sizes: [2, 5, 10, 25],
 		tools: ["path","rectangle","filledrectangle","circle","filledcircle"],
-		clearButton: {"text": "Clear Canvas"},
+		clearButton: {"text": "Clear drawing"},
 		saveButton: null
 	};
 	
@@ -74,7 +74,8 @@ var RoCanvas= function () {
 		
 		// prepare canvas		
 		self.canvas = document.getElementById(id);			
-		document.getElementById(id).style.cursor='crosshair';	
+		//document.getElementById(id).style.cursor='crosshair';	// Original
+		self.canvas.style.cursor = 'crosshair';
 		
 		// get canvas parent and append div for the tools
 		var parent=self.canvas.parentNode;
@@ -115,11 +116,13 @@ var RoCanvas= function () {
 		// add tools
 		if(self.toolbar.tools)
 		{
-			toolBarHTML+='<div style="clear:both;">&nbsp;</div>';
-			toolBarHTML+='<div style="float:left;">Tools:</div>';
-			for (tool in self.toolbar['tools'])
-			{
-				toolBarHTML+="<a href='#' onclick=\"RoCanvasInstances['"+self.id+"'].setTool('"+self.toolbar['tools'][tool]+"');return false;\"><img src=\"/assets/drawing_tools/tool-"+self.toolbar['tools'][tool]+".png\" width='25' height='25'></a> ";
+			if (self.toolbar.tools != "hidden") {
+				toolBarHTML+='<div style="clear:both;">&nbsp;</div>';
+				toolBarHTML+='<div style="float:left;">Tools:</div>';
+				for (tool in self.toolbar['tools'])
+				{
+					toolBarHTML+="<a href='#' onclick=\"RoCanvasInstances['"+self.id+"'].setTool('"+self.toolbar['tools'][tool]+"');return false;\"><img src=\"/assets/drawing_tools/tool-"+self.toolbar['tools'][tool]+".png\" width='25' height='25'></a> ";
+				}
 			}
 		}
 		
@@ -296,13 +299,16 @@ var RoCanvas= function () {
 		oldLineWidth=self.context.lineWidth;	
 		self.context.clearRect(0,0,self.canvas.width,self.canvas.height);
 	   self.canvas.width = self.canvas.width;
-	    
+
 	   self.clickX = new Array();
 	   self.clickY = new Array();
 	   RoCanvas.clickDrag = new Array();
 	   self.setSize(oldLineWidth);
 	   self.context.lineJoin = self.shape;
 	   self.setColor(self.color);
+
+	   $(document).trigger("drawing:init", self.id);
+
 	};
 	
 	// sets the size of the drawing line in pixels

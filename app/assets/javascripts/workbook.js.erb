@@ -59,6 +59,22 @@ function replaceDrawing(answer) {
 	$display_div.append($redo_btn);
 	$("#d_"+answer.question.id).parent().append($display_div);
 }
+function initDrawingBG(canvas, default_txt, default_img) {
+	var ctx = canvas[0].getContext("2d");
+	if (default_img != null) {
+		var gfx = new Image();
+		gfx.onload = function() {
+			ctx.drawImage(gfx, 0, 0);
+		}
+		gfx.src = default_img;
+	}
+	if (default_txt != null) {
+		ctx.fillColor = "black";
+		ctx.font = "18px Arial";
+		ctx.textBaseline = "top";
+		ctx.fillText(default_txt, 5, 5);
+	}
+}
 function displayFeedback(answer, audience) {
 	var $feedbackDiv = $('<div>', {class: "feedback", id: "f_"+answer.question.id, data: {"answer_id": answer.id}});
 	$("[name=q_"+answer.question.id+"]").after($feedbackDiv);
