@@ -76,6 +76,13 @@ class LessonsController < ApplicationController
       div.replace(new_html_str)
     end
 
+    @page.css("div.checkbox_question-snippet").each do |div|
+      new_q = Question.create!(lesson_id: @lesson.id, input_type: "checkbox")
+      new_html_str = render_to_string("/mercury/snippets/checkbox_question/preview.html", layout: false)
+      new_html_str.gsub!(/name=""/, "name=\"q_#{new_q.id}\"")
+      div.replace(new_html_str)
+    end
+
     @lesson.content = @page.to_s
     if @lesson.save
       render text: ""
