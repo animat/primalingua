@@ -43,6 +43,9 @@ function displayAnswer(answer) {
 		case "drawing_base64":
 			replaceDrawing(answer);
 			break;
+		case "checkbox":
+			$(".populate_student_answers [name=q_"+answer.question.id+"]").attr("checked", answer.content == "true");
+			break;
 		default:
 			console.log("Input type not recognized for Answer#"+answer.id);
 			break;

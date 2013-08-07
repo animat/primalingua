@@ -9,7 +9,7 @@ class AnswersController < ApplicationController
   	if @answer.update(answer_params)
       @student = Student.find(params[:answer][:student_id])
       @lesson = @answer.lesson
-      @q = Question.where(:lesson => @lesson).count 
+      @q = Question.where(lesson_id: @lesson.id).count 
       @a = Answer.by_student(@student).in_lesson(@lesson).count
       if @q == @a
         create_milestone_and_notification(@lesson, @student, @student.teacher, "completed")

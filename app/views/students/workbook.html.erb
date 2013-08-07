@@ -25,6 +25,25 @@ $(document).on("blur", ".question", function() {
  		}
 	});
 });
+$(document).on("change", ".question_checkbox", function() {
+	var $img = $("<img>", {class: "answer_response_img", src: "/images/_spinner.gif"});
+	$img.insertAfter($(this));
+	var qid = $(this).attr("name").split("_")[1];
+	var sid = <%= @student.id %>;
+	var c = $(this)[0].checked;
+	$.ajax({
+ 		type: "POST",
+ 		url: "<%= answers_url %>",
+ 		data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>"},
+ 		success: function() {
+ 			$img.attr("src", "/images/check.png");
+ 			$img.fadeOut(750);
+ 		},
+ 		error: function() {
+ 			alert("Problem saving data...");
+ 		}
+	});
+});
 $(document).on("ready", function() {
 	$(".drawing").each(function() {
 		var tmpID = $(this).attr("id");

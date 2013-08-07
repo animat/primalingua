@@ -13,5 +13,5 @@
 class Question < ActiveRecord::Base
   belongs_to :lesson
 
-  attr_accessible :id, :lesson_id, :tg_answer
+  attr_accessible :id, :lesson_id, :tg_answer, :input_type
 end
