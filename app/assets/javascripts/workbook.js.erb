@@ -27,16 +27,20 @@ $(document).on("click", "#resource_button", function() {
 function populate(url, audience) {
 	$.getJSON(url).success(function(answers) {
 		for (var i = 0; i < answers.length; i++) {
-			displayAnswer(answers[i]);
+			displayAnswer(answers[i], audience);
 			displayFeedback(answers[i], audience);
 		}
 	}).error(function(data) {
 		console.log("Error fetching answer JSON.");
 	});
 }
-function displayAnswer(answer) {
+function displayAnswer(answer, audience) {
 	switch (answer.question.input_type) {
 		case "text":
+			if (audience == "teacher") {
+				alert("Populating answer #"+answer.question.id+" for a TEACHER now... with TG == "+answer.question.tg_answer);
+				$("#teacher_guide_workbook [name=q_"+answer.question.id+"]").val(answer.question.tg_answer);
+			}
 			$(".populate_student_answers [name=q_"+answer.question.id+"]").val(answer.content);
 			$(".populate_student_answers [name=q_"+answer.question.id+"]").data({"answer_id": answer.id});
 			break;
@@ -44,6 +48,9 @@ function displayAnswer(answer) {
 			replaceDrawing(answer);
 			break;
 		case "checkbox":
+			if (audience == "teacher") {
+				$("#teacher_guide_workbook [name=q_"+answer.question.id+"]").attr("checked", answer.question.tg_answer == "true");
+			}
 			$(".populate_student_answers [name=q_"+answer.question.id+"]").attr("checked", answer.content == "true");
 			break;
 		default:
