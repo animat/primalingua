@@ -50,10 +50,37 @@ class TeachersController < ApplicationController
     @teachers = Teacher.all
   end
 
+  def edit
+    if admin_signed_in?
+      @teacher = Teacher.find(params[:id])
+    else
+      flash[:error] = "You do not have permission to view that page."
+      redirect_to :back
+    end
+  end
+
+  def update
+    if admin_signed_in?
+      @teacher = Teacher.find(params[:id])
+      @teacher.update(teacher_params)
+      flash[:notice] = "Saved!"
+      redirect_to teachers_path
+    else
+      flash[:error] = "You do not have permission to view that page."
+      redirect_to :back
+    end
+  end
+
   def show
     @title = "Prima Lingua: Teacher homepage"
     @teacher = Teacher.find(params[:id])
     @sections = @teacher.sections.order(:name)
     #@resource = Teacher
   end
+
+  private
+
+    def teacher_params
+      params.require(:teacher).permit(:first_name, :last_name, :email, :premium)
+    end
 end

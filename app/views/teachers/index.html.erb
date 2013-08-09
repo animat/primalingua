@@ -1,6 +1,6 @@
 <h1>All teachers using PrimaLingua.net</h1>
 
 <% @teachers.each do |t| %>
-	<p><%= link_to t.display_name, teacher_path(t) %></p>
+	<p><%= link_to t.display_name, teacher_path(t) %> (<%= link_to "edit", edit_teacher_path(t) %>)</p>
 <% end %>
 <%= link_to link_to "Create a new teacher", new_teacher_registration_path %>

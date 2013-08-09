@@ -20,7 +20,9 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
-  	super
+  	if admin_signed_in?
+      @teacher = Teacher.find(params[:id])
+    end
   end
 
   def update

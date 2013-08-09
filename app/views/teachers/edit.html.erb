@@ -1,0 +1,18 @@
+<h2>Edit a teacher account</h2>
+
+<%= form_for(@teacher) do |f| %>
+
+  <div><%= f.label :first_name %><br />
+  <%= f.text_field :first_name %></div>
+
+  <div><%= f.label :last_name %><br />
+  <%= f.text_field :last_name %></div>
+
+  <div><%= f.label :email %><br />
+  <%= f.email_field :email %></div>
+
+  <div><%= f.label :premium %><br />
+  <%= f.check_box :premium %></div>
+
+  <div><%= f.submit "Update" %></div>
+<% end %>

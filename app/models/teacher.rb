@@ -27,7 +27,7 @@ class Teacher < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :first_name, :last_name, :display_name, :email, :password
+  attr_accessible :first_name, :last_name, :display_name, :email, :password, :premium
 
   has_many :sections
   has_many :students, through: :sections

@@ -38,7 +38,6 @@ function displayAnswer(answer, audience) {
 	switch (answer.question.input_type) {
 		case "text":
 			if (audience == "teacher") {
-				alert("Populating answer #"+answer.question.id+" for a TEACHER now... with TG == "+answer.question.tg_answer);
 				$("#teacher_guide_workbook [name=q_"+answer.question.id+"]").val(answer.question.tg_answer);
 			}
 			$(".populate_student_answers [name=q_"+answer.question.id+"]").val(answer.content);
