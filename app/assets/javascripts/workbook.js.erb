@@ -43,6 +43,13 @@ function displayAnswer(answer, audience) {
 			$(".populate_student_answers [name=q_"+answer.question.id+"]").val(answer.content);
 			$(".populate_student_answers [name=q_"+answer.question.id+"]").data({"answer_id": answer.id});
 			break;
+		case "string":
+			if (audience == "teacher") {
+				$("#teacher_guide_workbook [name=q_"+answer.question.id+"]").val(answer.question.tg_answer);
+			}
+			$(".populate_student_answers [name=q_"+answer.question.id+"]").val(answer.content);
+			$(".populate_student_answers [name=q_"+answer.question.id+"]").data({"answer_id": answer.id});
+			break;
 		case "drawing_base64":
 			replaceDrawing(answer);
 			break;

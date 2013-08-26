@@ -37,6 +37,9 @@ function displayQuestion(question) {
 		case "text":
 			$("[name=q_"+question.id+"]").val(question.tg_answer);
 			break;
+		case "string":
+			$("[name=q_"+question.id+"]").val(question.tg_answer);
+			break;
 		case "drawing_base64":
 			console.log("Cannot display teachers' guide answer for drawing#"+question.id);
 			break;
