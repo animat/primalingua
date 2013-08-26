@@ -13,7 +13,7 @@ class TeachersController < ApplicationController
       elsif params[:section_id].to_i != 0
         @section = Section.find(params[:section_id])
         @student = @section.students.first
-        params[:student_id] = @student.id
+        params[:student_id] = @student.id or 0
       else
         flash[:error] = "Please select a section before grading."
         redirect_to :back

@@ -35,7 +35,7 @@ function resizeWindow() {
 			<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
 		</div>
 		<div id="lessonplans">
-			<%= @lesson_plan.content.gsub("\\r\\n", "").html_safe %>
+			<%= @lesson_plan.content.gsub("\\r\\n", "").html_safe unless @lesson_plan.nil? %>
 		</div>
 	</div>
 </div>
