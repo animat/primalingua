@@ -38,14 +38,14 @@ function displayAnswer(answer, audience) {
 	switch (answer.question.input_type) {
 		case "text":
 			if (audience == "teacher") {
-				$("#teacher_guide_workbook [name=q_"+answer.question.id+"]").val(answer.question.tg_answer);
+				$(".teacher_guide_workbook [name=q_"+answer.question.id+"]").val(answer.question.tg_answer);
 			}
 			$(".populate_student_answers [name=q_"+answer.question.id+"]").val(answer.content);
 			$(".populate_student_answers [name=q_"+answer.question.id+"]").data({"answer_id": answer.id});
 			break;
 		case "string":
 			if (audience == "teacher") {
-				$("#teacher_guide_workbook [name=q_"+answer.question.id+"]").val(answer.question.tg_answer);
+				$(".teacher_guide_workbook [name=q_"+answer.question.id+"]").val(answer.question.tg_answer);
 			}
 			$(".populate_student_answers [name=q_"+answer.question.id+"]").val(answer.content);
 			$(".populate_student_answers [name=q_"+answer.question.id+"]").data({"answer_id": answer.id});
@@ -55,7 +55,7 @@ function displayAnswer(answer, audience) {
 			break;
 		case "checkbox":
 			if (audience == "teacher") {
-				$("#teacher_guide_workbook [name=q_"+answer.question.id+"]").attr("checked", answer.question.tg_answer == "true");
+				$(".teacher_guide_workbook [name=q_"+answer.question.id+"]").attr("checked", answer.question.tg_answer == "true");
 			}
 			$(".populate_student_answers [name=q_"+answer.question.id+"]").attr("checked", answer.content == "true");
 			break;
@@ -174,6 +174,34 @@ function saveFeedback(save_url, d, btns, selected) {
  			console.log("Problem saving data...");
  		}
 	});
+}
+function populateTGAnswers(url) {
+	$.getJSON(url).success(function(questions) {
+		for (var i = 0; i < questions.length; i++) {
+			displayQuestion(questions[i]);
+		}
+	}).error(function(data) {
+		console.log("Error fetching question JSON.");
+	});
+}
+function displayQuestion(question) {
+	switch (question.input_type) {
+		case "text":
+			$("[name=q_"+question.id+"]").val(question.tg_answer);
+			break;
+		case "string":
+			$("[name=q_"+question.id+"]").val(question.tg_answer);
+			break;
+		case "checkbox":
+			$("[name=q_"+question.id+"]").attr("checked", question.tg_answer == "true");
+			break;
+		case "drawing_base64":
+			console.log("Cannot display teachers' guide answer for drawing#"+question.id);
+			break;
+		default:
+			console.log("Input type not recognized for Question#"+question.id);
+			break;
+	}
 }
 function loadStudentMilestones(url, is_student, current_lesson_id, audience) {
 	$.getJSON(url).success(function(lessons) {

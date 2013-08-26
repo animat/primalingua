@@ -6,7 +6,7 @@
 $(document).on("ready", function() {
 	$('#workspace').find('.feedback').hide();
 	$("#resource").hide();
-	populateTGAnswers();
+	populateTGAnswers("<%= in_lesson_questions_url(@lesson.id) %>");
 });
 $(document).on("blur", ".question", function() {
 	var qid = $(this).attr("name").split("_")[1];
@@ -44,34 +44,6 @@ $(document).on("change", ".question_checkbox", function() {
  		}
 	});
 })
-function populateTGAnswers() {
-	$.getJSON("<%= in_lesson_questions_url(@lesson.id) %>").success(function(questions) {
-		for (var i = 0; i < questions.length; i++) {
-			displayQuestion(questions[i]);
-		}
-	}).error(function(data) {
-		console.log("Error fetching question JSON.");
-	});
-}
-function displayQuestion(question) {
-	switch (question.input_type) {
-		case "text":
-			$("[name=q_"+question.id+"]").val(question.tg_answer);
-			break;
-		case "string":
-			$("[name=q_"+question.id+"]").val(question.tg_answer);
-			break;
-		case "checkbox":
-			$("[name=q_"+question.id+"]").attr("checked", question.tg_answer == "true");
-			break;
-		case "drawing_base64":
-			console.log("Cannot display teachers' guide answer for drawing#"+question.id);
-			break;
-		default:
-			console.log("Input type not recognized for Question#"+question.id);
-			break;
-	}
-}
 </script>
 <% end %>
 

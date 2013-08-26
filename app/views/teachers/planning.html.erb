@@ -3,6 +3,7 @@
 $(document).on("ready", function() {
 	resizeWindow();
 	setTimelineHeight(true);
+	populateTGAnswers("<%= in_lesson_questions_url(@lesson.id) %>");
 });
 $(document).on('change', "#lesson_select_menu", function(val) {
 	var loc = $(this).val();
@@ -40,7 +41,7 @@ function resizeWindow() {
 	</div>
 </div>
 
-<div id="workbook_example" class="half_width">
+<div id="workbook_example" class="half_width teacher_guide_workbook">
 	<div id="workbook_tools">
 	</div>
 	<% unless flash[:notice].nil? %>
