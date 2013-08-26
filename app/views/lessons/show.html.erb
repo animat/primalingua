@@ -11,18 +11,39 @@ $(document).on("ready", function() {
 $(document).on("blur", ".question", function() {
 	var qid = $(this).attr("name").split("_")[1];
 	var c = $(this).val();
+	var $img = $("<img>", {class: "answer_response_img", src: "/images/_spinner.gif"});
+	$img.insertAfter($(this));
  	$.ajax({
  		type: "POST",
  		url: "<%= questions_url %>",
  		data: {question: {id: qid, tg_answer: c}, authenticity_token: "<%= form_authenticity_token %>"},
  		success: function() {
- 			alert("Saved!");
+ 			$img.attr("src", "/images/check.png");
+ 			$img.fadeOut(750);
  		},
  		error: function() {
  			alert("Problem saving data...");
  		}
 	});
 });
+$(document).on("change", ".question_checkbox", function() {
+	var qid = $(this).attr("name").split("_")[1];
+	var c = $(this)[0].checked;
+	var $img = $("<img>", {class: "answer_response_img", src: "/images/_spinner.gif"});
+	$img.insertAfter($(this));
+ 	$.ajax({
+ 		type: "POST",
+ 		url: "<%= questions_url %>",
+ 		data: {question: {id: qid, tg_answer: c}, authenticity_token: "<%= form_authenticity_token %>"},
+ 		success: function() {
+ 			$img.attr("src", "/images/check.png");
+ 			$img.fadeOut(750);
+ 		},
+ 		error: function() {
+ 			alert("Problem saving data...");
+ 		}
+	});
+})
 function populateTGAnswers() {
 	$.getJSON("<%= in_lesson_questions_url(@lesson.id) %>").success(function(questions) {
 		for (var i = 0; i < questions.length; i++) {
@@ -39,6 +60,9 @@ function displayQuestion(question) {
 			break;
 		case "string":
 			$("[name=q_"+question.id+"]").val(question.tg_answer);
+			break;
+		case "checkbox":
+			$("[name=q_"+question.id+"]").attr("checked", question.tg_answer == "true");
 			break;
 		case "drawing_base64":
 			console.log("Cannot display teachers' guide answer for drawing#"+question.id);
