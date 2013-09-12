@@ -37,7 +37,7 @@ var student_id = <%= params[:student_id] %>;
 $(document).on("ready", function() {
 	setTimelineHeight();
 	resizeWindow();
-	loadStudentMilestones("<%= around_lesson_student_milestones_url(@student, @lesson) %>", <%= student_signed_in? %>, <%= @lesson.id %>, "teacher");
+	loadStudentMilestones("<%= around_lesson_student_milestones_url(@student, @lesson) %>", <%= student_signed_in? %>, <%= @lesson.id %>, "teacher", <%= @student.id %>);
 	populate("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>", "teacher");
 });
 $(document).on('change', "#lesson_select_menu", function(val) {
