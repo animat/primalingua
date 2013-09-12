@@ -58,8 +58,8 @@ class SectionsController < ApplicationController
         format.json { render action: 'show', status: :created, location: @section }
       else
         flash[:error] = @section.errors.full_messages
-        # TODO: Should be rendering the new page again instead
-        format.html { redirect_to :back }
+        @teacher = @section.teacher
+        format.html { render action: :new, layout: "workspace" }
         format.json { render json: @section.errors, status: :unprocessable_entity }
       end
     end

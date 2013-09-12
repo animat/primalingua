@@ -7,8 +7,6 @@ $(document).on("ready", function() {
         	clearInterval(interval);
    		}, 2000);
 
-	} else if ($('#flash_error').length > 0) {
-		alert('error');
 	}
 
 });

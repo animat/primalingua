@@ -21,7 +21,14 @@ class Section < ActiveRecord::Base
   validates_uniqueness_of :code
   validates_presence_of :lesson_id
 
+  before_validation :canonize_code
+
   def self.by_teacher(tid)
 	where(:teacher_id => tid)
+  end
+
+  def canonize_code
+  	self.code.strip!
+  	self.code.downcase!
   end
 end
