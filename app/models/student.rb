@@ -26,7 +26,7 @@ class Student < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :first_name, :last_name, :email, :password
+  attr_accessible :first_name, :last_name, :email, :password, :remember_me
 
   belongs_to :section
   has_one :teacher, through: :section
