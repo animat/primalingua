@@ -7,6 +7,7 @@ Pl2::Application.routes.draw do
 
   get "teachers/in_class(/:lesson_id)", to: "teachers#in_class", as: "in_class_teachers"
   get "teachers/planning(/:lesson_id)", to: "teachers#planning", as: "planning_teachers"
+  get "teachers/guide(/:lesson_id)", to: "teachers#guide", as: "guide_teachers"
   get "teachers/grading/lesson/:lesson_id/student/:student_id/section/:section_id", to: "teachers#grading", :as => "grading_teachers"
   post "teachers/update_section_lesson", to: "teachers#update_section_lesson", as: "update_section_lesson_teacher"
   get "students/:student_id/workbook(/:lesson_id)", to: "students#workbook", as: "workbook_student"

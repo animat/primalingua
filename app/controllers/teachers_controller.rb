@@ -36,6 +36,12 @@ class TeachersController < ApplicationController
   	@lesson = Lesson.find(params[:lesson_id])
   end
 
+  def guide
+    @title = "Prima Lingua: Teacher's guide"
+    @lesson = Lesson.find(params[:lesson_id])
+    @unit = @lesson.unit
+  end
+
   def update_section_lesson
     @sections = Section.where(id: params[:section_ids])
     @sections.each do |s|

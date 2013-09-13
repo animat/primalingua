@@ -1,0 +1,25 @@
+<% content_for :page_script do %>
+<script type="text/javascript">
+$(document).on("ready", function() {
+	setTimelineHeight(true);
+	populateTGAnswers("<%= in_lesson_questions_url(@lesson.id) %>");
+});
+$(document).on('change', "#guide_lesson_select_menu", function(val) {
+	var loc = $(this).val();
+	console.log("Redirecting to..."+loc);
+	location.href = "/teachers/guide/"+loc;
+});
+</script>
+<% end %>
+
+<div id="guide_lesson_select">
+	<p>
+		Go to teachers' guide for lesson: 
+		<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "guide_lesson_select_menu"}%>
+	</p>
+</div>
+
+<div class="teacher_guide_workbook" id="full_guide">
+	<%= @lesson.display_completed_lesson %>
+	<br class="clear_float" />
+</div>

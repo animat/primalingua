@@ -276,6 +276,10 @@ div#workspace {
 	overflow-y: scroll;
 	position: relative;
 }
+#full_guide {
+	max-width: 100% !important;
+	float: none !important;
+}
 #grading_area {
 	max-width: 50%;
 	min-width: 400px;
@@ -284,7 +288,7 @@ div#workspace {
 	position: relative;
 	overflow-y: auto;
 }
-#student_search {
+#student_search, #guide_lesson_select {
 	width: 95%;
 	height: 45px;
 	background: url(<%= image_path 'workspace/grading_search.png' %>) no-repeat center;
@@ -296,12 +300,24 @@ div#workspace {
 	border: 1px solid #6A507C;
 	box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.5);
 }
+#guide_lesson_select {
+	top: 40px !important;
+}
+#guide_lesson_select p {
+	text-align: center;
+	font-family: helvetica;
+}
 #student_arrow_right, #student_arrow_left {
 	width: 50px;
 	height: 50px;
 	position: absolute;
 	top: -2px;
 	z-index: 2;
+}
+label#tg_toggle {
+	float: right;
+	margin: 20px 20px 0px 0px;
+	font-family: helvetica;
 }
 #student_arrow_right {
 	background: url(<%= image_path 'workspace/arrow_right_2.png' %>) no-repeat center;
