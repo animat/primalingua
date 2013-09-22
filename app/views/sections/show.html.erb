@@ -29,7 +29,7 @@ $(document).on("ajax:complete", '#update_section', function(evt, resp) {
           <%= form_tag(update_section_lesson_teacher_path, {method: :post, remote: true, authenticity_token: false, id: "update_section"}) do %>
             <p>
               <label>This section is currently on...<br />
-                <%= grouped_collection_select :section, :lesson_id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "save_lesson_select_menu"}%>
+                <%= grouped_collection_select :section, :lesson_id, Unit.all, :lessons, :full_title, :id, :abbr_title, {}, {:id => "save_lesson_select_menu"}%>
               </label>
             </p>
             <div id="lesson_save_options">
