@@ -107,7 +107,7 @@ $(document).on("change", "#show_tg", function() {
 		<%= link_to "", "#", id: "student_arrow_right" %>
 		<%= link_to "", "#", id: "student_arrow_left" %>
 		<%= grouped_collection_select :student, :id, Section.by_teacher(current_teacher.id), :students, :name, :id, :display_name, {}, {:id => "student_select_menu"}%>
-		<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
+		<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :full_title, :id, :abbr_title, {}, {:id => "lesson_select_menu"}%>
 	</div>
 
 	<div id="student_workbook">

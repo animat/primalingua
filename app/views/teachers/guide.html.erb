@@ -15,7 +15,7 @@ $(document).on('change', "#guide_lesson_select_menu", function(val) {
 <div id="guide_lesson_select">
 	<p>
 		Go to teachers' guide for lesson: 
-		<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "guide_lesson_select_menu"}%>
+		<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :full_title, :id, :abbr_title, {}, {:id => "guide_lesson_select_menu"}%>
 	</p>
 </div>
 
