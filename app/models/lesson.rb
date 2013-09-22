@@ -26,6 +26,10 @@ class Lesson < ActiveRecord::Base
 
   default_scope order("unit_id ASC, number ASC")
 
+  def abbr_title
+    "#{self.unit.number}.#{self.number}: #{self.title}"
+  end
+
   def full_title
   	"Unit #{self.unit.number}, lesson #{self.number}: #{self.title}"
   end

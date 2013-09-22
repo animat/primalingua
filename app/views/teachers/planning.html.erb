@@ -33,7 +33,7 @@ function resizeWindow() {
 <div id="lessonplan" class="half_width">
 	<div id="lessons">
 		<div id="student_search">
-			<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :title, :id, :title, {}, {:id => "lesson_select_menu"}%>
+			<%= grouped_collection_select :lesson, :id, Unit.all, :lessons, :full_title, :id, :abbr_title, {}, {:id => "lesson_select_menu"}%>
 		</div>
 		<div id="lessonplans">
 			<%= @lesson_plan.content.gsub("\\r\\n", "").html_safe unless @lesson_plan.nil? %>
