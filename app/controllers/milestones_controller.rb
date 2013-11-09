@@ -8,7 +8,7 @@ class MilestonesController < ApplicationController
 
 	def around_lesson
 		@current_lesson = Lesson.select_without_content.find(params[:lesson_id])
-		@lessons_in_unit = Lesson.select_without_content.where(:unit_id => @current_lesson.unit_id)
+		@lessons_in_unit = Lesson.select_without_content.where(:unit_id => @current_lesson.unit_id, :completed => true)
 		@milestones_in_unit = Milestone.in_unit(@current_lesson.unit_id).where(student_id: params[:student_id])
 		puts "*"*50
 		puts @milestones_in_unit
