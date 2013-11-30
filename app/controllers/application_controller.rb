@@ -61,4 +61,13 @@ class ApplicationController < ActionController::Base
       redirect_to root_url
     end
   end
+
+  def authorize_admin
+    if admin_signed_in?
+      # Access granted
+    else
+      flash[:error] = "Please login to view that page."
+      redirect_to root_url
+    end
+  end
 end

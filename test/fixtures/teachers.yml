@@ -19,6 +19,7 @@
 #  last_name              :string(255)
 #  display_name           :string(255)
 #  premium                :boolean          default(FALSE)
+#  school_id              :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

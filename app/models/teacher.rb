@@ -19,6 +19,7 @@
 #  last_name              :string(255)
 #  display_name           :string(255)
 #  premium                :boolean          default(FALSE)
+#  school_id              :integer
 #
 
 class Teacher < ActiveRecord::Base
@@ -32,6 +33,7 @@ class Teacher < ActiveRecord::Base
   has_many :sections
   has_many :students, through: :sections
   has_many :notifications, as: :recipientable
+  belongs_to :school
 
   def display_name
   	"#{first_name} #{last_name}"

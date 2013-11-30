@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130725154315) do
+ActiveRecord::Schema.define(version: 20131130221516) do
 
   create_table "admins", force: true do |t|
     t.string   "email",                              default: "", null: false
@@ -119,6 +119,16 @@ ActiveRecord::Schema.define(version: 20130725154315) do
     t.string   "path_to_thumbnail"
   end
 
+  create_table "schools", force: true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.string   "city"
+    t.integer  "zip"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sections", force: true do |t|
     t.string   "name"
     t.integer  "teacher_id"
@@ -167,10 +177,12 @@ ActiveRecord::Schema.define(version: 20130725154315) do
     t.string   "last_name"
     t.string   "display_name"
     t.boolean  "premium",                            default: false
+    t.integer  "school_id"
   end
 
   add_index "teachers", ["email"], name: "index_teachers_on_email", unique: true
   add_index "teachers", ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
+  add_index "teachers", ["school_id"], name: "index_teachers_on_school_id"
 
   create_table "units", force: true do |t|
     t.integer  "number"

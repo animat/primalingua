@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @school.name %>
+</p>
+
+<p>
+  <strong>Teachers:</strong>
+  <% @school.teachers.each do |t| %>
+  	<%= link_to t.display_name, t %> (<%= t.students.count %>),
+  <% end %>
+</p>
+
+<p>
+	<strong>Total student count:</strong>
+	<%= @student_count %>
+</p>
+
+
+<%= link_to 'Edit', edit_school_path(@school) %> |
+<%= link_to 'Back', schools_path %>

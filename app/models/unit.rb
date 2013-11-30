@@ -7,6 +7,7 @@
 #  title      :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  custom_css :text
 #
 
 class Unit < ActiveRecord::Base
