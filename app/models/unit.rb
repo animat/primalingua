@@ -38,4 +38,8 @@ class Unit < ActiveRecord::Base
 	 	return Lesson.where(:unit_id => self.id).first
 	 end
   end
+
+  def completed_lessons
+    self.lessons.where(completed: true)
+  end
 end
