@@ -14,5 +14,8 @@
   <div><%= f.label :premium %><br />
   <%= f.check_box :premium %></div>
 
+  <div><%= f.label :school %><br />
+  <%= f.collection_select :school_id, School.all, :id, :name %></div>
+
   <div><%= f.submit "Update" %></div>
 <% end %>
