@@ -1,3 +1,6 @@
+<% content_for :head do %>
+<%= @lesson.unit.custom_css.html_safe unless @lesson.unit.custom_css.nil? %>
+<% end %>
 <% content_for :page_script do %>
 <script type="text/javascript">
 
