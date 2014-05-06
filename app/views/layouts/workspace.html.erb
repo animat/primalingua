@@ -12,7 +12,7 @@
 	<%= yield(:head) %>
 	<%= yield(:page_script) %>
 	<style type="text/css">
-		<%= @lesson.unit.custom_css.html_safe %>
+		<%= @lesson.unit.custom_css.html_safe unless @lesson.nil? %>
 	</style>
 </head>
 <body id="workspace">
