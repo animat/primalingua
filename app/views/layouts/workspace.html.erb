@@ -11,6 +11,9 @@
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/ios_icon.png" />
 	<%= yield(:head) %>
 	<%= yield(:page_script) %>
+	<style type="text/css">
+		<%= @lesson.unit.custom_css.html_safe %>
+	</style>
 </head>
 <body id="workspace">
 	<div id="<%= fullscreen_header_type %>">

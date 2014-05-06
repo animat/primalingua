@@ -3,6 +3,6 @@ class MoveFeedbackToAnswer < ActiveRecord::Migration
   	add_column :answers, :feedback, :text
   	add_column :answers, :feedback_status, :string
   	add_column :answers, :feedback_updated_at, :timestamp
-  	drop_table :feedbacks
+  	#drop_table :feedbacks
   end
 end

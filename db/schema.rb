@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20131130221516) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "admins", force: true do |t|
     t.string   "email",                              default: "", null: false
     t.string   "encrypted_password",     limit: 128, default: "", null: false
@@ -30,8 +33,8 @@ ActiveRecord::Schema.define(version: 20131130221516) do
     t.string   "last_name"
   end
 
-  add_index "admins", ["email"], name: "index_admins_on_email", unique: true
-  add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
+  add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
 
   create_table "answers", force: true do |t|
     t.integer  "student_id"
@@ -41,8 +44,8 @@ ActiveRecord::Schema.define(version: 20131130221516) do
     t.datetime "updated_at"
   end
 
-  add_index "answers", ["question_id"], name: "index_answers_on_question_id"
-  add_index "answers", ["student_id"], name: "index_answers_on_student_id"
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
+  add_index "answers", ["student_id"], name: "index_answers_on_student_id", using: :btree
 
   create_table "feedbacks", force: true do |t|
     t.text     "content"
@@ -106,7 +109,7 @@ ActiveRecord::Schema.define(version: 20131130221516) do
     t.string   "input_type"
   end
 
-  add_index "questions", ["lesson_id"], name: "index_questions_on_lesson_id"
+  add_index "questions", ["lesson_id"], name: "index_questions_on_lesson_id", using: :btree
 
   create_table "resources", force: true do |t|
     t.string   "content_type"
@@ -138,6 +141,8 @@ ActiveRecord::Schema.define(version: 20131130221516) do
     t.integer  "lesson_id"
   end
 
+  add_index "sections", ["teacher_id"], name: "index_sections_on_teacher_id", using: :btree
+
   create_table "students", force: true do |t|
     t.string   "email",                              default: "", null: false
     t.string   "encrypted_password",     limit: 128, default: "", null: false
@@ -156,9 +161,9 @@ ActiveRecord::Schema.define(version: 20131130221516) do
     t.integer  "section_id"
   end
 
-  add_index "students", ["email"], name: "index_students_on_email", unique: true
-  add_index "students", ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
-  add_index "students", ["section_id"], name: "index_students_on_section_id"
+  add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree
+  add_index "students", ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true, using: :btree
+  add_index "students", ["section_id"], name: "index_students_on_section_id", using: :btree
 
   create_table "teachers", force: true do |t|
     t.string   "email",                              default: "",    null: false
@@ -180,9 +185,9 @@ ActiveRecord::Schema.define(version: 20131130221516) do
     t.integer  "school_id"
   end
 
-  add_index "teachers", ["email"], name: "index_teachers_on_email", unique: true
-  add_index "teachers", ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
-  add_index "teachers", ["school_id"], name: "index_teachers_on_school_id"
+  add_index "teachers", ["email"], name: "index_teachers_on_email", unique: true, using: :btree
+  add_index "teachers", ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true, using: :btree
+  add_index "teachers", ["school_id"], name: "index_teachers_on_school_id", using: :btree
 
   create_table "units", force: true do |t|
     t.integer  "number"
