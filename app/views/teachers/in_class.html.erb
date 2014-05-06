@@ -2,6 +2,14 @@
 <script type="text/javascript">
 $(document).on("ready", function() {
 	setTimelineHeight(<%= current_teacher.premium %>);
+	$(".drawing").each(function() {
+		$(document).trigger("drawing:init", $(this).attr("id"));
+	});
+});
+$(document).on("drawing:init", function(event, id) {
+	var txt = $("#"+id).data("default_text");
+	var im = $("#"+id).data("default_img");
+	initDrawingBG($("#"+id), txt, im);
 });
 </script>
 <% end %>

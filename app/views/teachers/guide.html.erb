@@ -3,6 +3,14 @@
 $(document).on("ready", function() {
 	setTimelineHeight(true);
 	populateTGAnswers("<%= in_lesson_questions_url(@lesson.id) %>");
+	$(".drawing").each(function() {
+		$(document).trigger("drawing:init", $(this).attr("id"));
+	});
+});
+$(document).on("drawing:init", function(event, id) {
+	var txt = $("#"+id).data("default_text");
+	var im = $("#"+id).data("default_img");
+	initDrawingBG($("#"+id), txt, im);
 });
 $(document).on('change', "#guide_lesson_select_menu", function(val) {
 	var loc = $(this).val();
