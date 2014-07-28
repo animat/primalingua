@@ -8,3 +8,7 @@
     height:25px;
     margin-left:3px;
 }
+
+canvas.drawing {
+	touch-action: none;
+}
