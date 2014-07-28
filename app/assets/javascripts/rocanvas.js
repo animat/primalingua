@@ -250,7 +250,9 @@ var RoCanvas= function () {
 			            else self.context.fill();
 			        break;
 					default:
-						self.addClick(e.pageX - document.getElementById(id).offsetLeft, e.pageY - document.getElementById(id).offsetTop, true);
+						//console.log(touchX - document.getElementById(id).offsetLeft);
+						self.addClick(touchX, touchY - document.getElementById(id).offsetTop, true);
+						//self.addClick(e.pageX - document.getElementById(id).offsetLeft, e.pageY - document.getElementById(id).offsetTop, true);
 					break;
 				}
     
@@ -267,8 +269,13 @@ var RoCanvas= function () {
 			if (e.touches) {
 				if (e.touches.length == 1) { // Only deal with one finger
 					var touch = e.touches[0]; // Get the information for finger #1
+					
+					touchX = touch.clientX;
+					touchY = touch.clientY;
+					
+					/* Original patched code
 					touchX=touch.pageX-touch.target.offsetLeft;
-					touchY=touch.pageY-touch.target.offsetTop;
+					touchY=touch.pageY-touch.target.offsetTop;*/
 				}
 			}
 		}
@@ -387,6 +394,7 @@ var RoCanvas= function () {
 	  self.clickX.push(x);
 	  self.clickY.push(y);
 	  self.clickDrag.push(dragging);
+	  console.log("\t\tYou are drawing at... "+x+", "+y);
 	};
 	
 	this.redraw = function()
