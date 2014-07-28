@@ -24,9 +24,10 @@ $(document).on("keyup", ".question", function() {
 	 		success: function() {
 	 			$img.attr("src", "/images/check.png");
 	 			$img.fadeOut(850);
+				
 	 		},
 	 		error: function() {
-	 			alert("Problem saving data...");
+	 			alert("Sorry! There was a problem saving data.");
 	 		}
 		});
 	}, 2500);
@@ -43,10 +44,10 @@ $(document).on("change", ".question_checkbox", function() {
  		data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>"},
  		success: function() {
  			$img.attr("src", "/images/check.png");
- 			$img.fadeOut(750);
+ 			$img.fadeOut(850);
  		},
  		error: function() {
- 			alert("Problem saving data...");
+ 			alert("Sorry! There was a problem saving data.");
  		}
 	});
 });
@@ -86,10 +87,10 @@ $(document).on("click", ".drawing_save_btn", function() {
 		data: {answer: {student_id: sid, question_id: qid, content: c}, authenticity_token: "<%= form_authenticity_token %>"},
  		success: function() {
  			$img.attr("src", "/images/check.png");
- 			$img.fadeOut(750);
+ 			$img.fadeOut(850);
  		},
  		error: function() {
- 			alert("Problem saving data...");
+ 			alert("Sorry! There was a problem saving data.");
  		}
 	});
 });

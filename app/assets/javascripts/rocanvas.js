@@ -267,7 +267,9 @@ var RoCanvas= function () {
 		  self.clickY = new Array();
 		  self.clickDrag = new Array();
 		  self.clearRect=[0,0,0,0];
-		  self.clearCircle=[0,0,0]; 	 	
+		  self.clearCircle=[0,0,0]; 	
+		  
+		  $("#RoCanvasSave_"+self.id).click();	
 		}, false);
 
 		function getTouchPos(e) {
@@ -385,7 +387,9 @@ var RoCanvas= function () {
 		  self.clickY = new Array();
 		  self.clickDrag = new Array();
 		  self.clearRect=[0,0,0,0];
-		  self.clearCircle=[0,0,0]; 	 	
+		  self.clearCircle=[0,0,0]; 
+		  
+		  $("#RoCanvasSave_"+self.id).click();
 		}, false);
 		
 		this.canvas.addEventListener('mouseleave', function(e){
