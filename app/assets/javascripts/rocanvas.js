@@ -250,9 +250,7 @@ var RoCanvas= function () {
 			            else self.context.fill();
 			        break;
 					default:
-						//console.log(touchX - document.getElementById(id).offsetLeft);
-						self.addClick(touchX, touchY - document.getElementById(id).offsetTop, true);
-						//self.addClick(e.pageX - document.getElementById(id).offsetLeft, e.pageY - document.getElementById(id).offsetTop, true);
+						self.addClick(touchX, touchY, true);
 					break;
 				}
     
@@ -261,6 +259,16 @@ var RoCanvas= function () {
 				event.preventDefault();
 			}
 		},false);
+		
+		self.canvas.addEventListener('touchend', function(e){
+		  self.paint = false;
+		  
+		  self.clickX = new Array();
+		  self.clickY = new Array();
+		  self.clickDrag = new Array();
+		  self.clearRect=[0,0,0,0];
+		  self.clearCircle=[0,0,0]; 	 	
+		}, false);
 
 		function getTouchPos(e) {
 			if (!e)
@@ -270,12 +278,8 @@ var RoCanvas= function () {
 				if (e.touches.length == 1) { // Only deal with one finger
 					var touch = e.touches[0]; // Get the information for finger #1
 					
-					touchX = touch.clientX;
-					touchY = touch.clientY;
-					
-					/* Original patched code
-					touchX=touch.pageX-touch.target.offsetLeft;
-					touchY=touch.pageY-touch.target.offsetTop;*/
+					touchX = touch.pageX - $(self.canvas).offset().left;
+					touchY = touch.pageY - $(self.canvas).offset().top;
 				}
 			}
 		}
@@ -394,7 +398,6 @@ var RoCanvas= function () {
 	  self.clickX.push(x);
 	  self.clickY.push(y);
 	  self.clickDrag.push(dragging);
-	  console.log("\t\tYou are drawing at... "+x+", "+y);
 	};
 	
 	this.redraw = function()
