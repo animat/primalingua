@@ -3,9 +3,11 @@ var finHeight;
 var headInitHeight;
 var headFinHeight;
 var $head;
-
+var autosaveTimer;
 
 $(document).on("ready", function() {
+	autosaveTimer = null;
+	
 	$("a.fancybox").fancybox({
 		helpers: {
 			overlay: {

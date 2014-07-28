@@ -5,23 +5,29 @@ $(document).on("ready", function() {
 	$("#resource").hide();
 	populateTGAnswers("<%= in_lesson_questions_url(@lesson.id) %>");
 });
-$(document).on("blur", ".question", function() {
-	var qid = $(this).attr("name").split("_")[1];
-	var c = $(this).val();
-	var $img = $("<img>", {class: "answer_response_img", src: "/images/_spinner.gif"});
-	$img.insertAfter($(this));
- 	$.ajax({
- 		type: "POST",
- 		url: "<%= questions_url %>",
- 		data: {question: {id: qid, tg_answer: c}, authenticity_token: "<%= form_authenticity_token %>"},
- 		success: function() {
- 			$img.attr("src", "/images/check.png");
- 			$img.fadeOut(750);
- 		},
- 		error: function() {
- 			alert("Problem saving data...");
- 		}
-	});
+$(document).on("keyup", ".question", function() {
+	if (autosaveTimer) {
+		clearTimeout(autosaveTimer);
+	}
+	var workbook = this;
+	autosaveTimer = setTimeout(function() {
+		var qid = $(workbook).attr("name").split("_")[1];
+		var c = $(workbook).val();
+		var $img = $("<img>", {class: "answer_response_img", src: "/images/_spinner.gif"});
+		$img.insertAfter($(workbook));
+	 	$.ajax({
+	 		type: "POST",
+	 		url: "<%= questions_url %>",
+	 		data: {question: {id: qid, tg_answer: c}, authenticity_token: "<%= form_authenticity_token %>"},
+	 		success: function() {
+	 			$img.attr("src", "/images/check.png");
+	 			$img.fadeOut(850);
+	 		},
+	 		error: function() {
+	 			alert("Problem saving data...");
+	 		}
+		});
+	}, 2500);
 });
 $(document).on("change", ".question_checkbox", function() {
 	var qid = $(this).attr("name").split("_")[1];
