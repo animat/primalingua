@@ -1,6 +1,7 @@
 class Students::RegistrationsController < Devise::RegistrationsController
   def new
   	super
+    session.delete(:omniauth)
   end
 
   def create
@@ -9,8 +10,12 @@ class Students::RegistrationsController < Devise::RegistrationsController
       @student = Student.new(params[:student])
       @student.section = @section
       if @student.save
-        flash[:notice] = "New student account created!"
-        redirect_to new_student_session_path
+        flash[:notice] = "New account created!"
+        if session[:omniauth]
+          Authentication.create(student_id: @student.id, provider: session[:omniauth][:provider], uid: session[:omniauth][:uid])
+        end
+        session.delete(:omniauth)
+        sign_in_and_redirect(@student)
       else
         flash[:error] = "Sorry -- there was an error creating your account. Please try again."
         redirect_to :back

@@ -20,7 +20,9 @@
 
       <div><%= f.submit "Update" %></div>
     <% end %>
-
+	
+	<hr />
+	
     <h3>Registration</h3>
     <p>
       You are currently in <%= "#{@student.section.name} with #{@student.section.teacher.display_name}" %>. Would you like to change classes?<br />
@@ -34,7 +36,25 @@
         </div>
       <% end %>
     </p>
-
+	
+	<hr />
+	
+	<h3>Link my account to Google</h3>
+	<% if @student.authentications.length > 0 %>
+	    <% for authentication in @student.authentications %>
+	      <div class="authentication">
+				Your account is currently linked!
+				(<%= link_to "remove link", authentication, :confirm => 'Are you sure you want to remove this login option?', :method => :delete, :class => "remove" %>)
+	      </div>
+	    <% end %>
+	
+	<% else %>
+		<p>Link your accounts so that you can login with Google the next time you visit PrimaLingua.net</p>
+		<p><%= link_to "Link me now", student_omniauth_authorize_path(:google_oauth2) %></p>
+	<% end %>
+	
+	<br />
+	
     <%= link_to "Back", :back %>
   </div>
 </div>

@@ -4,24 +4,31 @@
   <%= devise_error_messages! %>
 
   <div><%= f.label :first_name %><br />
-  <%= f.text_field :first_name %></div>
+  <%# %>
+  <%= f.text_field :first_name, value: session[:omniauth] ? session[:omniauth][:first_name] : "" %></div>
 
   <div><%= f.label :last_name %><br />
-  <%= f.text_field :last_name %></div>
+  <%= f.text_field :last_name, value: session[:omniauth] ? session[:omniauth][:last_name] : "" %></div>
 
   <div><%= label_tag :code, "Your class code" %><br />
   <%= text_field_tag :code %></div>
 
   <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+  <%= f.email_field :email, value: session[:omniauth] ? session[:omniauth][:email] : "" %></div>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+  <% if session[:omniauth] %>
+  	<% @pass = Devise.friendly_token.first(10) %>
+  	<%= f.hidden_field :password, value: @pass %>
+	<%= f.hidden_field :password_confirmation, value: @pass %>
+  <% else %>
+    <div><%= f.label :password %><br />
+    <%= f.password_field :password %></div>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+    <div><%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %></div>
+  <% end %>
 
   <div><%= f.submit "Sign up" %></div>
 <% end %>
 
-<%= render :partial => "devise/shared/links" %>
+<%= render :partial => "students/shared/links" %>

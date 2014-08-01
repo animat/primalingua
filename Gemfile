@@ -8,6 +8,8 @@ gem 'jbuilder', '~> 1.0.1'
 gem "protected_attributes", "~> 1.0.0"
 gem "jquery-rails"
 gem "devise"
+gem "omniauth"
+gem "omniauth-google-oauth2"
 gem "paperclip"
 gem "mercury-rails", git: 'https://github.com/jejacks0n/mercury.git'
 gem "airbrake"
