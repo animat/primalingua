@@ -33,11 +33,11 @@ class SectionsController < ApplicationController
     if params[:teacher_id]
       @teacher = Teacher.find(params[:teacher_id])
       @section = Section.new
+      render_flex_layout
     else
       flash[:error] = "New sections can only be created by teachers."
       redirect_to :back
     end
-    render_flex_layout
   end
 
   # GET /sections/1/edit
