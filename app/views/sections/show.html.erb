@@ -77,7 +77,7 @@ $(document).on("ajax:complete", '#update_section', function(evt, resp) {
   </div>
 </div>
 <div id="student_grid">
-  <% if @section.students.empty? %>
+  <% if @section.active_students.empty? %>
     <h1>This class is empty.</h1>
     <p>Invite your students to create their own accounts using the class code <strong><%= @section.code %></strong>.</p>
   <% else %>
