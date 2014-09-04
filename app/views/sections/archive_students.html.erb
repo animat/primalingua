@@ -14,8 +14,8 @@
 				<input type="checkbox" name="students[<%= s.id %>]" <%= "checked" if s.archived %>>
 			</td>
 			<td><%= s.display_name %></td>
-			<td><%= s.created_at.strftime("%m/%d/%Y") %></td>
-			<td><%= s.current_sign_in_at.strftime("%m/%d/%Y") %></td>
+			<td><%= s.created_at.strftime("%m/%d/%Y") unless s.created_at.nil? %></td>
+			<td><%= s.current_sign_in_at.strftime("%m/%d/%Y") unless s.current_sign_in_at.nil? %></td>
 		</tr>
 	<% end %>
 </table>
