@@ -23,6 +23,10 @@
     <%= f.label :lesson, "This section is currently on..." %><br />
     <%= collection_select :section, :lesson_id, Lesson.where(completed: true), :id, :full_title %>
   </div>
+  <% if controller.action_name == "edit" %>
+	  <p><%= link_to "Click here to archive students no longer in this class", section_archive_students_path(@section) %></p>
+  <% end %>
+  <br />
   <div class="actions">
     <%= f.hidden_field :teacher_id, :value => @teacher.id %>
     <%= f.submit %> or <%= link_to 'cancel', :back %>

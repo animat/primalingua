@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140731191039) do
+ActiveRecord::Schema.define(version: 20140904011648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,8 +152,8 @@ ActiveRecord::Schema.define(version: 20140731191039) do
   add_index "sections", ["teacher_id"], name: "index_sections_on_teacher_id", using: :btree
 
   create_table "students", force: true do |t|
-    t.string   "email",                              default: "", null: false
-    t.string   "encrypted_password",     limit: 128, default: "", null: false
+    t.string   "email",                              default: "",    null: false
+    t.string   "encrypted_password",     limit: 128, default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -167,6 +167,7 @@ ActiveRecord::Schema.define(version: 20140731191039) do
     t.string   "first_name"
     t.string   "last_name"
     t.integer  "section_id"
+    t.boolean  "archived",                           default: false
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree

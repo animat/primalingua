@@ -26,6 +26,21 @@ class SectionsController < ApplicationController
       format.json { render :json => @section }
     end
   end
+  
+  def archive_students
+    @section = Section.find(params[:section_id])
+  end
+  
+  def update_archives
+    @section = Section.find(params[:section_id])
+    params[:students].each do |key, value|
+      @stu = Student.find(key)
+      @stu.archived = (value == "on")
+      @stu.save
+    end
+    flash[:notice] = "Students successfully archived."
+    redirect_to @section
+  end
 
   # GET /sections/new
   def new

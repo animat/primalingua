@@ -24,7 +24,11 @@ class Section < ActiveRecord::Base
   before_validation :canonize_code
 
   def self.by_teacher(tid)
-	where(:teacher_id => tid)
+	  where(:teacher_id => tid)
+  end
+  
+  def active_students
+    self.students.where(:archived => false)
   end
 
   def canonize_code

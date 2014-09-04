@@ -61,7 +61,7 @@ $(document).on("ajax:complete", '#update_section', function(evt, resp) {
       <div> 
         <%= link_to edit_section_path(@section) do %>
           <div class="workspace_button">
-            Edit
+            Edit class
           </div>
         <% end %>
         <%= link_to teacher_path(current_teacher) do %>
@@ -82,7 +82,7 @@ $(document).on("ajax:complete", '#update_section', function(evt, resp) {
     <p>Invite your students to create their own accounts using the class code <strong><%= @section.code %></strong>.</p>
   <% else %>
     <div>
-    <% @section.students.order(:last_name, :first_name).each do |s| %>
+    <% @section.active_students.order(:last_name, :first_name).each do |s| %>
       <a href="<%= grading_teachers_path(@section.lesson, s, @section) %>" class="teacher_student">
         <h1><%= s.display_name %></h1>
       </a>

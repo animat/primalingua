@@ -1,0 +1,25 @@
+<h1>Archive students</h1>
+<p>Use the checkboxes below to remove students who are no longer in your class without deleting their accounts.</p>
+<%= form_tag section_update_archives_path(@section.id), method: :put do %>
+<table width="100%">
+	<tr>
+		<th colspan="2">Name</th>
+		<th>Account created on...</th>
+		<th>Account last active on...</th>
+	</tr>
+	<% @section.students.order(:last_name, :first_name).each do |s| %>
+		<tr>
+			<td>
+				<input type="hidden" name="students[<%= s.id %>]" value="0">
+				<input type="checkbox" name="students[<%= s.id %>]" <%= "checked" if s.archived %>>
+			</td>
+			<td><%= s.display_name %></td>
+			<td><%= s.created_at.strftime("%m/%d/%Y") %></td>
+			<td><%= s.current_sign_in_at.strftime("%m/%d/%Y") %></td>
+		</tr>
+	<% end %>
+</table>
+<br />
+<%= hidden_field :section_id, @section.id %>
+<p><%= submit_tag "Archive these students" %> or <%= link_to "return to #{@section.name}", section_path(@section) %></p>
+<% end %>
