@@ -27,8 +27,10 @@ Pl2::Application.routes.draw do
 
   resources :lesson_plans, :resources, :units, :feedbacks, :answers, :notifications, :schools
   resources :sections do
-    get :archive_students
-    put :update_archives
+    member do
+      get :archive_students
+      put :update_archives
+    end
   end
   resources :lessons do 
     member { put :mercury_update}
