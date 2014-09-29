@@ -41,7 +41,7 @@
 	
 	<h3>Link my account to Google</h3>
 	<% if @student.authentications.length > 0 %>
-	    <% for authentication in @student.authentications %>
+	    <% @student.authentications.each do |authentication| %>
 	      <div class="authentication">
 				Your account is currently linked!
 				(<%= link_to "remove link", authentication, :confirm => 'Are you sure you want to remove this login option?', :method => :delete, :class => "remove" %>)

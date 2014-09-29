@@ -1,7 +1,7 @@
 Pl2::Application.routes.draw do
 
   get "omniauth_callbacks/google_oauth2"
-  get "omniauth_callbacks/:id", to: "omniauth_callbacks#destroy", method: :delete, as: "authentication"
+  delete "omniauth_callbacks/:id", to: "omniauth_callbacks#destroy", as: "authentication"
   devise_for :students, :controllers => {:registrations => "students/registrations", :omniauth_callbacks => "omniauth_callbacks"}
   devise_for :teachers, :controllers => {:registrations => "teachers/registrations"}
   devise_for :admins, :controllers => {:registrations => "admins/registrations"}

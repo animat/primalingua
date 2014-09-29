@@ -1,4 +1,6 @@
 class OmniauthCallbacksController < ApplicationController
+  protect_from_forgery except: :destroy
+  
   def google_oauth2
     access_token = request.env["omniauth.auth"]
     data = access_token.info
@@ -12,9 +14,13 @@ class OmniauthCallbacksController < ApplicationController
         sign_in_and_redirect auth.student
       end
     else
-      #registered_student = Student.where(:email => access_token.info.email).first
-      if current_student #registered_student
-        Authentication.create(student_id: current_student.id, provider: access_token.provider, uid: access_token.uid)
+      registered_student = Student.where(:email => access_token.info.email).first
+      if registered_student != nil
+        Authentication.create!(student_id: registered_student.id, provider: access_token.provider, uid: access_token.uid)
+        flash[:success] = "Successfully linked accounts"
+        sign_in_and_redirect registered_student
+      elsif current_student #registered_student
+        Authentication.create!(student_id: current_student.id, provider: access_token.provider, uid: access_token.uid)
         flash[:success] = "Successfully linked accounts"
         redirect_to edit_student_registration_path
       else
@@ -27,6 +33,11 @@ class OmniauthCallbacksController < ApplicationController
         redirect_to new_student_registration_path
       end
    end
+  end
+  
+  def failure
+    flash[:error] = "Could not login with Google"
+    redirect_to root_url
   end
   
   def destroy
