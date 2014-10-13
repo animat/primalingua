@@ -16,7 +16,9 @@
 	<div id="header">
 		<%= link_to image_tag("header_home_link.gif"), root_url, id: "header_home_link" %>
 		<% unless admin_signed_in? %>
-			<%= link_to image_tag("button_login_student.png"), new_student_session_path, id: "login_student_btn" %>
+			<% unless teacher_signed_in? %>
+				<%= link_to image_tag("button_login_student.png"), new_student_session_path, id: "login_student_btn" %>
+			<% end %>
 			<%= link_to image_tag("button_login_teacher.png"), new_teacher_session_path, id: "login_teacher_btn" %>
 		<% end %>
 		<br class="clearFloat" />
