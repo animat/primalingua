@@ -9,7 +9,6 @@ class MilestonesController < ApplicationController
 	def around_lesson
 		@current_lesson = Lesson.select_without_content.find(params[:lesson_id])
 		@milestones_in_unit = Milestone.includes(:lesson, :feedback).in_unit(@current_lesson.unit_id).where("student_id = ? AND lessons.completed = ?", params[:student_id], true).order("lessons.number")
-		puts @milestones_in_unit.map{ |m| "#{m.student_id} :: #{m.lesson.title} :: #{m.lesson.unit_id} :: #{m.status} :: #{m.feedback.status}"}
     render json: @milestones_in_unit.to_json(:include => [:lesson, :feedback]), status: :ok
 	end
 
