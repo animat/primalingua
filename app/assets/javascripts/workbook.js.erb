@@ -206,55 +206,54 @@ function displayQuestion(question) {
 	}
 }
 function loadStudentMilestones(url, is_student, current_lesson_id, audience, stu_id) {
-	$.getJSON(url).success(function(lessons) {
+	$.getJSON(url).success(function(milestones) {
 		if (is_student) {
-			displayStudentTimeline(lessons);
-			lesson_array = lessons;
+			displayStudentTimeline(milestones);
+			lesson_array = [];
+			for (var i = 0; i < milestones.length; i++) {
+				lesson_array.push(milestones[i].lesson);
+			}
 		}
-		for (var i = 0; i < lessons.length; i++) {
-			if (lessons[i].id == current_lesson_id) {
-				$.each(lessons[i].milestones, function(key, val) {
-					if (val.student_id == stu_id) {
-						displayMilestoneFeedback(val, audience);
-					}
-				})
+		for (var i = 0; i < milestones.length; i++) {
+			if (milestones[i].lesson_id == current_lesson_id) {
+				displayMilestoneFeedback(milestones[i], audience);
 			}
 		}
 	}).error(function(data) {
 		console.log("Error fetching answer JSON.");
 	});
 }
-function displayStudentTimeline(lessons) {
+function displayStudentTimeline(milestones) {
 	var timeline_width = $("#timeline_overlay").width() - 24;
-	var lesson_width = timeline_width / lessons.length;
-
-	for (i = 0; i < lessons.length; i++) {
-		var lesson = lessons[i];
+	var lesson_width = timeline_width / milestones.length;
+	
+	for (i = 0; i < milestones.length; i++) {
+		var milestone = milestones[i];
+		var lesson = milestone.lesson;
 		var $div = $('<a>', {class: "timeline_lesson", id: "lesson"+(i+1), "data-lesson_id": lesson.id});
 		$div.css("width", lesson_width);
-		if (lesson.milestones.length > 0) {
-			if (lesson.milestones[0].feedback != null) {
-				if (lesson.milestones[0].feedback.status == "correct") {
-					$div.css({
-						"background-color": "#1EA62B",
-						"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
-					});
-				} else if (lesson.milestones[0].feedback.status == "incomplete") {
-					$div.css({
-						"background-color": "#E0CA05",
-						"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
-					});
-				} else if (lesson.milestones[0].feedback.status == "incorrect") {
-					$div.css({
-						"background-color": "#ff0000",
-						"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
-					});
-				} else {
-					$div.css({
-						"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
-					});
-					console.log("Unrecognized milestone status on lesson #"+lesson.id);
-				}
+		
+		if (milestone.feedback != null) {
+			if (milestone.feedback.status == "correct") {
+				$div.css({
+					"background-color": "#1EA62B",
+					"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
+				});
+			} else if (milestone.feedback.status == "incomplete") {
+				$div.css({
+					"background-color": "#E0CA05",
+					"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
+				});
+			} else if (milestone.feedback.status == "incorrect") {
+				$div.css({
+					"background-color": "#ff0000",
+					"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
+				});
+			} else {
+				$div.css({
+					"backgroundImage": "url('<%= image_url 'workspace/timeline_break.png' %>')"
+				});
+				console.log("Unrecognized milestone status on lesson #"+lesson.id);
 			}
 		} else {
 			$div.css({
@@ -300,12 +299,12 @@ function updateTimelineWidth() {
 	var lesson_width = timeline_width / lesson_array.length;
 	for (i = 0; i < lesson_array.length; i++) {
 		var $lesson = $("#lesson"+(i+1));
-		console.log($lesson);
 		$lesson.width(lesson_width);
 	}
 }
 function displayMilestoneFeedback(m, audience) {
 	$milestoneFeedback = $("<div>", {id: "m_"+m.id});
+	console.log("displayMilestoneFeedback()");
 	if (audience == "teacher") {
 		$feedbackEditorDiv = createFeedbackEditor("m", m.id);
 		if (m.feedback != null) {
@@ -320,6 +319,7 @@ function displayMilestoneFeedback(m, audience) {
 		$milestoneFeedback.append($feedbackEditorDiv)
 		$("#content").append($milestoneFeedback);
 	} else if (audience == "student") {
+		console.log("Displaying milestone feedback for students!");
 		$studentFeedbackDiv = $("<div>");
 		if (m.feedback.status != null) {
 			var feedbackTypes = ["incomplete", "correct", "incorrect"];

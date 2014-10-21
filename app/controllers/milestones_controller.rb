@@ -8,19 +8,9 @@ class MilestonesController < ApplicationController
 
 	def around_lesson
 		@current_lesson = Lesson.select_without_content.find(params[:lesson_id])
-		@lessons_in_unit = Lesson.select_without_content.where(:unit_id => @current_lesson.unit_id, :completed => true)
-		@milestones_in_unit = Milestone.in_unit(@current_lesson.unit_id).where(student_id: params[:student_id])
-		puts "*"*50
-		puts @milestones_in_unit
-
-		@lessons = []
-		@lessons_in_unit.each do |lesson|
-			#@milestones_in_unit.select {|m| lesson.milestones = [m] if m.lesson_id == lesson.id }
-			@lessons.push(lesson)
-		end
-		#render json: @lessons.to_json, status: :ok
-		# TODO: Lessons are attaching feedback for ALL students, not specified student if using include param below
-		render json: @lessons.to_json(:include => {:milestones => {:include => :feedback}}), status: :ok
+		@milestones_in_unit = Milestone.includes(:lesson, :feedback).in_unit(@current_lesson.unit_id).where("student_id = ? AND lessons.completed = ?", params[:student_id], true).order("lessons.number")
+		puts @milestones_in_unit.map{ |m| "#{m.student_id} :: #{m.lesson.title} :: #{m.lesson.unit_id} :: #{m.status} :: #{m.feedback.status}"}
+    render json: @milestones_in_unit.to_json(:include => [:lesson, :feedback]), status: :ok
 	end
 
 	def show
