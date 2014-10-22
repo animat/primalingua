@@ -26,7 +26,7 @@ $(document).on("ajax:complete", '#update_section', function(evt, resp) {
        
       <div id="section_current_lesson">
         <div class="section_info">
-          <%= form_tag(update_section_lesson_teacher_path, {method: :post, remote: true, authenticity_token: false, id: "update_section"}) do %>
+          <%= form_tag(update_section_lesson_teacher_path, {method: :post, authenticity_token: false, id: "update_section"}) do %>
             <p>
               <label>This section is currently on...<br />
                 <%= grouped_collection_select :section, :lesson_id, Unit.all, :completed_lessons, :full_title, :id, :abbr_title, {}, {:id => "save_lesson_select_menu"}%>
@@ -45,6 +45,7 @@ $(document).on("ajax:complete", '#update_section', function(evt, resp) {
                 <% end %>
               <% end %>
               <br />
+			  <%= hidden_field_tag :return_to_section, @section.id %>
               <%= submit_tag "Save" %>
             </div>
           <% end %>

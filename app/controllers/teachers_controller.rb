@@ -46,10 +46,10 @@ class TeachersController < ApplicationController
     @sections = Section.where(id: params[:section_ids])
     @sections.each do |s|
       s.lesson_id = params[:section][:lesson_id]
-
       s.save
     end
-    render json: "Success", status: :ok
+    flash[:notice] = "Updated the current lesson."
+    redirect_to section_path(params[:return_to_section])
   end
 
   def index
