@@ -7,9 +7,18 @@ class MilestonesController < ApplicationController
 	end
 
 	def around_lesson
-		@current_lesson = Lesson.select_without_content.find(params[:lesson_id])
-		@milestones_in_unit = Milestone.includes(:lesson, :feedback).in_unit(@current_lesson.unit_id).where("student_id = ? AND lessons.completed = ?", params[:student_id], true).order("lessons.number")
-    render json: @milestones_in_unit.to_json(:include => [:lesson, :feedback]), status: :ok
+    @current_lesson = Lesson.select_without_content.find(params[:lesson_id])
+    if params[:student_id].to_i == 0
+      @lessons_in_unit = Lesson.select_without_content.where(:unit_id => @current_lesson.unit_id, :completed => true).order(:number)
+      @empty_milestones = Array.new(@lessons_in_unit.size) {|i| Milestone.new }
+      @empty_milestones.each_with_index do |em, i|
+        em.lesson = @lessons_in_unit[i]
+      end
+      render json: @empty_milestones.to_json(:include => :lesson), status: :ok
+    else
+  		@milestones_in_unit = Milestone.includes(:lesson, :feedback).in_unit(@current_lesson.unit_id).where("student_id = ? AND lessons.completed = ?", params[:student_id], true).order("lessons.number")
+      render json: @milestones_in_unit.to_json(:include => [:lesson, :feedback]), status: :ok
+    end
 	end
 
 	def show

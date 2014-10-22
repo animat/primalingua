@@ -4,6 +4,7 @@ var headInitHeight;
 var headFinHeight;
 var $head;
 var autosaveTimer;
+var lesson_array;
 
 $(document).on("ready", function() {
 	autosaveTimer = null;
@@ -207,12 +208,12 @@ function displayQuestion(question) {
 }
 function loadStudentMilestones(url, is_student, current_lesson_id, audience, stu_id) {
 	$.getJSON(url).success(function(milestones) {
+		lesson_array = [];
+		for (var i = 0; i < milestones.length; i++) {
+			lesson_array.push(milestones[i].lesson);
+		}
 		if (is_student) {
 			displayStudentTimeline(milestones);
-			lesson_array = [];
-			for (var i = 0; i < milestones.length; i++) {
-				lesson_array.push(milestones[i].lesson);
-			}
 		}
 		for (var i = 0; i < milestones.length; i++) {
 			if (milestones[i].lesson_id == current_lesson_id) {
@@ -226,7 +227,6 @@ function loadStudentMilestones(url, is_student, current_lesson_id, audience, stu
 function displayStudentTimeline(milestones) {
 	var timeline_width = $("#timeline_overlay").width() - 24;
 	var lesson_width = timeline_width / milestones.length;
-	
 	for (i = 0; i < milestones.length; i++) {
 		var milestone = milestones[i];
 		var lesson = milestone.lesson;

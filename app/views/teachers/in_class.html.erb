@@ -1,6 +1,14 @@
 <% content_for :page_script do %>
 <script type="text/javascript">
 $(document).on("ready", function() {
+	$.getJSON("<%= around_lesson_student_milestones_url(0, @lesson) %>").success(function(milestones) {
+		displayStudentTimeline(milestones);
+	}).error(function() {
+		console.log("Error loading milestones");
+	});
+	$(window).resize(function() {
+		updateTimelineWidth();
+	});
 	setTimelineHeight(<%= current_teacher.premium %>);
 	$(".drawing").each(function() {
 		$(document).trigger("drawing:init", $(this).attr("id"));
@@ -10,6 +18,10 @@ $(document).on("drawing:init", function(event, id) {
 	var txt = $("#"+id).data("default_text");
 	var im = $("#"+id).data("default_img");
 	initDrawingBG($("#"+id), txt, im);
+});
+$(document).on("click", ".timeline_lesson", function() {
+	var lid = $(this).data("lesson_id");
+	location.href = "/teachers/in_class/" + lid;
 });
 </script>
 <% end %>

@@ -63,6 +63,19 @@
 				</div>
 			</div>
 			<% if @lesson %>
+			<% if params[:action] == "in_class" %>
+			<div id="timeline">
+				<%= link_to "", in_class_teachers_path(@lesson.unit.next_unit_lesson), id: "timeline_arrow_right" %>
+				<%= link_to "", in_class_teachers_path(@lesson.unit.previous_unit_lesson), id: "timeline_arrow_left" %>
+				<div id="timeline_overlay">
+					<div id="timeline_end_left"></div>
+					<div id="timeline_end_right"></div>
+				</div>
+				<div id="timeline_lessons">
+					
+				</div>
+			</div>
+			<% end %>
 			<div id="resource">
 				<div>
 					<%= render :partial => "resources/panel", :locals => {:resources => @lesson.unit.resources} %>
