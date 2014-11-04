@@ -24,7 +24,7 @@
     <%= collection_select :section, :lesson_id, Lesson.where(completed: true), :id, :full_title %>
   </div>
   <% if controller.action_name == "edit" %>
-	  <p><%= link_to "Click here to archive students no longer in this class", section_archive_students_path(@section) %></p>
+	  <p><%= link_to "Click here to archive students no longer in this class", archive_students_section_path(@section) %></p>
   <% end %>
   <br />
   <div class="actions">

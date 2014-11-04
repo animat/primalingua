@@ -28,11 +28,11 @@ class SectionsController < ApplicationController
   end
   
   def archive_students
-    @section = Section.find(params[:section_id])
+    @section = Section.find(params[:id])
   end
   
   def update_archives
-    @section = Section.find(params[:section_id])
+    @section = Section.find(params[:id])
     params[:students].each do |key, value|
       @stu = Student.find(key)
       @stu.archived = (value == "on")
