@@ -16,6 +16,7 @@
 class Notification < ActiveRecord::Base
 	belongs_to :recipientable, polymorphic: true
 	belongs_to :notifiable, polymorphic: true
+  belongs_to :generateable, polymorphic: true
 
-	attr_accessible :unread, :emailed_at, :notifiable_id, :notifiable_type, :recipientable_id, :recipientable_type
+	attr_accessible :unread, :emailed_at, :notifiable_id, :notifiable_type, :recipientable_id, :recipientable_type, :generateable_id, :generateable_type
 end

@@ -33,10 +33,19 @@ class Student < ActiveRecord::Base
   has_many :answers
   has_many :milestones
   has_many :notifications, as: :recipientable
+  has_many :generateables, as: :generateable, class_name: "Notification"
   has_many :authentications
 
   def display_name
   	"#{first_name} #{last_name}"
+  end
+  
+  def unread_correction_notifications
+    self.generateables.where("status = ? and unread = ?", "corrected", "true")
+  end
+  
+  def corrected_answers_in_lesson(lid)
+    Answer.joins(:notifications, :question, :lesson).merge(self.unread_correction_notifications).where("lessons.id = ?", lid)
   end
 
 end

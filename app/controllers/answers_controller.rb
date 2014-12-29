@@ -17,8 +17,9 @@ class AnswersController < ApplicationController
         update_milestone_and_notification(@lesson, @student, @student.teacher, "completed")
       end
       
-      
-      # TODO: Find some way to update the milestone and create an update notification for corrections...
+      if @answer.feedback != nil
+        create_correction_notification(@answer, @student.section.teacher)
+      end
       
       render :json => @answer, :status => :ok
   	else
@@ -31,13 +32,24 @@ class AnswersController < ApplicationController
   	params.require(:answer).permit(:student_id, :question_id, :content)
   end
 
+  def create_correction_notification(ans, tea)
+    @n = Notification.where(notifiable: ans, recipientable: tea).first_or_initialize
+    @n.generateable = ans.student
+    @n.updated_at = Time.now
+    @n.status = "corrected"
+    @n.save
+  end
+
   def update_milestone_and_notification(les, stu, recip, stat)
     @m = Milestone.where(:student_id => stu, :lesson_id => les).first
     if @m.status != stat
       @m.status = stat
       
-      @n = Notification.where(:notifiable => @m, :recipientable => recip).first_or_create!
-      puts "Milestone: lesson complete! Notifying the teacher now."
+      # TODO: Make use of the notification system at this point!
+      @n = Notification.where(:notifiable => @m, :recipientable => recip).first_or_initialize
+      @n.generateable = stu
+      @n.status = stat
+      @n.save
     end
     
     @m.updated_at = Time.now
