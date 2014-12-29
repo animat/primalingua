@@ -30,6 +30,10 @@ class Section < ActiveRecord::Base
   def active_students
     self.students.where(:archived => false)
   end
+  
+  def archived_students
+    self.students.where(:archived => true)
+  end
 
   def canonize_code
   	self.code.strip!
