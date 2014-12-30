@@ -95,7 +95,8 @@ $(document).on("ajax:complete", '#update_section', function(evt, resp) {
     <% @section.active_students.order(:last_name, :first_name).each do |s| %>
       <a href="<%= grading_teachers_path(@section.lesson, s, @section) %>" class="teacher_student">
         <h1><%= s.display_name %></h1>
-		<p><%= s.unread_correction_notifications.count %></p>
+		<p>Pending corrections: <%= s.unread_correction_notifications.count %></p>
+		<p>Completed lesson: <%= s.completed_milestone_in_lesson(@section.lesson) %></p>
       </a>
     <% end %>
   </div>

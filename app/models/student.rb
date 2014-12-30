@@ -47,5 +47,13 @@ class Student < ActiveRecord::Base
   def corrected_answers_in_lesson(lid)
     Answer.joins(:notifications, :question, :lesson).merge(self.unread_correction_notifications).where("lessons.id = ?", lid)
   end
+  
+  def completed_milestone_in_lesson(lid)
+    if Milestone.exists?(student: self, lesson_id: lid, status: "completed")
+      true
+    else 
+      false
+    end
+  end
 
 end
