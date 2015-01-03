@@ -14,7 +14,7 @@ Pl2::Application.routes.draw do
   post "teachers/update_section_lesson", to: "teachers#update_section_lesson", as: "update_section_lesson_teacher"
   get "students/:student_id/workbook(/:lesson_id)", to: "students#workbook", as: "workbook_student"
   get "students/:student_id/lesson/:lesson_id/answers", to: "answers#show", as: "student_answers_in_lesson"
-
+  
   resources :students, :except => [:new, :create, :show, :edit, :update, :delete] do
     resources :milestones do
       match "(around_lesson/:lesson_id)" => "milestones#around_lesson", on: :collection, as: :around_lesson, via: :get
@@ -25,7 +25,8 @@ Pl2::Application.routes.draw do
     resources :sections
   end
 
-  resources :lesson_plans, :resources, :units, :feedbacks, :answers, :notifications, :schools
+  resources :lesson_plans, :resources, :units, :feedbacks, :answers, :schools, :notifications
+  post "notifications/mark_corrected_question_as_read/question/:question_id/student/:student_id", to: "notifications#mark_corrected_question_as_read", as: "mark_corrected_question_as_read"
   resources :sections do
     member do
       get :archive_students

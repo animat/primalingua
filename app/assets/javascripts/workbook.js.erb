@@ -349,3 +349,29 @@ function markCorrectedQuestions(ids) {
 		$el.parent().addClass("question_corrected");
 	}
 }
+function watchCorrectedQuestionsMarkedAsRead(sid, auth_token) {
+	$(".question_corrected:in-viewport").run(function() {
+		$el = this;
+		var qid = this.find(".question").attr("name").split("_")[1];
+		var url = "/notifications/mark_corrected_question_as_read/question/"+qid+"/student/"+sid;
+		
+		$.ajax({
+	 		type: "POST",
+	 		url: url,
+			dataType: "html",
+	 		data: {authenticity_token: auth_token},
+			beforeSend: function() {
+				$el.removeClass("question_corrected");
+				$el.addClass("question_corrected_pending");
+				console.log("Pending...");
+			}
+		}).done(function() {
+			$el.removeClass("question_corrected_pending");
+ 			$el.addClass("question_marked_read");
+			console.log("Success!");
+		}).fail(function(data) {
+			console.log("Notification could not be saved.");
+			console.log(data);
+		});
+	});
+}

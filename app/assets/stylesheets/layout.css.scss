@@ -162,9 +162,16 @@ p.flash_error {
 .float_right {
 	float: right;
 }
-.question_corrected {
-	background-color: yellow;
-	
+.question_corrected, .question_corrected_pending {
+	background-color: #FFEA47;
+}
+.question_marked_read {
+	background-color: #FFF9CF;
+	-webkit-transition: background-color 4s ease-out;
+    -moz-transition: background-color 4s ease-out;
+    -o-transition: background-color 4s ease-out;
+    -ms-transition: background-color 4s ease-out;
+    transition: background-color 4s ease-out;
 }
 
 /*	------------------- *

@@ -33,7 +33,7 @@ class AnswersController < ApplicationController
   end
 
   def create_correction_notification(ans, tea)
-    @n = Notification.where(notifiable: ans, recipientable: tea).first_or_initialize
+    @n = Notification.where(notifiable: ans, recipientable: tea, unread: true).first_or_initialize
     @n.generateable = ans.student
     @n.updated_at = Time.now
     @n.status = "corrected"
