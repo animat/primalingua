@@ -17,3 +17,5 @@
 //= require notifications
 //= require rocanvas
 //= require fancybox
+//= require jquery.textfill.min
+//= require isInViewport.min

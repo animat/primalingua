@@ -788,19 +788,89 @@ table.with_border td input, table.without_border td input {
 	display: inline-block;
 	vertical-align: top;
 }
-.teacher_student {
-	width: 180px; /*    Took away 20px     */
-	height: 186px;
-	background: url(<%= image_path 'workspace/teacher_student_bg.png' %>) no-repeat center;
-	padding-top: 14px;
-	padding-left: 27px;
+#student_grid {
 	color: #4F3157;
 	font-family: Helvetica, Arial Rounded MT Bold, Nunito;
+}
+#student_grid_nav h1 {
+	margin: 0px 10px 5px 10px;
+}
+#student_grid_nav table, #student_grid_nav td {
+	padding: 0px;
+}
+#student_grid_nav table, #student_snapshots table {
+	width: 100%;
+}
+#student_snapshots table td {
+	vertical-align: top;
+	padding: 0px;
+}
+#student_grid_nav td:first-child, #student_grid_nav td:last-child {
+	width: 150px;
+}
+#student_grid_nav td a {
+	padding: 10px;
+	font-size: .8em;
+}
+.student_snapshot {
+	width: 245px;
 	display: inline-block;
 	vertical-align: top;
-	text-decoration: none;
-	padding-right: 25px;
 	text-align: center;
+}
+.student_snapshot a, #student_grid_nav a {
+	text-decoration: none;
+}
+.student_snapshot a:hover,  #student_grid_nav a:hover {
+	text-decoration: underline;
+}
+.student_snapshot div.snapshot_header {
+	background: url(<%= image_path 'workspace/student_snapshot_header.png' %>) no-repeat center;
+	height: 63px;
+	overflow: none;
+	margin: 0px;
+	padding: 0px 0px 0px 0px;
+}
+.student_snapshot h1 {
+	margin: 0px;
+	padding: 0px 20px;
+	position: relative;
+	top: 22px;
+	width: 200px;
+	height: 40px;
+}
+.student_snapshot h1 > a {
+	color: #4F3157;
+	display: block;
+}
+.student_snapshot > div {
+	background: url(<%= image_path 'workspace/student_snapshot_body.png' %>) repeat-y center;
+	font-size: .9em;
+	padding: 4px 20px 0px 20px;
+}
+.student_snapshot > div > p {
+	padding: 4px;
+	margin: 0px;
+}
+.student_snapshot > div li {
+	padding: 3px 0px;
+}
+.student_snapshot li > a {
+	color: inherit;
+	padding: 5px;
+	display: block;
+}
+.student_snapshot > div.snapshot_footer {
+	background: url(<%= image_path 'workspace/student_snapshot_footer.png' %>) no-repeat center;
+	height: 22px;
+	margin: 0px;
+	padding: 0px;
+}
+.student_snapshot ul {
+	list-style-type: none;
+	text-align: left;
+	padding: 0px;
+	margin: 0px;
 }
 #save_lesson_select_menu {
 	width: 90%;

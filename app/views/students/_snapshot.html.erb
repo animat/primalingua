@@ -1,0 +1,21 @@
+<div class="snapshot_header">
+	<h1><%= link_to student.display_name, grading_teachers_path(section.lesson, student, section) %></h1>
+</div>
+<div>
+	<% if milestones.empty? %>
+		<p><%= "#{student.first_name} has not yet done any work in this unit."%></p>
+	<% else %>
+		<ul>
+			<% milestones.each do |m| %>
+				<li style="<%= student_milestone_status_style(m) %>">
+					<%= link_to grading_teachers_path(m.lesson, student, section) do %>
+						<%= m.lesson.abbr_title %>
+						<% @num = student.unread_corrected_answers_in_lesson(m.lesson).count %>
+						<%= "(#{@num})" unless @num  == 0 %>
+					<% end %>
+				</li>
+			<% end %>
+		</ul>
+	<% end %>
+</div>
+<div class="snapshot_footer"></div>

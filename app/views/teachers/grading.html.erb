@@ -40,7 +40,7 @@ $(document).on("ready", function() {
 	hideTG();
 	loadStudentMilestones("<%= around_lesson_student_milestones_url(@student, @lesson) %>", <%= student_signed_in? %>, <%= @lesson.id %>, "teacher", <%= @student.id %>);
 	populate("<%= student_answers_in_lesson_url(@student.id, @lesson.id) %>", "teacher");
-	markCorrectedQuestions(<%= @student.corrected_answers_in_lesson(@lesson).map {|a| a.question.id } %>);
+	markCorrectedQuestions(<%= @student.unread_corrected_answers_in_lesson(@lesson).map {|a| a.question.id } %>);
 	$(".drawing").each(function() {
 		$(document).trigger("drawing:init", $(this).attr("id"));
 	});

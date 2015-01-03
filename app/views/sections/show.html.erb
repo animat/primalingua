@@ -5,6 +5,12 @@ $(document).on("ready", function() {
   $("#save_lesson_select_menu").on("change", function() {
     $("#lesson_save_options").slideDown();
   });
+  
+  $('.snapshot_header h1').textfill({
+      innerTag: "a",
+	  minFontPixels: 6,
+	  maxFontPixels: 32
+  });
 });
 $(document).on("ajax:complete", '#update_section', function(evt, resp) {
     if (resp.status >= 200 && resp.status < 300 || resp.status === 304) {
@@ -91,14 +97,37 @@ $(document).on("ajax:complete", '#update_section', function(evt, resp) {
     <h1>This class is empty.</h1>
     <p>Invite your students to create their own accounts using the class code <strong><%= @section.code %></strong>.</p>
   <% else %>
-    <div>
-    <% @section.active_students.order(:last_name, :first_name).each do |s| %>
-      <a href="<%= grading_teachers_path(@section.lesson, s, @section) %>" class="teacher_student">
-        <h1><%= s.display_name %></h1>
-		<p>Pending corrections: <%= s.unread_correction_notifications.count %></p>
-		<p>Completed lesson: <%= s.completed_milestone_in_lesson(@section.lesson) %></p>
-      </a>
-    <% end %>
+	
+  	<div id="student_grid_nav">
+		<table>
+			<tr>
+				<td>
+					<%= link_to "&larr; previous overview".html_safe, previous_unit_overview(@section, @overview_unit) unless @overview_unit.is_first? %>
+				</td>
+				<td>
+					<h1><%= "#{@overview_unit.full_title}"%></h1>
+					<% if @overview_unit != @section.lesson.unit %>
+						<%= link_to "return to this section's current unit", section_path(@section) %>
+					<% end %>
+				</td>
+				<td>
+					<%= link_to "next overview &rarr;".html_safe, next_unit_overview(@section, @overview_unit) unless @overview_unit.is_last? %>
+				</td>	
+			</tr>
+		</table>
+	</div>
+    <div id="student_snapshots">
+		<table>
+		    <% @section.active_students.order(:last_name, :first_name).each_with_index do |s, i| %>
+				<%= "<tr>".html_safe if i % 3 == 0 %>
+				<td>
+			    	<div class="student_snapshot">
+						<%= render partial: "students/snapshot", locals: {student: s, section: @section, lesson: @section.lesson, milestones: s.milestones.in_unit(@overview_unit) }%>
+			      </div>
+				</td>
+				<%= "</tr>".html_safe if i+1 % 3 == 0 %>
+		    <% end %>
+		</table>
   </div>
   <% end %>
 </div>

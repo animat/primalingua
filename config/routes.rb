@@ -30,6 +30,7 @@ Pl2::Application.routes.draw do
     member do
       get :archive_students
       put :update_archives
+      match "unit_overview/:unit_id" => "sections#show", as: :unit_overview, via: :get
     end
   end
   resources :lessons do 

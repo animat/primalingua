@@ -44,7 +44,7 @@ class Student < ActiveRecord::Base
     self.generateables.where("status = ? and unread = ?", "corrected", "true")
   end
   
-  def corrected_answers_in_lesson(lid)
+  def unread_corrected_answers_in_lesson(lid)
     Answer.joins(:notifications, :question, :lesson).merge(self.unread_correction_notifications).where("lessons.id = ?", lid)
   end
   

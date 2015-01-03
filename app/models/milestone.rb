@@ -22,4 +22,8 @@ class Milestone < ActiveRecord::Base
 		joins(:lesson).
 		where("lessons.unit_id = ?", uid)
 	end
+  
+  def self.for_student(sid)
+    where("student_id = ?", sid)
+  end
 end

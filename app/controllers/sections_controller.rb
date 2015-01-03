@@ -21,6 +21,11 @@ class SectionsController < ApplicationController
   # GET /sections/1.json
   def show
     @title = "Prima Lingua: #{@section.name}"
+    if params[:unit_id]
+      @overview_unit = Unit.find(params[:unit_id])
+    else
+      @overview_unit = @section.lesson.unit
+    end
     respond_to do |format|
       format.html { render_flex_layout }
       format.json { render :json => @section }

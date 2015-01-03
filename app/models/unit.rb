@@ -38,6 +38,28 @@ class Unit < ActiveRecord::Base
 	 	return Lesson.where(:unit_id => self.id).first
 	 end
   end
+  
+  def next_unit
+    if self.id == 21
+      -1
+    else
+      self.id + 1
+    end
+  end
+  def previous_unit
+    if self.id == 1
+      -1
+    else
+      self.id - 1
+    end
+  end
+  
+  def is_first?
+    self.id == 1
+  end
+  def is_last?
+    self.id == 21
+  end
 
   def completed_lessons
     self.lessons.where(completed: true)
