@@ -17,7 +17,9 @@ class Milestone < ActiveRecord::Base
 	has_one :feedback, as: :feedbackable
 
 	attr_accessible :student_id, :lesson_id, :status
-
+  
+  default_scope { order('lessons.unit_id, lessons.number') }
+  
 	def self.in_unit(uid)
 		joins(:lesson).
 		where("lessons.unit_id = ?", uid)
