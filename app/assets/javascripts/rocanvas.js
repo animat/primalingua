@@ -433,7 +433,8 @@ var RoCanvas= function () {
 	   RoCanvas.clickDrag = new Array();
 	   self.setSize(oldLineWidth);
 	   self.context.lineJoin = self.shape;
-	   self.setColor(self.color);
+	   self.setColor("#000000"); // Reset color to black when you clear the canvas
+	   //self.setColor(self.color);
 
 	   $(document).trigger("drawing:init", self.id);
 
