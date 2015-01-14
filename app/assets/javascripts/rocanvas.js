@@ -23,7 +23,7 @@ var RoCanvas= function () {
 	this.color = "#000";	
 	this.tool = "path";
 	this.drawTool = "path";
-	this.lineWidth = 5;
+	this.lineWidth = 2;
 	
 	// toolbar
 	this.toolbar = {
