@@ -1,6 +1,6 @@
 <div class="teacher_class">
 	<%= link_to section_path(section), :class => "teacher_class_main" do %>
-		<h1><%= section.name %></h1>
+		<h1><span><%= section.name %></span></h1>
 		<h2>Unit <strong><%= section.lesson.unit.number %></strong></h2>
 		<h3>Lesson <strong><%= section.lesson.number %></strong></h3>
 		<h4><%= pluralize(section.active_students.length, "student") %></h4>

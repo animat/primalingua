@@ -1,3 +1,14 @@
+<% content_for :head do %>
+<script type="text/javascript">
+$(document).on("ready", function() {
+  $('.teacher_class_main h1').textfill({
+	  minFontPixels: 6,
+	  maxFontPixels: 24
+  });
+});
+</script>
+<% end %>
+
 <div id="teacher_class_overview">
 	<% if @sections.empty? %>
 		<h1>Welcome!</h1>
