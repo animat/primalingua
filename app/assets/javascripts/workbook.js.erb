@@ -122,7 +122,7 @@ function displayStudentFeedback(answer) {
 	}
 }
 function displayTeacherFeedback(answer) {
-	$feedbackEditorDiv = createFeedbackEditor("f", answer.question.id)
+	$feedbackEditorDiv = createFeedbackEditor("f", answer.question.id);
 	if (answer.feedback) {
 		if (answer.feedback.content != null) {
 			$feedbackEditorDiv.find(".feedback_txt").val(answer.feedback.content);
@@ -131,7 +131,7 @@ function displayTeacherFeedback(answer) {
 			$feedbackEditorDiv.find(".feedback_"+answer.feedback.status+"_btn").addClass("selected_feedback");
 		}
 	}
-	$(".populate_student_answers [name=q_"+answer.question.id+"]").siblings(".feedback").append($feedbackEditorDiv);
+	$(".populate_student_answers [name=q_"+answer.question.id+"]").siblings(".feedback").last().append($feedbackEditorDiv);
 }
 function createFeedbackEditor(type, id) {
 	var $feedbackButtonsDiv = $('<div>', {class: "feedback_buttons"});
