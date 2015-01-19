@@ -96,7 +96,12 @@ function initDrawingBG(canvas, default_txt, default_img) {
 }
 function displayFeedback(answer, audience) {
 	var $feedbackDiv = $('<div>', {class: "feedback", id: "f_"+answer.question.id, data: {"answer_id": answer.id}});
-	$("[name=q_"+answer.question.id+"]").after($feedbackDiv);
+    var $q = $("[name=q_"+answer.question.id+"]");
+    if ($q.hasClass("question_checkbox")) {
+        $q.parent().append($feedbackDiv);
+    } else {
+        $q.after($feedbackDiv);
+    }
 	if (audience == "student") {
 		displayStudentFeedback(answer);
 	} else if (audience == "teacher") {
