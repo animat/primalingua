@@ -39,6 +39,9 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize_student
+    if teacher_signed_in?
+      sign_out current_teacher
+    end
     if student_signed_in?
       if current_student.id == params[:student_id].to_i
         # Access granted
@@ -53,6 +56,9 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize_teacher
+    if student_signed_in?
+      sign_out current_student
+    end
     if teacher_signed_in? or admin_signed_in?
       # TODO: Insecure (could one teacher go to another teacher's page?)
       # Access granted
