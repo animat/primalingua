@@ -9,7 +9,7 @@ $(document).on("ready", function() {
 	$(window).resize(function() {
 		updateTimelineWidth();
 	});
-	setTimelineHeight(<%= current_teacher.premium %>);
+	setTimelineHeight(true);
 	$(".drawing").each(function() {
 		$(document).trigger("drawing:init", $(this).attr("id"));
 	});

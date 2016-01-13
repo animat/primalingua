@@ -278,17 +278,27 @@ function displayStudentTimeline(milestones) {
 		$('#timeline_lessons').append($div);
 	}
 }
-function setTimelineHeight() {
-	if ($("#head_student").length) {
+function setTimelineHeight(teacher_view) {
+  console.log("v1.13.807")
+  if (teacher_view) {
+		$head = $("#head");
+		$("#resource").css("top", 57);
+  } else {
+    $head = $("#head_student");
+  }
+	/*if ($("#head_student").length) {
 		$head = $("#head_student");
 	} else {
 		$head = $("#head");
 		$("#resource").css("top", 57);
-	}
+	}*/
 	initHeight = 27;
-	finHeight = $("#resource").css("height");
-	headInitHeight = $head.height();
-	headFinHeight = parseInt(headInitHeight) + (parseInt(finHeight) - initHeight);
+	finHeight = parseInt($("#resource_container").css("height"));
+	headInitHeight = parseInt($head.css("height"));
+	headFinHeight = headInitHeight + finHeight - initHeight;
+  console.log("finHeight: ",finHeight);
+  console.log("headFinHeight: ",headFinHeight);
+  console.log("#resource.css(height): ",$("#resource").css("height"));
 	$("#resource").css("height", initHeight);
 }
 function closeResources() {

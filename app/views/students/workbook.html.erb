@@ -129,7 +129,8 @@ $(document).on("click", ".timeline_lesson", function() {
 });
 
 $(document).on("ready", function() {
-	setTimelineHeight(<%= @student.teacher.premium %>);
+  // TODO: Check how page looks for students of premium/basic teachers
+	setTimelineHeight(false);
 	$(window).resize(function() {
 		updateTimelineWidth();
 	});

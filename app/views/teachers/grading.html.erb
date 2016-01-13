@@ -35,7 +35,7 @@ var lesson_array;
 var lesson_id = <%= params[:lesson_id] %>;
 var student_id = <%= params[:student_id] %>;
 $(document).on("ready", function() {
-	setTimelineHeight();
+	setTimelineHeight(true);
 	resizeWindow();
 	hideTG();
 	loadStudentMilestones("<%= around_lesson_student_milestones_url(@student, @lesson) %>", <%= student_signed_in? %>, <%= @lesson.id %>, "teacher", <%= @student.id %>);
